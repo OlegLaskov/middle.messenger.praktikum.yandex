@@ -23,6 +23,7 @@
 		"parcel-transformer-hbs": "^1.0.4"
 	},
 	"dependencies": {
+		"@parcel/config-default": "^2.5.0",
 		"@parcel/core": "^2.5.0"
 	}
 }
