@@ -1,0 +1,26 @@
+{
+	"name": "oleg-messenger",
+	"version": "1.0.0",
+	"description": "Oleg Messenger",
+	"source": "src/index.html",
+	"scripts": {
+		"dev": "parcel src/index.html",
+		"build": "parcel build src/index.html",
+		"start": "parcel build src/index.html && node server.js"
+	},
+	"keywords": [
+		"messenger",
+		"messages"
+	],
+	"author": "Oleg Laskov",
+	"license": "ISC",
+	"devDependencies": {
+		"@parcel/transformer-sass": "^2.4.1",
+		"express": "^4.17.3",
+		"express-handlebars": "^6.0.5",
+		"hbs": "^4.2.0",
+		"parcel": "^2.4.1",
+		"parcel-transformer-hbs": "^1.0.4"
+	},
+	".nvmrc": "^16.4.2"
+}

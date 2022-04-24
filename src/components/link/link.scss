@@ -1,0 +1,19 @@
+$grayLine: #eaeaea;
+
+.link {
+	&__group {
+		position: relative;
+		margin-bottom: 32px;
+		text-align: center;
+	}
+	&__link {
+		text-decoration: none;
+		color: #0071f0;
+	}
+	&__to_left {
+		text-align: left;
+		border-bottom: 1px solid $grayLine;
+		padding-bottom: 12px;
+		margin-bottom: 20px;
+	}
+}

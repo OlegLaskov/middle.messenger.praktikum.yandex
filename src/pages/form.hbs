@@ -1,0 +1,14 @@
+<main class="container-form">
+	<form action="{{action}}" method="post" class="form">
+		<h1 class="form__title">{{title}}</h1>
+		{{#each inputs}}
+			{{> input }}
+		{{/each}}
+		{{#each buttons}}
+			{{> button }}
+		{{/each}}
+		{{#each links}}
+			{{> link }}
+		{{/each}}
+	</form>
+</main>

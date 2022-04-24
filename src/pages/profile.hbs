@@ -1,0 +1,16 @@
+<div class="body">
+	{{> leftnav }}
+	<main class="container-profile">
+		<div class="profile">
+			{{> avatar }}
+			<h2 class="profile__name">{{name}}</h2>
+			{{#each fields}}
+				{{> linefield }}
+			{{/each}}
+			<p> </p>
+			{{#each links}}
+				{{> link }}
+			{{/each}}
+		</div>
+	</main>
+</div>

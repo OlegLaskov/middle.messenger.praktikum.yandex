@@ -1,0 +1,29 @@
+$font: sans-serif;
+$blueButton: #0071f0;
+$focusButton: rgba(0, 113, 240, 0.7);
+
+.form {
+	&__button {
+		font-family: $font;
+		letter-spacing: 1px;
+		font-size: 16px;
+		width: 100%;
+		text-align: center;
+		padding: 10px 20px;
+		margin-bottom: 32px;
+		border: none;
+		border-radius: 5px;
+		color: #fff;
+		background-color: $blueButton;
+		outline: none;
+		cursor: pointer;
+		transition: 0.3s;
+	}
+	&__button:focus,
+	&__button:hover {
+		background-color: $focusButton;
+	}
+	&__button__w250 {
+		max-width: 250px;
+	}
+}

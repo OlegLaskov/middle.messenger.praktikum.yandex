@@ -1,0 +1,71 @@
+$font: sans-serif;
+$lightShadow: #ccc;
+$bkgrAvatar: #EFEFEF;
+$blueButton: #0071f0;
+$focusButton: rgba(0, 113, 240, 0.7);
+$grayLine: #eaeaea;
+
+body {
+	font-family: $font;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+%container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.container {
+	@extend %container;
+
+	&-error {
+		@extend %container; height: 100vh;
+	}
+	&-form {
+		@extend %container; height: calc(max(100vh,648px));
+	}
+	&-profile {
+		@extend %container;
+		width: calc(100vw - 64px);
+	}
+}
+
+.form {
+	width: 300px;
+	padding: 0 32px;
+	border-radius: 10px;
+	box-shadow: 0 4px 16px $lightShadow;
+	font-family: $font;
+	letter-spacing: 1px;
+
+	&__title {
+		text-align: center;
+		margin: 32px 0;
+		font-weight: normal;
+	}
+}
+.error {
+	&__title, &__content {
+		text-align: center;
+	}
+	&__link {
+		text-decoration: none;
+	}
+}
+.profile {
+	width: 510px;
+	align-items: center;
+	text-align: center;
+
+}
+.color-red {
+	color: red;
+}
+.body {
+	display: flex;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	width: 100%;
+}
