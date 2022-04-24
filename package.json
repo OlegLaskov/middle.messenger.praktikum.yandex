@@ -21,5 +21,8 @@
 		"hbs": "^4.2.0",
 		"parcel": "^2.5.0",
 		"parcel-transformer-hbs": "^1.0.4"
+	},
+	"dependencies": {
+		"@parcel/core": "^2.5.0"
 	}
 }
