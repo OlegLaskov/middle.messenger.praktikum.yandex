@@ -24,6 +24,7 @@
 	},
 	"dependencies": {
 		"@parcel/config-default": "^2.5.0",
-		"@parcel/core": "^2.5.0"
+		"@parcel/core": "^2.5.0",
+		"handlebars": "^4.7.7"
 	}
 }
