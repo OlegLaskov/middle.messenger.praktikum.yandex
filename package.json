@@ -21,6 +21,6 @@
 		"hbs": "^4.2.0",
 		"parcel": "^2.4.1",
 		"parcel-transformer-hbs": "^1.0.4"
-	},
-	".nvmrc": "^16.4.2"
+	}
+	
 }
