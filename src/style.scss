@@ -1,15 +1,14 @@
 $font: sans-serif;
 $lightShadow: #ccc;
-$bkgrAvatar: #EFEFEF;
-$blueButton: #0071f0;
-$focusButton: rgba(0, 113, 240, 0.7);
-$grayLine: #eaeaea;
 
 body {
 	font-family: $font;
 	margin: 0;
 	padding: 0;
 	border: 0;
+}
+input {
+	font-family: $font;
 }
 %container {
 	display: flex;
@@ -36,7 +35,6 @@ body {
 	padding: 0 32px;
 	border-radius: 10px;
 	box-shadow: 0 4px 16px $lightShadow;
-	font-family: $font;
 	letter-spacing: 1px;
 
 	&__title {

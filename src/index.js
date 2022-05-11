@@ -8,7 +8,6 @@ import avatar from './components/avatar';
 import input from './components/input';
 import button from './components/button';
 import link from './components/link';
-import linefield from './components/linefield';
 import lineinput from './components/lineinput';
 import leftnav from './components/leftnav';
 
@@ -69,12 +68,12 @@ const data = {
 		avatarClass: 'avatar__changable',
 		name: 'Иван',
 		fields: [
-			{field: 'Почта', value: 'pochta@yandex.ru', class1: '', class2: '', class3: ''},
-			{field: 'Логин', value: 'ivanivanov', class1: '', class2: '', class3: ''},
-			{field: 'Имя', value: 'Иван', class1: '', class2: '', class3: ''},
-			{field: 'Фамилия', value: 'Иванов', class1: '', class2: '', class3: ''},
-			{field: 'Имя в чате', value: 'Иван', class1: '', class2: '', class3: ''},
-			{field: 'Телефон', value: '+7 (909) 967 30 30', class1: '', class2: '', class3: ''},
+			{field: 'Почта', value: 'pochta@yandex.ru', class1: '', class2: '', class3: 'input__right', readonly: 'readonly'},
+			{field: 'Логин', value: 'ivanivanov', class1: '', class2: '', class3: 'input__right', readonly: 'readonly'},
+			{field: 'Имя', value: 'Иван', class1: '', class2: '', class3: 'input__right', readonly: 'readonly'},
+			{field: 'Фамилия', value: 'Иванов', class1: '', class2: '', class3: 'input__right', readonly: 'readonly'},
+			{field: 'Имя в чате', value: 'Иван', class1: '', class2: '', class3: 'input__right', readonly: 'readonly'},
+			{field: 'Телефон', value: '+7 (909) 967 30 30', class1: '', class2: '', class3: 'input__right', readonly: 'readonly'},
 		],
 		links: [
 			{href: '/changeprofile', class0: 'link__to_left', class1: '', label: 'Изменить данные'},

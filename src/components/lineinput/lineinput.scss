@@ -1,8 +1,6 @@
-$font: sans-serif;
 $black: #1e1e1e;
 $grayLine: #eaeaea;
 $grayFont: #999999;
-$blueLink: #3369f3;
 
 .line {
 	position: relative;
@@ -10,7 +8,6 @@ $blueLink: #3369f3;
 	display: flex;	
 
 	&__key, &__value {
-		font-family: $font;
 		letter-spacing: 1px;
 		font-size: 16px;
 		width: 100%;
