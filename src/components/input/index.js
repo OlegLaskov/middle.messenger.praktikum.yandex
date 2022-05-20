@@ -1,7 +1,16 @@
-import Handlebars from 'handlebars';
 import tmpl from './input.hbs';
+import Component from '../../utils/component';
 import './input.scss';
 
-Handlebars.registerPartial('input', tmpl);
-
-export default ({type, name, placeholder, class1, label}) => {return tmpl({type, name, placeholder, class1, label})};
+export default class Input extends Component{
+	constructor(tagName = "input", propsAndChildren = {}, defaultClass = 'form__input'){
+		super(tagName, propsAndChildren, defaultClass);
+	}
+	validation(){
+		return true;
+	}
+	render(){
+		console.log('Input render');
+		return this.compile(tmpl);
+	}
+}

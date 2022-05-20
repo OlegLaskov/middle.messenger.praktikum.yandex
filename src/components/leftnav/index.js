@@ -1,7 +1,14 @@
-import Handlebars from 'handlebars';
 import tmpl from './leftnav.hbs';
+import Component from '../../utils/component';
 import './leftnav.scss';
 
-Handlebars.registerPartial('leftnav', tmpl);
+export default class LeftNav extends Component{
+	constructor(tagName = "nav", propsAndChildren = {}, defaultClass = 'leftnav'){
+		super(tagName, propsAndChildren, defaultClass);
+	}
 
-export default ({onClickLeftNav}) => {return tmpl({onClickLeftNav})};
+	render(){
+		console.log('LeftNav render');
+		return this.compile(tmpl);
+	}
+}

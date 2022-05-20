@@ -1,16 +1,19 @@
 <div class="body">
 	{{> leftnav }}
 	<main class="container-profile">
-		<div class="profile">
+		<form action="chat" method="post" class="profile">
 			{{> avatar }}
 			<h2 class="profile__name">{{name}}</h2>
 			{{#each fields}}
 				{{> lineinput }}
 			{{/each}}
 			<br />
+			{{#each buttons}}
+				{{> button }}
+			{{/each}}
 			{{#each links}}
 				{{> link }}
 			{{/each}}
-		</div>
+		</form>
 	</main>
 </div>

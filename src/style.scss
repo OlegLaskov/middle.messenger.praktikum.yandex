@@ -1,15 +1,37 @@
 $font: sans-serif;
 $lightShadow: #ccc;
+$blueLink: #0071f0;
+$backgroundNav: #FBFBFB;
+$lightBorder: #e0e0e0;
+$grayLabel: #9e9e9e;
+$blueInput: #1a73a8;
+$backgroundSearchInput: #EFEFEF;
+$blackFont: #1E1E1E;
+$grayFont: #999999;
 
 body {
 	font-family: $font;
 	margin: 0;
 	padding: 0;
 	border: 0;
+	box-sizing: border-box;
 }
 input {
 	font-family: $font;
+	font-size: 1rem;
 }
+
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+li {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
 %container {
 	display: flex;
 	justify-content: center;
@@ -19,10 +41,17 @@ input {
 	@extend %container;
 
 	&-error {
-		@extend %container; height: 100vh;
+		@extend %container; height: 100vh; width: 100%;
 	}
 	&-form {
-		@extend %container; height: calc(max(100vh,648px));
+		@extend %container; height: 100vh;
+
+		&-login {
+			@extend %container; height: calc(max(100vh,418px));
+		}
+		&-signup {
+			@extend %container; height: calc(max(100vh, 828px));
+		}
 	}
 	&-profile {
 		@extend %container;
@@ -30,19 +59,6 @@ input {
 	}
 }
 
-.form {
-	width: 300px;
-	padding: 0 32px;
-	border-radius: 10px;
-	box-shadow: 0 4px 16px $lightShadow;
-	letter-spacing: 1px;
-
-	&__title {
-		text-align: center;
-		margin: 32px 0;
-		font-weight: normal;
-	}
-}
 .error {
 	&__title, &__content {
 		text-align: center;
@@ -58,7 +74,7 @@ input {
 
 }
 .color-red {
-	color: red;
+	color: red !important;
 }
 .body {
 	display: flex;
@@ -66,4 +82,63 @@ input {
 	padding: 0;
 	border: 0;
 	width: 100%;
+}
+.nav {
+	width: 310px;
+	background-color: $backgroundNav;
+	border-right: solid 1px $lightBorder;
+
+	&__upper {
+		margin: 5px 10px;
+		border-bottom: 1px solid $lightBorder;
+	}
+
+	&__block {
+		padding: 5px 0px;
+	}
+
+	&__link_block {
+		text-align: right;
+	}
+
+	&__link_profile {
+		text-decoration: none;
+		color: $grayFont;
+		text-align: right;
+		border-bottom: none;
+	}
+
+	&__search_input {
+		width: calc(100% - 10px);
+		text-align: center;
+		padding: 4px 5px;
+		margin: 10px 0;
+		color: $blackFont;
+		background-color: $backgroundSearchInput;
+		border: 1px solid $backgroundSearchInput;
+		border-radius: 5px;
+		outline: none;
+		transition: 0.3s;
+	}
+	&__search_input:focus {
+		// border: 1px solid $blueInput;
+	}
+}
+
+.chat_list {
+
+	&__item {
+		margin: 5px 10px;
+		padding-bottom: 5px;
+		border-bottom: 1px solid $lightBorder;
+		font-size: 1.05rem;
+		color: $blackFont;
+	}
+}
+
+.main {
+
+	&__select_chat_msg {
+		color: $grayFont;
+	}
 }

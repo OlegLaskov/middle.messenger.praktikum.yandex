@@ -1,4 +1,5 @@
 $grayLine: #eaeaea;
+$blueLink: #0071f0;
 
 .link {
 	&__group {
@@ -8,10 +9,16 @@ $grayLine: #eaeaea;
 	}
 	&__link {
 		text-decoration: none;
-		color: #0071f0;
+		color: $blueLink;
 	}
 	&__to_left {
 		text-align: left;
+		border-bottom: 1px solid $grayLine;
+		padding-bottom: 12px;
+		margin-bottom: 20px;
+	}
+	&__to_right {
+		text-align: right;
 		border-bottom: 1px solid $grayLine;
 		padding-bottom: 12px;
 		margin-bottom: 20px;

@@ -6,7 +6,7 @@ $bkgrAvatar: #EFEFEF;
 	height: auto;
 	min-height: 130px;
 	width: 130px;
-	color: $bkgrAvatar;
+	// color: $bkgrAvatar;
 	background-color: $bkgrAvatar;
 	border-radius: 50%;
 	position: relative;
@@ -14,9 +14,9 @@ $bkgrAvatar: #EFEFEF;
 	margin-right: auto;
 	&__changable {
 		&:hover {
+			color: black;
 			background-color: black;
-			opacity: 0.5;
-			cursor: pointer;
+			opacity: 0.9;
 		}
 	}
 	&__label {
@@ -28,15 +28,21 @@ $bkgrAvatar: #EFEFEF;
 	}
 	&__img {
 		position: absolute;
-		top: 43px;
-		left: 43px;
-		height: 45px;
-		width: 45px;
+		top: 0px;
+		left: 0px;
+		height: 130px;
+		width: 130px;
+		background: url(/resources/noPhoto.jpg);
+		cursor: default;
 	}
 	&__name {
 		text-align: center;
 	}
-	&__changable:hover &__label {
+	/* &__changable:hover &__label {
 		z-index: 1000;
+	} */
+	&__changable:hover &__img {
+		cursor: pointer;
+		background: url(/resources/changePhoto.jpg);
 	}
 }

@@ -9,6 +9,12 @@ $focusButton: rgba(0, 113, 240, 0.7);
 	padding: 0;
 	border: 0;
 
+	&__a {
+		display: block;
+		height: 100%;
+		width: 100%;
+	}
+
 	&__button {
 		height: inherit;
 		width: inherit;
@@ -19,6 +25,16 @@ $focusButton: rgba(0, 113, 240, 0.7);
 		cursor: pointer;
 		margin: 0;
 		padding: 0;
+		position: relative;
+	}
+	&__inner {
+		position: absolute;
+		height: 32px;
+		width: 32px;
+		top: 0;
+		bottom: 0;
+		margin: auto 16px;
+		
 	}
 	&__button:hover {
 		color: $focusButton;
