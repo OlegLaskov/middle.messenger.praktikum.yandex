@@ -40,8 +40,7 @@ export default function main(): Component {
 	const chatObj = {
 		chat1: new Message('li', {message: 'Andrey'}, 'chat_list__item'),
 		chat2: new Message('li', {message: 'Sergey'}, 'chat_list__item'),
-		chat3: new Message('li', {message: 'Pyotr'}, 'chat_list__item'),
-
+		chat3: new Message('li', {message: 'Pyotr'}, 'chat_list__item')
 	}
 
 	const chatList = new List(
@@ -59,7 +58,7 @@ export default function main(): Component {
 		'nav'
 	);
 
-	let selectedChat = null;
+	const selectedChat = null;
 
 	const chatNav = new Message('div', {message: 'Chat Nav'});
 	const chatBody = new Message('div', {message: 'Chat Nav'});

@@ -19,7 +19,7 @@ abstract class Component {
 	eventBus: Function;
 	state: {[key:string|symbol]: any} = {};
 
-	constructor(tagName: string = 'div', propsAndChildren: {[key:string|symbol]: any} = {}, defaultClass: string = '') {
+	constructor(tagName = 'div', propsAndChildren: {[key:string|symbol]: any} = {}, defaultClass = '') {
 		const { children, props } = this._getChildren(propsAndChildren);
 		
 		const { attr = {} } = props;
@@ -52,8 +52,10 @@ abstract class Component {
 		eventBus.emit(Component.EVENTS.INIT);
 	}
 
-	_getChildren(propsAndChildren: {[key:string|symbol]: any}) {
-		let children: {[key:string|symbol]: Component} = {};
+	_getChildren(propsAndChildren: {[key:string|symbol]: any}): {
+		children: {[key: string|symbol]: Component}, props: {[key: string|symbol]: any}
+	} {
+		const children: {[key:string|symbol]: Component} = {};
 		const props: {[key:string|symbol]: any} = {};
 
 		Object.entries(propsAndChildren).forEach(([key, value]: [string, any]) => {
@@ -67,7 +69,7 @@ abstract class Component {
 		return { children, props };
 	}
 
-	_registerEvents(eventBus: EventBus) {
+	_registerEvents(eventBus: EventBus): void {
 		eventBus.on(Component.EVENTS.INIT, this.init.bind(this));
 		eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
 		eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
@@ -76,7 +78,7 @@ abstract class Component {
 		eventBus.on(Component.EVENTS.HIDE, this.hide.bind(this));
 	}
 
-	_addEvents() {
+	_addEvents(): void {
 		const {events = {}} = this.props;
 	
 		// console.log('_addEvents', events);
@@ -85,14 +87,14 @@ abstract class Component {
 		});
 	}
 
-	_removeEvents(){
+	_removeEvents(): void {
 		const {events = {}} = this.props;
 		Object.keys(events).forEach(eventName=>{
 			this._element.removeEventListener(eventName, events[eventName]);
 		})
 	}
 
-	addAtribute(){
+	addAtribute():void {
 		const { attr = {} } = this.props;
 		
 		Object.entries(attr).forEach(([key, value]: [string, any]) => {
@@ -102,49 +104,46 @@ abstract class Component {
 		});
 	}
 
-	_createResources() {
+	_createResources(): void {
 		const { tagName } = this._meta;
 		this._element = this._createDocumentElement(tagName);
 	}
 
-	init() {
+	init(): void {
 		this._createResources();
 		this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
 	}
 
-	_componentDidMount() {
+	_componentDidMount(): void {
 		this.componentDidMount();
 		Object.values(this.children).forEach(child => {
 			child.dispatchComponentDidMount();
 		});
 	}
 
-	componentDidMount(oldProps?: {[key:string|symbol]: any}): void {};
+	componentDidMount(oldProps?: {[key:string|symbol]: any}): void {}
 
-	dispatchComponentDidMount() {
+	dispatchComponentDidMount(): void {
 		this.eventBus().emit(Component.EVENTS.FLOW_CDM);
 	}
 
-	_componentDidUpdate(oldProps: {[key:string|symbol]: any}, newProps: {[key:string|symbol]: any}) {
+	_componentDidUpdate(oldProps: {[key:string|symbol]: any}, newProps: {[key:string|symbol]: any}): void {
 		const response = this.componentDidUpdate(oldProps, newProps);
 		if(response){
 			this._render();
 		}
 	}
 
-	componentDidUpdate(oldProps: {[key:string|symbol]: any}, newProps: {[key:string|symbol]: any}) {
-		// console.log(JSON.stringify(oldProps), '-', JSON.stringify(newProps));
-		const cdu: boolean = !this.compareProps(oldProps, newProps);
-		console.log('componentDidUpdate', cdu);
-		return cdu;
+	componentDidUpdate(oldProps: {[key:string|symbol]: any}, newProps: {[key:string|symbol]: any}): boolean {
+		return !this.compareProps(oldProps, newProps);
 	}
 
-	compareProps(oldProps: {[key: string]: any}, newProps: {[key: string]: any}){
+	compareProps(oldProps: {[key: string]: any}, newProps: {[key: string]: any}): boolean {
 		if(oldProps === newProps){
 			return true;
 		} else {
 			if(Object.keys(oldProps).length !== Object.keys(newProps).length) return false;
-			for (let prop in oldProps) {
+			for (const prop in oldProps) {
 				if (oldProps.hasOwnProperty(prop)) {
 					if(oldProps[prop] !== newProps[prop]) return false;
 				}
@@ -153,7 +152,7 @@ abstract class Component {
 		}
 	}
 
-	setProps = (nextProps: object) => {
+	setProps = (nextProps: object): void => {
 		if (!nextProps) {
 			return;
 		}
@@ -167,7 +166,7 @@ abstract class Component {
 		return this._element;
 	}
 
-	_render() {
+	_render(): void {
 		const block = this.render();
 
 		this._removeEvents();
@@ -183,11 +182,11 @@ abstract class Component {
 
 	abstract render():DocumentFragment;
 
-	getContent() {
+	getContent(): HTMLElement {
 		return this.element;
 	}
 
-	_makePropsProxy(props: {[key:string|symbol]: any}) {
+	_makePropsProxy(props: {[key:string|symbol]: any}): {[key:string|symbol]: any} {
 
 		const self = this;
 		const isPrivateProp = (prop: string|symbol) => (typeof prop === 'string' && prop.startsWith('_'));
@@ -219,20 +218,20 @@ abstract class Component {
 		});
 	}
 
-	_createDocumentElement(tagName: string) {
+	_createDocumentElement(tagName: string): HTMLElement {
 		
 		return document.createElement(tagName);
 	}
 
-	show() {
+	show(): void {
 		this.getContent().style.display = "block";
 	}
 
-	hide() {
+	hide(): void {
 		this.getContent().style.display = "none";
 	}
 
-	compile(template: Function, props?: {[key:string|symbol]: any}) {
+	compile(template: Function, props?: {[key:string|symbol]: any}): DocumentFragment {
 		if(props == null){
 			props = this.props;
 		}

@@ -1,4 +1,4 @@
-import Handlebars from 'handlebars';
+import * as Handlebars from 'handlebars';
 import Component from '../../utils/component';
 
 export default class List extends Component{

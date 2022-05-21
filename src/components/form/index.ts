@@ -14,7 +14,7 @@ export default class Form extends Component {
 		if(!propsAndChildren.events.keyup){
 			propsAndChildren.events.keyup = (e: Event)=>{
 				const {name, value, tagName} = <HTMLInputElement> e.target;
-				// console.log(e.target.name, e.target.value);
+				
 				if(name && tagName === 'INPUT'){
 					if(!this.state.form){
 						this.state.form = {};

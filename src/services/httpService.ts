@@ -93,7 +93,7 @@ let httpTran: HTTPTransport|null;
 
 export default function fetchWithRetry(url: string, options: {[key: string]: any}): Promise<string|Error> {
 	url = BASE_URL + url;
-	let retries = options && typeof options.retries === 'number' && options.retries > 1 ? options.retries : 5;
+	const retries = options && typeof options.retries === 'number' && options.retries > 1 ? options.retries : 5;
 	httpTran = httpTran || (httpTran = new HTTPTransport());
 	
 	return oneFetch(httpTran, url, options, retries);

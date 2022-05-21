@@ -47,7 +47,7 @@ export default function profile({readonly = true, changepassword = false}: {read
 	});
 	
 	const lineInputArr: Input[]|LineInput[] = fields.map(({type, label, name, valid, errorMsg}, i)=>{
-		let lineinput: FieldBlock = {label, input: inputArr[i]};
+		const lineinput: FieldBlock = {label, input: inputArr[i]};
 
 		if(!readonly){
 			const fieldvalid = (name==='confirm_password') ? function(){
@@ -98,6 +98,12 @@ export default function profile({readonly = true, changepassword = false}: {read
 				url: '/user/profile',
 				options: {
 					method: 'put'
+				},
+				resolve: (resp: string)=>{
+					console.log('resp='+typeof resp, resp);
+				},
+				reject: (err: Error)=>{
+					console.log('err='+typeof err, err);
 				}
 			}
 		},

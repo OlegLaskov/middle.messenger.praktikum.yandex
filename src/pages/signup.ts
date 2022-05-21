@@ -79,6 +79,12 @@ export default function signup(){
 				url: '/auth/signup',
 				options: {
 					method: 'post'
+				},
+				resolve: (resp: string)=>{
+					console.log('resp='+typeof resp, resp);
+				},
+				reject: (err: Error)=>{
+					console.log('err='+typeof err, err);
 				}
 			}
 		},
