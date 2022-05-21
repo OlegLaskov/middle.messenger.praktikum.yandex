@@ -20,14 +20,14 @@ export const errorMsg = {
 	display_name: 'Допустимы 3 имени через пробел (Имя Отчество Фамилия)'
 };
 
-type validFunction = () => boolean;
+type ValidFunction = () => boolean;
 
 export interface Field {
 	type: string,
 	name: string,
 	value?: string,
 	label?: string|null,
-	valid?: validFunction|RegExp,
+	valid?: ValidFunction|RegExp,
 	errorMsg?: string|null,
 	autocomplete?: string|null,
 }
@@ -35,6 +35,6 @@ export interface Field {
 export interface FieldBlock {
 	input: Component,
 	label?: string|null,
-	valid?: validFunction|RegExp,
+	valid?: ValidFunction|RegExp,
 	fieldErrorMsg?: string|null,
 }

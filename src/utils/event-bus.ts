@@ -1,18 +1,20 @@
+type ListnerFunction = (...args: object[]) => never;
+
 class EventBus {
-	listeners: {[key: string]: Function[]};
+	listeners: {[key: string]: ListnerFunction[]};
 	constructor() {
 		this.listeners = {};
 	}
 
-	on(event: string, callback: Function) {
-		if (!this.listeners.hasOwnProperty(event)) {
+	on(event: string, callback: ListnerFunction) {
+		if (!Object.prototype.hasOwnProperty.call(this.listeners, event)) {
 			this.listeners[event] = [];
 		}
 
 		this.listeners[event].push(callback);
 	}
 
-	off(event: string, callback: Function) {
+	off(event: string, callback: ListnerFunction) {
 		if (!this.listeners[event]) {
 			throw new Error(`Нет события: ${event}`);
 		}

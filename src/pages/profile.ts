@@ -8,7 +8,8 @@ import LeftNav from '../components/leftnav';
 import Avatar from '../components/avatar';
 import Component from '../utils/component';
 
-export default function profile({readonly = true, changepassword = false}: {readonly: boolean, changepassword?: boolean}): Component{
+export default function profile({readonly = true, changepassword = false}: 
+	{readonly: boolean, changepassword?: boolean}): Component{
 
 	const classAvatar: string = readonly ? 'avatar avatar__changable' : 'avatar';
 
@@ -30,12 +31,18 @@ export default function profile({readonly = true, changepassword = false}: {read
 			{type: 'hidden', name: 'login', value: 'ivanivanov', autocomplete: 'login'},
 		]
 		: [
-			{type: 'text', label: 'Почта', name: 'email', value: 'pochta@yandex.ru', valid: regExp.email, errorMsg: errorMsg.email},
-			{type: 'text', label: 'Логин', name: 'login', value: 'ivanivanov', valid: regExp.login, errorMsg: errorMsg.login},
-			{type: 'text', label: 'Имя', name: 'first_name', value: 'Иван', valid: regExp.name, errorMsg: errorMsg.name},
-			{type: 'text', label: 'Фамилия', name: 'second_name', value: 'Иванов', valid: regExp.name, errorMsg: errorMsg.name},
-			{type: 'text', label: 'Имя в чате', name: 'display_name', value: 'Иван', valid: regExp.display_name, errorMsg: errorMsg.display_name},
-			{type: 'text', label: 'Телефон', name: 'phone', value: '+7 909 967 3030', valid: regExp.phone, errorMsg: errorMsg.phone},
+			{type: 'text', label: 'Почта', name: 'email', value: 'pochta@yandex.ru', 
+				valid: regExp.email, errorMsg: errorMsg.email},
+			{type: 'text', label: 'Логин', name: 'login', value: 'ivanivanov', 
+				valid: regExp.login, errorMsg: errorMsg.login},
+			{type: 'text', label: 'Имя', name: 'first_name', value: 'Иван', 
+				valid: regExp.name, errorMsg: errorMsg.name},
+			{type: 'text', label: 'Фамилия', name: 'second_name', value: 'Иванов', 
+				valid: regExp.name, errorMsg: errorMsg.name},
+			{type: 'text', label: 'Имя в чате', name: 'display_name', value: 'Иван', 
+				valid: regExp.display_name, errorMsg: errorMsg.display_name},
+			{type: 'text', label: 'Телефон', name: 'phone', value: '+7 909 967 3030', 
+				valid: regExp.phone, errorMsg: errorMsg.phone},
 		];
 	
 	const inputArr: Input[] = fields.map(({type, name, value, autocomplete}, i: number)=>{
@@ -51,7 +58,8 @@ export default function profile({readonly = true, changepassword = false}: {read
 
 		if(!readonly){
 			const fieldvalid = (name==='confirm_password') ? function(){
-				return (<HTMLInputElement> inputArr[1]._element).value === (<HTMLInputElement> inputArr[2]._element).value;
+				return (<HTMLInputElement> 
+					inputArr[1]._element).value === (<HTMLInputElement> inputArr[2]._element).value;
 			} : valid;
 			lineinput.valid = fieldvalid; 
 			lineinput.fieldErrorMsg = errorMsg;
@@ -64,7 +72,8 @@ export default function profile({readonly = true, changepassword = false}: {read
 			);
 	});
 	
-	const inputObj: {[key: string|symbol]: Input|LineInput} = fields.reduce((obj: {[key:string|symbol]: Input|LineInput}, field, i)=>{
+	const inputObj: {[key: string|symbol]: Input|LineInput} = fields.reduce(
+		(obj: {[key:string|symbol]: Input|LineInput}, field, i) => {
 		obj[field.name] = lineInputArr[i];
 		return obj;
 	}, {});

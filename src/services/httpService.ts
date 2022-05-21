@@ -10,9 +10,8 @@ const BASE_URL = 'https://ya-praktikum.tech/api/v2';
 function queryStringify(data: {[key: string]: string|number|boolean}): string {
 	const arr: string[] = [];
 	for (const key in data) {
-		if (data.hasOwnProperty(key)) {
+		if (Object.prototype.hasOwnProperty.call(data, key)) {
 			arr.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
-			arr.push(key + '=' + data[key]);
 		}
 	}
 	return arr.length ? '?' + arr.join('&') : '';
@@ -54,7 +53,7 @@ class HTTPTransport {
 			!headers['Content-Type'] && (headers['content-type'] = 'application/json');
 
 			for (const key in headers) {
-				if (headers.hasOwnProperty(key)) {
+				if (Object.prototype.hasOwnProperty.call(headers, key)) {
 					xhr.setRequestHeader(key, headers[key]);
 				}
 			}
@@ -77,7 +76,8 @@ class HTTPTransport {
 	};
 }
 
-async function oneFetch(httpTran: HTTPTransport, url: string, options: {[key: string]: any}, retries: number): Promise<string|Error> {
+async function oneFetch(httpTran: HTTPTransport, url: string, options: {[key: string]: any}): Promise<string|Error> {
+	let {retries} = options;
 	try{
 		const data: XMLHttpRequest = await httpTran.request(url, options, options.timeout);
 		return data.response;
@@ -85,7 +85,8 @@ async function oneFetch(httpTran: HTTPTransport, url: string, options: {[key: st
 		if(retries === 1){
 			return e;
 		}
-		return oneFetch(httpTran, url, options, retries - 1);
+		options.reties = --retries;
+		return oneFetch(httpTran, url, options);
 	}
 }
 
@@ -95,7 +96,8 @@ export default function fetchWithRetry(url: string, options: {[key: string]: any
 	url = BASE_URL + url;
 	const retries = options && typeof options.retries === 'number' && options.retries > 1 ? options.retries : 5;
 	httpTran = httpTran || (httpTran = new HTTPTransport());
+	options.reties = retries;
 	
-	return oneFetch(httpTran, url, options, retries);
+	return oneFetch(httpTran, url, options);
 }
 

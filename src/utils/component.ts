@@ -121,7 +121,7 @@ abstract class Component {
 		});
 	}
 
-	componentDidMount(oldProps?: {[key:string|symbol]: any}): void {}
+	componentDidMount(): void {}
 
 	dispatchComponentDidMount(): void {
 		this.eventBus().emit(Component.EVENTS.FLOW_CDM);

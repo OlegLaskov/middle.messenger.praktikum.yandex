@@ -45,7 +45,7 @@ const inputArr: Input[] = fields.map(({type, name, autocomplete})=>{
 
 const inputBlockArr: InputBlock[] = fields.map(({name, label, valid, errorMsg}, i)=>{
 	const fieldvalid = (name==='confirm_password') ? function(){
-		return (<HTMLInputElement> inputArr[5]._element).value===(<HTMLInputElement> inputArr[6]._element).value;
+		return (<HTMLInputElement> inputArr[5]._element).value === (<HTMLInputElement> inputArr[6]._element).value;
 	} : valid;
 
 	return new InputBlock(
@@ -54,13 +54,18 @@ const inputBlockArr: InputBlock[] = fields.map(({name, label, valid, errorMsg}, 
 		);
 });
 
-const inputObj: {[key: string|symbol]: InputBlock} = fields.reduce((obj: {[key:string|symbol]: InputBlock}, field, i)=>{
+const inputObj: {[key: string|symbol]: InputBlock} = fields.reduce(
+	(obj: {[key:string|symbol]: InputBlock}, field, i) => {
 	obj[field.name] = inputBlockArr[i];
 	return obj;
 }, {});
 
 const inputs: List = new List('div', inputObj);
-const button: Button = new Button('button',{attr: {type: 'submit', name: 'Sign up', class: ''}, label: 'Зарегистрироваться'});
+const button: Button = new Button(
+	'button', 
+	{attr: {type: 'submit', name: 'Sign up', class: ''}, 
+	label: 'Зарегистрироваться'}
+);
 
 export default function signup(){
 
