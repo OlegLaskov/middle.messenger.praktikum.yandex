@@ -1,4 +1,4 @@
-{
+module.exports = {
 	"compilerOptions": {
 		"module": "commonjs",
 		"noImplicitAny": true,
@@ -11,5 +11,5 @@
 		"target": "es5",
 	},
 	"include": ["src/**/*"],
-  	"exclude": ["node_modules", "**/*.spec.ts", "**/*.hbs"]
+	"exclude": ["node_modules", "**/*.spec.ts", "**/*.hbs"]
 }
