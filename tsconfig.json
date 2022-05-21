@@ -1,4 +1,4 @@
-module.exports = {
+{
 	"compilerOptions": {
 		"module": "commonjs",
 		"noImplicitAny": true,
