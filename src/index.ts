@@ -1,14 +1,13 @@
 import {default as renderDOM} from './utils/render';
+import main from './pages/main';
 import login from './pages/login';
 import signup from './pages/signup';
 import profile from './pages/profile';
-import error from './pages/error.hbs';
-import chat from './pages/chat.hbs';
+import error from './pages/error';
+import Component from './utils/component';
 import './style.scss';
-import link from './components/link';
-import main from './pages/main';
 
-const data = {
+const data: {[key: string]: Component|string} = {
 	'/': login(),
 	'/signup': signup(),
 	'/profile': profile({readonly: true}),
@@ -34,5 +33,5 @@ const data = {
 
 };
 
-const page = data[window.location.pathname] || data['/error404'];
+const page: Component|string = data[window.location.pathname] || data['/error404'];
 renderDOM('#root', page);

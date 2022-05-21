@@ -3,9 +3,9 @@ import Input from '../components/input';
 import List from '../components/list';
 import InputBlock from '../components/inputBlock';
 import Button from '../components/button';
-import {regExp, errorMsg} from '../utils/validationConst';
+import {regExp, errorMsg, Field} from '../utils/validationConst';
 
-const fields = [
+const fields: Field[] = [
 	{
 		type: 'email', name: 'email', label: 'Почта', autocomplete: 'email', 
 		valid: regExp.email, errorMsg: errorMsg.email
@@ -36,16 +36,16 @@ const fields = [
 	},
 ];
 
-const inputArr = fields.map(({type, name, autocomplete})=>{
+const inputArr: Input[] = fields.map(({type, name, autocomplete})=>{
 	return new Input(
 		'input', 
 		{attr: {type, id: name, name, placeholder: ' ', autocomplete}}
 		);
 });
 
-const inputBlockArr = fields.map(({name, label, valid, errorMsg}, i)=>{
+const inputBlockArr: InputBlock[] = fields.map(({name, label, valid, errorMsg}, i)=>{
 	const fieldvalid = (name==='confirm_password') ? function(){
-		return inputArr[5]._element.value===inputArr[6]._element.value;
+		return (<HTMLInputElement> inputArr[5]._element).value===(<HTMLInputElement> inputArr[6]._element).value;
 	} : valid;
 
 	return new InputBlock(
@@ -54,13 +54,13 @@ const inputBlockArr = fields.map(({name, label, valid, errorMsg}, i)=>{
 		);
 });
 
-const inputObj = fields.reduce((obj, field, i)=>{
+const inputObj: {[key: string|symbol]: InputBlock} = fields.reduce((obj: {[key:string|symbol]: InputBlock}, field, i)=>{
 	obj[field.name] = inputBlockArr[i];
 	return obj;
 }, {});
 
-const inputs = new List('div', inputObj);
-const button = new Button('button',{attr: {type: 'submit', name: 'Sign up', class: ''}, label: 'Зарегистрироваться'});
+const inputs: List = new List('div', inputObj);
+const button: Button = new Button('button',{attr: {type: 'submit', name: 'Sign up', class: ''}, label: 'Зарегистрироваться'});
 
 export default function signup(){
 

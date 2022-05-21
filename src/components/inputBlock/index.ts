@@ -1,24 +1,15 @@
-/* import Handlebars from 'handlebars';
-import tmpl from './lineinput.hbs';
-import './lineinput.scss';
-
-Handlebars.registerPartial('lineinput', tmpl);
-
-export default ({field, value, type, name, placeholder, class1, class2, class3}) => 
-	{return tmpl({field, value, type, name, placeholder, class1, class2, class3})}; */
-
-import tmpl from './lineinput.hbs';
+import tmpl from './inputBlock.hbs';
 import Component from '../../utils/component';
-import './lineinput.scss';
+import './inputBlock.scss';
 
-export default class LineInput extends Component{
-	constructor(tagName = "div", propsAndChildren = {}, defaultClass = 'form__group'){
+export default class InputBlock extends Component{
+	constructor(tagName = "div", propsAndChildren: {[key:string|symbol]: any} = {}, defaultClass = 'form__group'){
 
 		if(!propsAndChildren.events){
 			propsAndChildren.events = {};
 		}
 		if(!propsAndChildren.events.focusout && propsAndChildren.valid){
-			propsAndChildren.events.focusout = (e)=>{
+			propsAndChildren.events.focusout = (e: Event)=>{
 				this.eventBus().emit('validation', e);
 			};
 		}
@@ -26,14 +17,16 @@ export default class LineInput extends Component{
 		super(tagName, propsAndChildren, defaultClass);
 		this.eventBus().on('validation', this.validation.bind(this));
 	}
+
+	isValid: boolean;
+
 	validation(e={target: this.children.input._element}){
-		const {name, value} = e.target;
+		const {name, value} = <HTMLInputElement> e.target;
 		if(name){
 			const {valid} = this.props;
-			this.isValid = null;
 			
 			if(valid){
-				
+				this.isValid = false;
 				if(typeof valid !== 'function'){
 					this.isValid = !!value.match(valid);
 				} else {

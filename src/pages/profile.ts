@@ -3,23 +3,23 @@ import Input from '../components/input';
 import List from '../components/list';
 import LineInput from '../components/lineinput';
 import Button from '../components/button';
-import {regExp, errorMsg} from '../utils/validationConst';
+import {regExp, errorMsg, Field, FieldBlock} from '../utils/validationConst';
 import LeftNav from '../components/leftnav';
 import Avatar from '../components/avatar';
+import Component from '../utils/component';
 
+export default function profile({readonly = true, changepassword = false}: {readonly: boolean, changepassword?: boolean}): Component{
 
-export default function profile({readonly = true, changepassword = false} = {}){
+	const classAvatar: string = readonly ? 'avatar avatar__changable' : 'avatar';
 
-	const classAvatar = readonly ? 'avatar avatar__changable' : 'avatar';
-
-	const avatarProps = readonly ? {changephoto: 'changephoto'} : {};
-	const avatar = new Avatar(
+	const avatarProps: {[key: string]: string} = readonly ? {changephoto: 'changephoto'} : {};
+	const avatar: Avatar = new Avatar(
 		'div',
 		avatarProps,
 		classAvatar
 	);
 	
-	const fields = changepassword ?
+	const fields: Field[] = changepassword ?
 		[
 			{type: 'password', label: 'Старый\u00A0пароль', name: 'current_password', value: '', 
 			valid: regExp.password, errorMsg: errorMsg.password, autocomplete: 'current-password'},
@@ -27,7 +27,7 @@ export default function profile({readonly = true, changepassword = false} = {}){
 			valid: regExp.password, errorMsg: errorMsg.password, autocomplete: 'new-password'},
 			{type: 'password', label: 'Повторите\u00A0новый\u00A0пароль', name: 'confirm_password', 
 			value: '', valid: regExp.password, errorMsg: errorMsg.password, autocomplete: 'new-password'},
-			{type: 'hidden', name: 'login', value: 'ivanivanov', autocomplete: 'login', valid: null},
+			{type: 'hidden', name: 'login', value: 'ivanivanov', autocomplete: 'login'},
 		]
 		: [
 			{type: 'text', label: 'Почта', name: 'email', value: 'pochta@yandex.ru', valid: regExp.email, errorMsg: errorMsg.email},
@@ -38,7 +38,7 @@ export default function profile({readonly = true, changepassword = false} = {}){
 			{type: 'text', label: 'Телефон', name: 'phone', value: '+7 909 967 3030', valid: regExp.phone, errorMsg: errorMsg.phone},
 		];
 	
-	const inputArr = fields.map(({type, name, value, autocomplete}, i)=>{
+	const inputArr: Input[] = fields.map(({type, name, value, autocomplete}, i: number)=>{
 		return new Input(
 			'input', 
 			{attr: {type, id: name, name, value, readonly, autocomplete, autofocus: i===0}},
@@ -46,12 +46,12 @@ export default function profile({readonly = true, changepassword = false} = {}){
 			);
 	});
 	
-	const lineInputArr = fields.map(({type, label, name, valid, errorMsg}, i)=>{
-		let lineinput = {label, input: inputArr[i]};
+	const lineInputArr: Input[]|LineInput[] = fields.map(({type, label, name, valid, errorMsg}, i)=>{
+		let lineinput: FieldBlock = {label, input: inputArr[i]};
 
 		if(!readonly){
 			const fieldvalid = (name==='confirm_password') ? function(){
-				return inputArr[1]._element.value===inputArr[2]._element.value;
+				return (<HTMLInputElement> inputArr[1]._element).value === (<HTMLInputElement> inputArr[2]._element).value;
 			} : valid;
 			lineinput.valid = fieldvalid; 
 			lineinput.fieldErrorMsg = errorMsg;
@@ -64,27 +64,27 @@ export default function profile({readonly = true, changepassword = false} = {}){
 			);
 	});
 	
-	const inputObj = fields.reduce((obj, field, i)=>{
+	const inputObj: {[key: string|symbol]: Input|LineInput} = fields.reduce((obj: {[key:string|symbol]: Input|LineInput}, field, i)=>{
 		obj[field.name] = lineInputArr[i];
 		return obj;
 	}, {});
 	
-	const inputs = new List('div', inputObj);
+	const inputs: List = new List('div', inputObj);
 
-	const button = readonly ? null 
+	const button: Button|null = readonly ? null 
 		: new Button(
 			'button', 
 			{attr: {type: 'submit', name: 'save'}, label: 'Сохранить'},
 			'form__button form__button__w250'
 		);
 
-	const links = readonly ? [
+	const links: {[key: string]: string}[]|null = readonly ? [
 			{href: '/changeprofile', class0: 'link__to_left', class1: '', label: 'Изменить данные'},
 			{href: '/changepassword', class0: 'link__to_left', class1: '', label: 'Изменить пароль'},
-			{href: '/login', class0: 'link__to_left', class1: 'color-red', label: 'Выйти'},
+			{href: '/', class0: 'link__to_left', class1: 'color-red', label: 'Выйти'},
 		] : null;
 	
-	const form = new Form(
+	const form: Form = new Form(
 		'main', 
 		{
 			formClass: 'profile',
@@ -94,11 +94,17 @@ export default function profile({readonly = true, changepassword = false} = {}){
 			inputs,
 			button,
 			links,
+			request: {
+				url: '/user/profile',
+				options: {
+					method: 'put'
+				}
+			}
 		},
 		'container-profile'
 	);
 	
-	const leftnav = new LeftNav();
+	const leftnav: LeftNav = new LeftNav();
 
 	return new List(
 		'div', 

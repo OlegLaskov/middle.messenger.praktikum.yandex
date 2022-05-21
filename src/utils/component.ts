@@ -1,8 +1,7 @@
 import EventBus from './event-bus';
-import Handlebars from 'handlebars';
 import {v4 as makeUUID} from 'uuid';
 
-class Component {
+abstract class Component {
 	static EVENTS = {
 		INIT: 'init',
 		FLOW_CDM: 'flow:component-did-mount',
@@ -12,18 +11,15 @@ class Component {
 		HIDE: 'hide',
 	};
 
-	_element = null;
-	_meta = null;
-	id = null;
-	state = {};
+	_element: HTMLElement;
+	_meta: {tagName: string, props: object};
+	id: string;
+	props: {[key:string|symbol]: any};
+	children: {[key:string]: Component};
+	eventBus: Function;
+	state: {[key:string|symbol]: any} = {};
 
-	/** JSDoc
-	 * @param {string} tagName
-	 * @param {Object} props
-	 *
-	 * @returns {void}
-	 */
-	constructor(tagName = "div", propsAndChildren = {}, defaultClass = '') {
+	constructor(tagName: string = 'div', propsAndChildren: {[key:string|symbol]: any} = {}, defaultClass: string = '') {
 		const { children, props } = this._getChildren(propsAndChildren);
 		
 		const { attr = {} } = props;
@@ -56,11 +52,11 @@ class Component {
 		eventBus.emit(Component.EVENTS.INIT);
 	}
 
-	_getChildren(propsAndChildren) {
-		const children = {};
-		const props = {};
+	_getChildren(propsAndChildren: {[key:string|symbol]: any}) {
+		let children: {[key:string|symbol]: Component} = {};
+		const props: {[key:string|symbol]: any} = {};
 
-		Object.entries(propsAndChildren).forEach(([key, value]) => {
+		Object.entries(propsAndChildren).forEach(([key, value]: [string, any]) => {
 			if (value instanceof Component) {
 				children[key] = value;
 			} else {
@@ -71,7 +67,7 @@ class Component {
 		return { children, props };
 	}
 
-	_registerEvents(eventBus) {
+	_registerEvents(eventBus: EventBus) {
 		eventBus.on(Component.EVENTS.INIT, this.init.bind(this));
 		eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
 		eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
@@ -99,8 +95,7 @@ class Component {
 	addAtribute(){
 		const { attr = {} } = this.props;
 		
-		Object.entries(attr).forEach(([key, value]) => {
-			key === 'readonly' && console.log({key, value});
+		Object.entries(attr).forEach(([key, value]: [string, any]) => {
 			if(value !== false){
 				this._element.setAttribute(key, value);
 			}
@@ -124,27 +119,27 @@ class Component {
 		});
 	}
 
-	componentDidMount(oldProps) {}
+	componentDidMount(oldProps?: {[key:string|symbol]: any}): void {};
 
 	dispatchComponentDidMount() {
 		this.eventBus().emit(Component.EVENTS.FLOW_CDM);
 	}
 
-	_componentDidUpdate(oldProps, newProps) {
+	_componentDidUpdate(oldProps: {[key:string|symbol]: any}, newProps: {[key:string|symbol]: any}) {
 		const response = this.componentDidUpdate(oldProps, newProps);
 		if(response){
 			this._render();
 		}
 	}
 
-	componentDidUpdate(oldProps, newProps) {
+	componentDidUpdate(oldProps: {[key:string|symbol]: any}, newProps: {[key:string|symbol]: any}) {
 		// console.log(JSON.stringify(oldProps), '-', JSON.stringify(newProps));
-		const cdu = !this.compareProps(oldProps, newProps);
+		const cdu: boolean = !this.compareProps(oldProps, newProps);
 		console.log('componentDidUpdate', cdu);
 		return cdu;
 	}
 
-	compareProps(oldProps, newProps){
+	compareProps(oldProps: {[key: string]: any}, newProps: {[key: string]: any}){
 		if(oldProps === newProps){
 			return true;
 		} else {
@@ -158,11 +153,11 @@ class Component {
 		}
 	}
 
-	setProps = nextProps => {
+	setProps = (nextProps: object) => {
 		if (!nextProps) {
 			return;
 		}
-		const oldProps = {};
+		const oldProps: {[key:string|symbol]: any} = {};
 		Object.assign(oldProps, this.props);
 		Object.assign(this.props, nextProps);
 		this._componentDidUpdate(oldProps, this.props);
@@ -186,16 +181,16 @@ class Component {
 		this.addAtribute();
 	}
 
-	render() {}
+	abstract render():DocumentFragment;
 
 	getContent() {
 		return this.element;
 	}
 
-	_makePropsProxy(props) {
+	_makePropsProxy(props: {[key:string|symbol]: any}) {
 
 		const self = this;
-		const isPrivateProp = prop => prop.startsWith('_');
+		const isPrivateProp = (prop: string|symbol) => (typeof prop === 'string' && prop.startsWith('_'));
 
 		return new Proxy(props, {
 			get(target, prop) {
@@ -203,7 +198,7 @@ class Component {
 					console.log('get:', target, prop);
 					throw new Error("Нет доступа");
 				} else {
-					const value = target[prop];
+					const value: any = target[prop];
 					return typeof value === 'function' ? value.bind(target) : value;
 				}
 			},
@@ -224,7 +219,7 @@ class Component {
 		});
 	}
 
-	_createDocumentElement(tagName) {
+	_createDocumentElement(tagName: string) {
 		
 		return document.createElement(tagName);
 	}
@@ -237,15 +232,15 @@ class Component {
 		this.getContent().style.display = "none";
 	}
 
-	compile(template, props) {
+	compile(template: Function, props?: {[key:string|symbol]: any}) {
 		if(props == null){
 			props = this.props;
 		}
-		const propsAndStubs = { ...props };
+		const propsAndStubs: {[key:string|symbol]: any} = { ...props };
 		Object.entries(this.children).forEach(([key, child]) => {
 			propsAndStubs[key] = `<div data-id="${child.id}"></div>`
 		});
-		const fragment = this._createDocumentElement('template');
+		const fragment: HTMLTemplateElement = <HTMLTemplateElement> this._createDocumentElement('template');
 		fragment.innerHTML = template(propsAndStubs);
 
 		Object.values(this.children).forEach(child => {

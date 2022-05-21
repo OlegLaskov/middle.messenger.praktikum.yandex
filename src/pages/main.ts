@@ -1,8 +1,9 @@
 import Input from '../components/input';
 import List from '../components/list';
 import Message from '../components/message';
+import Component from '../utils/component';
 
-export default function main(){
+export default function main(): Component {
 
 	const linkProfile = new Message(
 		'a',
@@ -58,7 +59,7 @@ export default function main(){
 		'nav'
 	);
 
-	const selectedChat = null;
+	let selectedChat = null;
 
 	const chatNav = new Message('div', {message: 'Chat Nav'});
 	const chatBody = new Message('div', {message: 'Chat Nav'});

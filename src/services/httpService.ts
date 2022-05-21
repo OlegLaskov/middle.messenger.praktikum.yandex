@@ -7,8 +7,8 @@ const METHODS = {
 
 const BASE_URL = 'https://ya-praktikum.tech/api/v2';
 
-function queryStringify(data) {
-	const arr = [];
+function queryStringify(data: {[key: string]: string|number|boolean}): string {
+	const arr: string[] = [];
 	for (const key in data) {
 		if (data.hasOwnProperty(key)) {
 			arr.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
@@ -19,30 +19,31 @@ function queryStringify(data) {
 }
 
 class HTTPTransport {
-	get = (url, options = {}) => {
+	get = (url: string, options: {[key: string]: any} = {}) => {
 		if(options.data){
 			url += queryStringify(options.data);
 			delete options.data;
 		}
-		return this.request(url, {...options, method: METHODS.GET}, options.timeout);
+		options.method = METHODS.GET;
+		return this.request(url, options, options.timeout);
 	};
 
 	// PUT, POST, DELETE
 	// options:
 	// headers — obj
 	// data — obj
-	post = (url, options = {}) => {
+	post = (url: string, options: {[key: string]: any} = {}) => {
 		return this.request(url, {...options, method: METHODS.POST}, options.timeout);
 	};
-	put = (url, options = {}) => {
+	put = (url: string, options: {[key: string]: any} = {}) => {
 		return this.request(url, {...options, method: METHODS.PUT}, options.timeout);
 	};
-	delete = (url, options = {}) => {
+	delete = (url: string, options: {[key: string]: any} = {}) => {
 		return this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
 	};
 
 
-	request = (url, options, timeout ) => {
+	request = (url: string, options: {[key: string]: any}, timeout: number ): Promise<XMLHttpRequest> => {
 		const {method, data, headers={}} = options;
 
 		return new Promise((resolve, reject) => {
@@ -76,9 +77,9 @@ class HTTPTransport {
 	};
 }
 
-async function oneFetch(httpTran, url, options, retries){
+async function oneFetch(httpTran: HTTPTransport, url: string, options: {[key: string]: any}, retries: number): Promise<string|Error> {
 	try{
-		const data = await httpTran.request(url, options, options.timeout);
+		const data: XMLHttpRequest = await httpTran.request(url, options, options.timeout);
 		return data.response;
 	} catch (e){
 		if(retries === 1){
@@ -88,9 +89,9 @@ async function oneFetch(httpTran, url, options, retries){
 	}
 }
 
-let httpTran;
+let httpTran: HTTPTransport|null;
 
-export default function fetchWithRetry(url, options) {
+export default function fetchWithRetry(url: string, options: {[key: string]: any}): Promise<string|Error> {
 	url = BASE_URL + url;
 	let retries = options && typeof options.retries === 'number' && options.retries > 1 ? options.retries : 5;
 	httpTran = httpTran || (httpTran = new HTTPTransport());

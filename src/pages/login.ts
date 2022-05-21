@@ -22,13 +22,13 @@ const inputArr = fields.map(({type, name, autocomplete})=>{
 const inputBlockArr = fields.map(({name, label, valid, errorMsg}, i)=>{
 	return new InputBlock('div', {name, label, input: inputArr[i], valid, fieldErrorMsg: errorMsg});
 });
-const inputObj = fields.reduce((obj, field, i)=>{
+const inputObj = fields.reduce((obj: {[key:string|symbol]: any}, field, i)=>{
 	obj[field.name] = inputBlockArr[i];
 	return obj;
 }, {});
 
 const inputs = new List('div', inputObj);
-const button = new Button('button',{attr: {type: 'submit', name: 'Sign in', class: ''}, label: 'Войти'});
+const button = new Button('button', {attr: {type: 'submit', name: 'Sign in', class: ''}, label: 'Войти'});
 
 export default function login(){
 	
@@ -48,8 +48,8 @@ export default function login(){
 				options: {
 					method: 'post'
 				},
-				resolve: resp=>{
-					console.log('resp=', resp);
+				resolve: (resp: string)=>{
+					console.log('resp='+typeof resp, resp);
 					if(resp.toUpperCase() === 'OK'){
 						// Авторизован -> redirect to Main Page
 					} else {
@@ -57,8 +57,8 @@ export default function login(){
 						console.log('res', res, this);
 					}
 				},
-				reject: err=>{
-					console.log('err=', err);
+				reject: (err: Error)=>{
+					console.log('err='+typeof err, err);
 				}
 			}
 		},
