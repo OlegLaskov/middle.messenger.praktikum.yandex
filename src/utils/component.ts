@@ -11,8 +11,8 @@ abstract class Component {
 		HIDE: 'hide',
 	};
 
-	_element: HTMLElement;
-	_meta: {tagName: string, props: object};
+	private _element: HTMLElement;
+	private _meta: {tagName: string, props: object};
 	id: string;
 	props: {[key:string|symbol]: any};
 	children: {[key:string]: Component};
@@ -52,7 +52,7 @@ abstract class Component {
 		eventBus.emit(Component.EVENTS.INIT);
 	}
 
-	_getChildren(propsAndChildren: {[key:string|symbol]: any}): {
+	private _getChildren(propsAndChildren: {[key:string|symbol]: any}): {
 		children: {[key: string|symbol]: Component}, props: {[key: string|symbol]: any}
 	} {
 		const children: {[key:string|symbol]: Component} = {};
@@ -69,7 +69,7 @@ abstract class Component {
 		return { children, props };
 	}
 
-	_registerEvents(eventBus: EventBus): void {
+	private _registerEvents(eventBus: EventBus): void {
 		eventBus.on(Component.EVENTS.INIT, this.init.bind(this));
 		eventBus.on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
 		eventBus.on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
@@ -78,7 +78,7 @@ abstract class Component {
 		eventBus.on(Component.EVENTS.HIDE, this.hide.bind(this));
 	}
 
-	_addEvents(): void {
+	private _addEvents(): void {
 		const {events = {}} = this.props;
 	
 		// console.log('_addEvents', events);
@@ -87,7 +87,7 @@ abstract class Component {
 		});
 	}
 
-	_removeEvents(): void {
+	private _removeEvents(): void {
 		const {events = {}} = this.props;
 		Object.keys(events).forEach(eventName=>{
 			this._element.removeEventListener(eventName, events[eventName]);
@@ -104,7 +104,7 @@ abstract class Component {
 		});
 	}
 
-	_createResources(): void {
+	private _createResources(): void {
 		const { tagName } = this._meta;
 		this._element = this._createDocumentElement(tagName);
 	}
@@ -114,20 +114,20 @@ abstract class Component {
 		this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
 	}
 
-	_componentDidMount(): void {
+	private _componentDidMount(): void {
 		this.componentDidMount();
 		Object.values(this.children).forEach(child => {
 			child.dispatchComponentDidMount();
 		});
 	}
 
-	componentDidMount(): void {}
+	componentDidMount(): void {} // eslint-disable-line
 
 	dispatchComponentDidMount(): void {
 		this.eventBus().emit(Component.EVENTS.FLOW_CDM);
 	}
 
-	_componentDidUpdate(oldProps: {[key:string|symbol]: any}, newProps: {[key:string|symbol]: any}): void {
+	private _componentDidUpdate(oldProps: {[key:string|symbol]: any}, newProps: {[key:string|symbol]: any}): void {
 		const response = this.componentDidUpdate(oldProps, newProps);
 		if(response){
 			this._render();
@@ -166,7 +166,7 @@ abstract class Component {
 		return this._element;
 	}
 
-	_render(): void {
+	private _render(): void {
 		const block = this.render();
 
 		this._removeEvents();
@@ -180,14 +180,15 @@ abstract class Component {
 		this.addAtribute();
 	}
 
-	abstract render():DocumentFragment;
+	abstract render(): DocumentFragment;
 
 	getContent(): HTMLElement {
 		return this.element;
 	}
 
-	_makePropsProxy(props: {[key:string|symbol]: any}): {[key:string|symbol]: any} {
+	private _makePropsProxy(props: {[key:string|symbol]: any}): {[key:string|symbol]: any} {
 
+		// eslint-disable-next-line @typescript-eslint/no-this-alias
 		const self = this;
 		const isPrivateProp = (prop: string|symbol) => (typeof prop === 'string' && prop.startsWith('_'));
 
@@ -218,7 +219,7 @@ abstract class Component {
 		});
 	}
 
-	_createDocumentElement(tagName: string): HTMLElement {
+	private _createDocumentElement(tagName: string): HTMLElement {
 		
 		return document.createElement(tagName);
 	}

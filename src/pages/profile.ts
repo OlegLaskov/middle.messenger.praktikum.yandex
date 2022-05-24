@@ -3,7 +3,7 @@ import Input from '../components/input';
 import List from '../components/list';
 import LineInput from '../components/lineinput';
 import Button from '../components/button';
-import {regExp, errorMsg, Field, FieldBlock} from '../utils/validationConst';
+import {REG_EXP, ERROR_MSG, Field, FieldBlock} from '../utils/validationConst';
 import LeftNav from '../components/leftnav';
 import Avatar from '../components/avatar';
 import Component from '../utils/component';
@@ -23,32 +23,32 @@ export default function profile({readonly = true, changepassword = false}:
 	const fields: Field[] = changepassword ?
 		[
 			{type: 'password', label: 'Старый\u00A0пароль', name: 'current_password', value: '', 
-			valid: regExp.password, errorMsg: errorMsg.password, autocomplete: 'current-password'},
+			valid: REG_EXP.PASSWORD, errorMsg: ERROR_MSG.PASSWORD, autocomplete: 'current-password'},
 			{type: 'password', label: 'Новый\u00A0пароль', name: 'new_password', value: '', 
-			valid: regExp.password, errorMsg: errorMsg.password, autocomplete: 'new-password'},
+			valid: REG_EXP.PASSWORD, errorMsg: ERROR_MSG.PASSWORD},
 			{type: 'password', label: 'Повторите\u00A0новый\u00A0пароль', name: 'confirm_password', 
-			value: '', valid: regExp.password, errorMsg: errorMsg.password, autocomplete: 'new-password'},
+			value: '', valid: REG_EXP.PASSWORD, errorMsg: ERROR_MSG.CONFIRM_NEW_PASSWORD},
 			{type: 'hidden', name: 'login', value: 'ivanivanov', autocomplete: 'login'},
 		]
 		: [
 			{type: 'text', label: 'Почта', name: 'email', value: 'pochta@yandex.ru', 
-				valid: regExp.email, errorMsg: errorMsg.email},
+				valid: REG_EXP.EMAIL, errorMsg: ERROR_MSG.EMAIL},
 			{type: 'text', label: 'Логин', name: 'login', value: 'ivanivanov', 
-				valid: regExp.login, errorMsg: errorMsg.login},
+				valid: REG_EXP.LOGIN, errorMsg: ERROR_MSG.LOGIN},
 			{type: 'text', label: 'Имя', name: 'first_name', value: 'Иван', 
-				valid: regExp.name, errorMsg: errorMsg.name},
+				valid: REG_EXP.NAME, errorMsg: ERROR_MSG.NAME},
 			{type: 'text', label: 'Фамилия', name: 'second_name', value: 'Иванов', 
-				valid: regExp.name, errorMsg: errorMsg.name},
+				valid: REG_EXP.NAME, errorMsg: ERROR_MSG.NAME},
 			{type: 'text', label: 'Имя в чате', name: 'display_name', value: 'Иван', 
-				valid: regExp.display_name, errorMsg: errorMsg.display_name},
+				valid: REG_EXP.DISPLAY_NAME, errorMsg: ERROR_MSG.DISPLAY_NAME},
 			{type: 'text', label: 'Телефон', name: 'phone', value: '+7 909 967 3030', 
-				valid: regExp.phone, errorMsg: errorMsg.phone},
+				valid: REG_EXP.PHONE, errorMsg: ERROR_MSG.PHONE},
 		];
 	
 	const inputArr: Input[] = fields.map(({type, name, value, autocomplete}, i: number)=>{
 		return new Input(
 			'input', 
-			{attr: {type, id: name, name, value, readonly, autocomplete, autofocus: i===0}},
+			{attr: {type, id: name, name, value, readonly, autocomplete, autofocus: (!readonly && i===0)}},
 			'form__input input__right'
 			);
 	});
@@ -58,11 +58,11 @@ export default function profile({readonly = true, changepassword = false}:
 
 		if(!readonly){
 			const fieldvalid = (name==='confirm_password') ? function(){
-				return (<HTMLInputElement> 
-					inputArr[1]._element).value === (<HTMLInputElement> inputArr[2]._element).value;
+				return (<HTMLInputElement> inputArr[1].element).value === (<HTMLInputElement> 
+					inputArr[2].element).value;
 			} : valid;
 			lineinput.valid = fieldvalid; 
-			lineinput.fieldErrorMsg = errorMsg;
+			lineinput.fieldErrorMsg =  errorMsg;
 		}
 
 		return type === 'hidden' ? inputArr[i]

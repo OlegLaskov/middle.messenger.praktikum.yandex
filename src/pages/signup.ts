@@ -3,36 +3,36 @@ import Input from '../components/input';
 import List from '../components/list';
 import InputBlock from '../components/inputBlock';
 import Button from '../components/button';
-import {regExp, errorMsg, Field} from '../utils/validationConst';
+import {REG_EXP, ERROR_MSG, Field} from '../utils/validationConst';
 
 const fields: Field[] = [
 	{
 		type: 'email', name: 'email', label: 'Почта', autocomplete: 'email', 
-		valid: regExp.email, errorMsg: errorMsg.email
+		valid: REG_EXP.EMAIL, errorMsg: ERROR_MSG.EMAIL
 	},
 	{
 		type: 'text', name: 'login', label: 'Логин', autocomplete: 'login', 
-		valid: regExp.login, errorMsg: errorMsg.login
+		valid: REG_EXP.LOGIN, errorMsg: ERROR_MSG.LOGIN
 	},
 	{
 		type: 'text', name: 'first_name', label: 'Имя', autocomplete: 'first-name', 
-		valid: regExp.name, errorMsg: errorMsg.name
+		valid: REG_EXP.NAME, errorMsg: ERROR_MSG.NAME
 	},
 	{
 		type: 'text', name: 'second_name', label: 'Фамилия', autocomplete: 'last-name', 
-		valid: regExp.name, errorMsg: errorMsg.name
+		valid: REG_EXP.NAME, errorMsg: ERROR_MSG.NAME
 	},
 	{
 		type: 'tel', name: 'phone', label: 'Телефон', autocomplete: 'phone', 
-		valid: regExp.phone, errorMsg: errorMsg.phone
+		valid: REG_EXP.PHONE, errorMsg: ERROR_MSG.PHONE
 	},
 	{
 		type: 'password', name: 'password', label: 'Пароль', 
-		valid: regExp.password, errorMsg: errorMsg.password
+		valid: REG_EXP.PASSWORD, errorMsg: ERROR_MSG.PASSWORD
 	},
 	{
 		type: 'password', name: 'confirm_password', label: 'Пароль ещё раз', 
-		valid: regExp.password, errorMsg: errorMsg.confirm_password
+		valid: REG_EXP.PASSWORD, errorMsg: ERROR_MSG.CONFIRM_PASSWORD
 	},
 ];
 

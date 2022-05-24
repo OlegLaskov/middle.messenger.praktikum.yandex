@@ -1,3 +1,5 @@
+import {queryStringify} from '../utils/utils';
+
 const METHODS = {
 	GET:	'GET',
 	POST:	'POST',
@@ -6,16 +8,6 @@ const METHODS = {
 };
 
 const BASE_URL = 'https://ya-praktikum.tech/api/v2';
-
-function queryStringify(data: {[key: string]: string|number|boolean}): string {
-	const arr: string[] = [];
-	for (const key in data) {
-		if (Object.prototype.hasOwnProperty.call(data, key)) {
-			arr.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
-		}
-	}
-	return arr.length ? '?' + arr.join('&') : '';
-}
 
 class HTTPTransport {
 	get = (url: string, options: {[key: string]: any} = {}) => {

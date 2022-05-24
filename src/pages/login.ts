@@ -3,16 +3,16 @@ import Input from '../components/input';
 import List from '../components/list';
 import InputBlock from '../components/inputBlock';
 import Button from '../components/button';
-import {regExp, errorMsg} from '../utils/validationConst';
+import {REG_EXP, ERROR_MSG} from '../utils/validationConst';
 
 const fields = [
 	{
 		type: 'text', name: 'login', label: 'Логин', autocomplete: 'login', 
-		valid: regExp.login, errorMsg: errorMsg.login
+		valid: REG_EXP.LOGIN, errorMsg: ERROR_MSG.LOGIN
 	},
 	{
 		type: 'password', name: 'password', label: 'Пароль', autocomplete: 'current-password', 
-		valid: regExp.password, errorMsg: errorMsg.password
+		valid: REG_EXP.PASSWORD, errorMsg: ERROR_MSG.PASSWORD
 	},
 ];
 

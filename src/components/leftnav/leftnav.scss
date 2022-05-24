@@ -1,5 +1,6 @@
 $blueButton: #0071f0;
 $focusButton: rgba(0, 113, 240, 0.7);
+$backgroundNav: #FBFBFB;
 
 .leftnav {
 	height: 100vh;
@@ -19,7 +20,7 @@ $focusButton: rgba(0, 113, 240, 0.7);
 		height: inherit;
 		width: inherit;
 		color: $blueButton;
-		background-color: #FBFBFB;
+		background-color: $backgroundNav;
 		border: 0 transparent;
 		font-size: 2em;
 		cursor: pointer;

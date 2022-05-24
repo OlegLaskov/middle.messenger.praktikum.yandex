@@ -6,7 +6,6 @@ $bkgrAvatar: #EFEFEF;
 	height: auto;
 	min-height: 130px;
 	width: 130px;
-	// color: $bkgrAvatar;
 	background-color: $bkgrAvatar;
 	border-radius: 50%;
 	position: relative;
@@ -38,9 +37,6 @@ $bkgrAvatar: #EFEFEF;
 	&__name {
 		text-align: center;
 	}
-	/* &__changable:hover &__label {
-		z-index: 1000;
-	} */
 	&__changable:hover &__img {
 		cursor: pointer;
 		background: url(/resources/changePhoto.jpg);
