@@ -7,3 +7,6 @@ export function queryStringify(data: {[key: string]: string|number|boolean}): st
 	}
 	return arr.length ? '?' + arr.join('&') : '';
 }
+export function isEqualPath(lhs: string, rhs: string): boolean {
+	return lhs === rhs;
+}

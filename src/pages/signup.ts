@@ -45,7 +45,7 @@ const inputArr: Input[] = fields.map(({type, name, autocomplete})=>{
 
 const inputBlockArr: InputBlock[] = fields.map(({name, label, valid, errorMsg}, i)=>{
 	const fieldvalid = (name==='confirm_password') ? function(){
-		return (<HTMLInputElement> inputArr[5]._element).value === (<HTMLInputElement> inputArr[6]._element).value;
+		return (<HTMLInputElement> inputArr[5].element).value === (<HTMLInputElement> inputArr[6].element).value;
 	} : valid;
 
 	return new InputBlock(

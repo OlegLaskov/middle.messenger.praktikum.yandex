@@ -3,7 +3,7 @@
 	<h1 class="{{titleClass}}">{{title}}</h1>
 	{{{ inputs }}}
 	{{{ button }}}
-	{{!-- {{#each links}} --}}
-		{{{ link }}}
-	{{!-- {{/each}} --}}
+	{{#each links}}
+		{{> link }}
+	{{/each}}
 </form>

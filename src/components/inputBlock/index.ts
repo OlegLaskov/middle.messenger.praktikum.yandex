@@ -20,7 +20,7 @@ export default class InputBlock extends Component{
 
 	isValid: boolean;
 
-	validation(e={target: this.children.input._element}){
+	validation(e={target: this.children.input.element}){
 		const {name, value} = <HTMLInputElement> e.target;
 		if(name){
 			const {valid} = this.props;

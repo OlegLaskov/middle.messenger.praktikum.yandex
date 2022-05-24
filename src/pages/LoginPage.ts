@@ -4,6 +4,7 @@ import List from '../components/list';
 import InputBlock from '../components/inputBlock';
 import Button from '../components/button';
 import {REG_EXP, ERROR_MSG} from '../utils/validationConst';
+import Link from '../components/link';
 
 const fields = [
 	{
@@ -29,8 +30,45 @@ const inputObj = fields.reduce((obj: {[key:string|symbol]: any}, field, i)=>{
 
 const inputs = new List('div', inputObj);
 const button = new Button('button', {attr: {type: 'submit', name: 'Sign in', class: ''}, label: 'Войти'});
+const link = new Link('div', {href: '/signup', class1: '', label: 'Нет аккаунта?'});
 
-export default function login(){
+export default class LoginPage extends Form {
+
+	constructor(){
+		const tagName = 'main';
+		const propsAndChildren = {
+			formClass: 'form',
+			titleClass: 'form__title',
+			title: 'Вход',
+			inputs,
+			button,
+			link, // : {href: '/signup', class1: '', label: 'Нет аккаунта?'},
+			request: {
+				url: '/auth/signin',
+				options: {
+					method: 'post'
+				},
+				resolve: (resp: string)=>{
+					console.log('resp='+typeof resp, resp);
+					if(resp.toUpperCase() === 'OK'){
+						// Авторизован -> redirect to Main Page
+					} else {
+						const res = JSON.parse(resp);
+						console.log('res', res, this);
+					}
+				},
+				reject: (err: Error)=>{
+					console.log('err='+typeof err, err);
+				}
+			}
+		};
+		const defaultClass = 'container-form-login';
+		super(tagName, propsAndChildren, defaultClass);
+	}
+	
+}
+
+/* export default function login(){
 	
 	return new Form(
 		'main', 
@@ -64,4 +102,4 @@ export default function login(){
 		},
 		'container-form-login'
 	);
-}
+} */

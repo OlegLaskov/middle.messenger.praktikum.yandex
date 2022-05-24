@@ -16,7 +16,7 @@ abstract class Component {
 	id: string;
 	props: {[key:string|symbol]: any};
 	children: {[key:string]: Component};
-	eventBus: Function;
+	eventBus: ()=>EventBus;
 	state: {[key:string|symbol]: any} = {};
 
 	constructor(tagName = 'div', propsAndChildren: {[key:string|symbol]: any} = {}, defaultClass = '') {
@@ -144,7 +144,7 @@ abstract class Component {
 		} else {
 			if(Object.keys(oldProps).length !== Object.keys(newProps).length) return false;
 			for (const prop in oldProps) {
-				if (oldProps.hasOwnProperty(prop)) {
+				if (Object.prototype.hasOwnProperty.call(oldProps, prop)) {
 					if(oldProps[prop] !== newProps[prop]) return false;
 				}
 			}
@@ -232,7 +232,7 @@ abstract class Component {
 		this.getContent().style.display = "none";
 	}
 
-	compile(template: Function, props?: {[key:string|symbol]: any}): DocumentFragment {
+	compile(template: (context: any, options?: any)=>string, props?: {[key:string|symbol]: any}): DocumentFragment {
 		if(props == null){
 			props = this.props;
 		}

@@ -10,6 +10,17 @@ const METHODS = {
 const BASE_URL = 'https://ya-praktikum.tech/api/v2';
 
 class HTTPTransport {
+
+	private static __instance: HTTPTransport;
+
+	constructor(){
+		if (HTTPTransport.__instance) {
+			return HTTPTransport.__instance;
+		}
+		HTTPTransport.__instance = this;
+		return this;
+	}
+
 	get = (url: string, options: {[key: string]: any} = {}) => {
 		if(options.data){
 			url += queryStringify(options.data);
