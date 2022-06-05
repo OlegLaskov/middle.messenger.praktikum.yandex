@@ -4,11 +4,15 @@ import {default as renderDOM} from '../utils/render';
 
 export default class Route {
 	private _pathname: string;
-	private _blockClass: {new(): Component};
+	private _blockClass: {new(props: object): Component};
 	private _block: Component|null;
 	private _props;
 
-	constructor(pathname: string, view: {new(): Component}, props: {[key:string|symbol]: any}) {
+	constructor(
+		pathname: string, 
+		view: {new(): Component}, 
+		props: {[key:string|symbol]: any}
+	) {
 		this._pathname = pathname;
 		this._blockClass = view;
 		this._block = null;
@@ -34,7 +38,8 @@ export default class Route {
 
 	render(): void {
 		if(!this._block){
-			this._block = new this._blockClass();
+			console.log('route: render props=', this._props);
+			this._block = new this._blockClass(this._props);
 			renderDOM(this._props.rootQuery, this._block);
 			return;
 		}

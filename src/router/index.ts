@@ -1,4 +1,5 @@
 import Component from "../utils/component";
+import { PATH } from "./paths";
 import Route from "./route";
 
 export default class Router {
@@ -22,17 +23,20 @@ export default class Router {
 		Router.__instance = this;
 	}
 
-	use(pathname: string, block: {new(): Component}) {
-		const route = new Route(pathname, block, {rootQuery: this._rootQuery});
+	use(pathname: string, block: {new(): Component}, props?: object) {
+		const route = new Route(pathname, block, {...props, rootQuery: this._rootQuery});
 		this.routes.push(route);
 		return this;
 	}
 
 	start() {
 		window.onpopstate = event => {
-			console.log('onpopstate: pathname', event?.currentTarget?.location?.pathname);
-			alert('location');
-			this._onRoute(event?.currentTarget?.location?.pathname);
+			const doc = event?.currentTarget;
+			if(doc){
+				console.log('ONPOPSTATE: pathname', (<Document> doc).location?.pathname);
+				alert('location');
+				this._onRoute((<Document> doc).location?.pathname);
+			}
 		}
 		this._onRoute(window.location.pathname);
 	}
@@ -46,9 +50,16 @@ export default class Router {
 
 		this._currentRoute = route;
 		if(route){
-			route.render(); //(route, pathname);
+			try{
+				route.render(); //(route, pathname);
+			} catch(e){
+				console.log('Error:', e);
+				setTimeout(()=>{this.go(PATH.ERROR500);}, 1000);
+				
+			}
 		} else {
 			console.log('Route not found');
+			this.go(PATH.ERROR404);
 		}
 	}
 

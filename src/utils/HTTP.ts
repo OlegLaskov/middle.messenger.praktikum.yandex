@@ -1,4 +1,4 @@
-import {queryStringify} from '../utils/utils';
+import {queryStringify} from './utils';
 
 const METHODS = {
 	GET:	'GET',
@@ -6,6 +6,14 @@ const METHODS = {
 	PUT:	'PUT',
 	DELETE:	'DELETE'
 };
+
+export type RequestOptions = {
+	method?: string,
+	data?: {[key: string]: string|number|boolean},
+	timeout?: number,
+	retries?: number,
+	headers?: {[key: string]: string}
+}
 
 const BASE_URL = 'https://ya-praktikum.tech/api/v2';
 
@@ -21,7 +29,7 @@ class HTTPTransport {
 		return this;
 	}
 
-	get = (url: string, options: {[key: string]: any} = {}) => {
+	get = (url: string, options: RequestOptions = {}) => {
 		if(options.data){
 			url += queryStringify(options.data);
 			delete options.data;
@@ -34,19 +42,19 @@ class HTTPTransport {
 	// options:
 	// headers — obj
 	// data — obj
-	post = (url: string, options: {[key: string]: any} = {}) => {
+	post = (url: string, options: RequestOptions = {}) => {
 		return this.request(url, {...options, method: METHODS.POST}, options.timeout);
 	};
-	put = (url: string, options: {[key: string]: any} = {}) => {
+	put = (url: string, options: RequestOptions = {}) => {
 		return this.request(url, {...options, method: METHODS.PUT}, options.timeout);
 	};
-	delete = (url: string, options: {[key: string]: any} = {}) => {
+	delete = (url: string, options: RequestOptions = {}) => {
 		return this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
 	};
 
 
-	request = (url: string, options: {[key: string]: any}, timeout: number ): Promise<XMLHttpRequest> => {
-		const {method, data, headers={}} = options;
+	request = (url: string, options: RequestOptions, timeout?: number ): Promise<XMLHttpRequest> => {
+		const {method = METHODS.GET, data, headers={}} = options;
 
 		return new Promise((resolve, reject) => {
 			const xhr = new XMLHttpRequest();
@@ -79,8 +87,8 @@ class HTTPTransport {
 	};
 }
 
-async function oneFetch(httpTran: HTTPTransport, url: string, options: {[key: string]: any}): Promise<string|Error> {
-	let {retries} = options;
+async function oneFetch(httpTran: HTTPTransport, url: string, options: RequestOptions): Promise<string|Error> {
+	let {retries=5} = options;
 	try{
 		const data: XMLHttpRequest = await httpTran.request(url, options, options.timeout);
 		return data.response;
@@ -88,18 +96,18 @@ async function oneFetch(httpTran: HTTPTransport, url: string, options: {[key: st
 		if(retries === 1){
 			return e;
 		}
-		options.reties = --retries;
+		options.retries = --retries;
 		return oneFetch(httpTran, url, options);
 	}
 }
 
 let httpTran: HTTPTransport|null;
 
-export default function fetchWithRetry(url: string, options: {[key: string]: any}): Promise<string|Error> {
+export function fetchWithRetry(url: string, options: RequestOptions): Promise<string|Error> {
 	url = BASE_URL + url;
 	const retries = options && typeof options.retries === 'number' && options.retries > 1 ? options.retries : 5;
 	httpTran = httpTran || (httpTran = new HTTPTransport());
-	options.reties = retries;
+	options.retries = retries;
 	
 	return oneFetch(httpTran, url, options);
 }

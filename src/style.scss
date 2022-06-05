@@ -77,6 +77,7 @@ li {
 	color: red !important;
 }
 .body {
+	box-sizing: border-box;
 	display: flex;
 	margin: 0;
 	padding: 0;
@@ -84,11 +85,13 @@ li {
 	width: 100%;
 }
 .nav {
-	width: 310px;
+	box-sizing: border-box;
+	width: auto;
 	background-color: $backgroundNav;
 	border-right: solid 1px $lightBorder;
 
 	&__upper {
+		width: 290px;
 		margin: 5px 10px;
 		border-bottom: 1px solid $lightBorder;
 	}
@@ -124,6 +127,8 @@ li {
 }
 
 .chat_list {
+	height: calc(100vh - 97px);
+	overflow-y: auto;
 
 	&__item {
 		margin: 5px 10px;

@@ -9,18 +9,17 @@ export default class InputBlock extends Component{
 			propsAndChildren.events = {};
 		}
 		if(!propsAndChildren.events.focusout && propsAndChildren.valid){
-			propsAndChildren.events.focusout = (e: Event)=>{
-				this.eventBus().emit('validation', e);
+			propsAndChildren.events.focusout = (e: FocusEvent)=>{
+				this.validate(e);
 			};
 		}
 
 		super(tagName, propsAndChildren, defaultClass);
-		this.eventBus().on('validation', this.validation.bind(this));
 	}
 
 	isValid: boolean;
 
-	validation(e={target: this.children.input.element}){
+	validate(e:FocusEvent|{target: HTMLElement}={target: this.children.input.element}){
 		const {name, value} = <HTMLInputElement> e.target;
 		if(name){
 			const {valid} = this.props;
@@ -33,9 +32,9 @@ export default class InputBlock extends Component{
 					this.isValid = valid(this);
 				}
 				if(this.isValid){
-					this.props.classErr = '';
+					this.setProps({...this.props, classErr: ''});
 				} else {
-					this.props.classErr = 'form__errorMsg__show';
+					this.setProps({...this.props, classErr: 'form__errorMsg__show'});
 				}
 			}
 		}

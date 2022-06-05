@@ -6,7 +6,7 @@ export default class Input extends Component{
 	constructor(tagName = "input", propsAndChildren = {}, defaultClass = 'form__input'){
 		super(tagName, propsAndChildren, defaultClass);
 	}
-	validation(){
+	validate(){
 		return true;
 	}
 	render(){

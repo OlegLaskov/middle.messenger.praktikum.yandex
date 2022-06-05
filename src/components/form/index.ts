@@ -1,5 +1,4 @@
 import Component from "../../utils/component";
-import fetchWithRetry from "../../services/httpService";
 import tmpl from './form.hbs';
 import './form.scss';
 import InputBlock from "../inputBlock";
@@ -27,14 +26,15 @@ export default class Form extends Component {
 			propsAndChildren.events.click = (e: Event)=>{
 				if(e.target && (<HTMLButtonElement> e.target).getAttribute('type') === 'submit'){
 					e.preventDefault();
-					const isValid = this.validation();
+					const isValid = this.validate();
 					const {form} = this.state;
 					console.log('isValid=' + isValid, form);
-					const {url, options, resolve, reject} = this.props.request;
-					console.log({url, options});
-					options.data = form;
-					if(isValid){
-						fetchWithRetry(url, options).then(resolve).catch(reject);
+
+					const {f_submit, resolve, reject} = this.props.request;
+					if(isValid && f_submit){
+						f_submit(form)
+						.then(resolve)
+						.catch(reject);
 					}
 					
 				}
@@ -45,14 +45,13 @@ export default class Form extends Component {
 		this.state.form = {};
 	}
 
-	validation(){
+	validate(){
 		let isValid = true;
 		if(this.children?.inputs?.children){
 			const children = this.children.inputs.children;
 			for (const child in children) {
-				if(children[child] instanceof InputBlock && !(<InputBlock> children[child]).validation()){
+				if(children[child] instanceof InputBlock && !(<InputBlock> children[child]).validate()){
 					isValid = false
-					break;
 				}
 			}
 		}

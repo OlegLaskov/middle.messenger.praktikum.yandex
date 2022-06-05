@@ -13,7 +13,7 @@ abstract class Component {
 
 	private _element: HTMLElement;
 	private _meta: {tagName: string, props: object};
-	id: string;
+	uid: string;
 	props: {[key:string|symbol]: any};
 	children: {[key:string]: Component};
 	eventBus: ()=>EventBus;
@@ -40,8 +40,8 @@ abstract class Component {
 		};
 
 		// Генерируем уникальный UUID V4
-		this.id = makeUUID();
-		this.props = this._makePropsProxy({ ...props, id: this.id });
+		this.uid = makeUUID();
+		this.props = this._makePropsProxy({ ...props, uid: this.uid });
 
 		this.children = this._makePropsProxy(children);
 		this.state = this._makePropsProxy(this.state);
@@ -81,7 +81,6 @@ abstract class Component {
 	private _addEvents(): void {
 		const {events = {}} = this.props;
 	
-		// console.log('_addEvents', events);
 		Object.keys(events).forEach(eventName => {
 			this._element.addEventListener(eventName, events[eventName]);
 		});
@@ -138,10 +137,11 @@ abstract class Component {
 		return !this.compareProps(oldProps, newProps);
 	}
 
-	compareProps(oldProps: {[key: string]: any}, newProps: {[key: string]: any}): boolean {
+	compareProps(oldProps: any, newProps: any): boolean {
 		if(oldProps === newProps){
 			return true;
 		} else {
+			if(!oldProps || !newProps || typeof oldProps !== 'object' || typeof newProps !== 'object') return false;
 			if(Object.keys(oldProps).length !== Object.keys(newProps).length) return false;
 			for (const prop in oldProps) {
 				if (Object.prototype.hasOwnProperty.call(oldProps, prop)) {
@@ -157,8 +157,10 @@ abstract class Component {
 			return;
 		}
 		const oldProps: {[key:string|symbol]: any} = {};
+
 		Object.assign(oldProps, this.props);
-		Object.assign(this.props, nextProps);
+		
+		this.props = this._makePropsProxy({ ...nextProps, uid: this.uid });
 		this._componentDidUpdate(oldProps, this.props);
 	};
 
@@ -195,7 +197,6 @@ abstract class Component {
 		return new Proxy(props, {
 			get(target, prop) {
 				if (isPrivateProp(prop)) {
-					console.log('get:', target, prop);
 					throw new Error("Нет доступа");
 				} else {
 					const value: any = target[prop];
@@ -238,13 +239,13 @@ abstract class Component {
 		}
 		const propsAndStubs: {[key:string|symbol]: any} = { ...props };
 		Object.entries(this.children).forEach(([key, child]) => {
-			propsAndStubs[key] = `<div data-id="${child.id}"></div>`
+			propsAndStubs[key] = `<div data-id="${child.uid}"></div>`
 		});
 		const fragment: HTMLTemplateElement = <HTMLTemplateElement> this._createDocumentElement('template');
 		fragment.innerHTML = template(propsAndStubs);
 
 		Object.values(this.children).forEach(child => {
-			const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
+			const stub = fragment.content.querySelector(`[data-id="${child.uid}"]`);
 			if(stub){
 				stub.replaceWith(child.getContent());
 			}

@@ -4,7 +4,12 @@ import List from '../components/list';
 import InputBlock from '../components/inputBlock';
 import Button from '../components/button';
 import {REG_EXP, ERROR_MSG, Field} from '../utils/validationConst';
+import Link from '../components/link';
+import { PATH } from '../router/paths';
+import { SignupAPI } from '../api/signup-api';
+import form from '../components/form/form.hbs';
 
+const signupAPI = new SignupAPI();
 const fields: Field[] = [
 	{
 		type: 'email', name: 'email', label: 'Почта', autocomplete: 'email', 
@@ -66,33 +71,30 @@ const button: Button = new Button(
 	{attr: {type: 'submit', name: 'Sign up', class: ''}, 
 	label: 'Зарегистрироваться'}
 );
+const link = new Link('div', {href: PATH.LOGIN, label: 'Войти'})
 
-export default function signup(){
-
-	return new Form(
-		'main', 
-		{
-			formClass: 'form',
-			titleClass: 'form__title',
-			title: 'Регистрация',
-			inputs,
-			button,
-			links: [
-				{href: '/', class1: '', label: 'Войти'},
-			],
-			request: {
-				url: '/auth/signup',
-				options: {
-					method: 'post'
-				},
-				resolve: (resp: string)=>{
-					console.log('resp='+typeof resp, resp);
-				},
-				reject: (err: Error)=>{
-					console.log('err='+typeof err, err);
+export default class SignupPage extends Form {
+	constructor(){
+		super(
+			'main', 
+			{
+				formClass: 'form',
+				titleClass: 'form__title',
+				title: 'Регистрация',
+				inputs,
+				button,
+				link,
+				request: {
+					f_submit: signupAPI.signup,
+					resolve: (resp: string)=>{
+						console.log('resp='+typeof resp, resp);
+					},
+					reject: (err: Error)=>{
+						console.log('err='+typeof err, err);
+					}
 				}
-			}
-		},
-		'container-form-signup'
-	);
+			},
+			'container-form-signup'
+		)
+	}
 }
