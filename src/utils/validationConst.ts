@@ -31,6 +31,7 @@ export interface Field {
 	valid?: ValidFunction|RegExp,
 	errorMsg?: string|null,
 	autocomplete?: string|null,
+	autofocus?: boolean
 }
 
 export interface FieldBlock {

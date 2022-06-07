@@ -3,9 +3,6 @@ import tmpl from './error.hbs';
 import Component from '../../utils/component';
 import Link from '../link';
 import { PATH } from '../../router/paths';
-// import link from '../link';
-
-// Handlebars.registerPartial('error', link);
 
 export default class Error extends Component{
 
@@ -25,5 +22,3 @@ export default class Error extends Component{
 		return this.compile(tmpl, this.props);
 	}
 }
-/* export default ({title, content, links}: 
-	{title: string, content: string, links: object[]}) => {return tmpl({title, content, links})}; */

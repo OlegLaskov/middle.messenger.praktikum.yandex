@@ -59,7 +59,7 @@ export default class Form extends Component {
 	}
 
 	render(){
-		console.log('Form render');
+		console.log('Form render=', this.props);
 		return this.compile(tmpl, this.props);
 	}
 }

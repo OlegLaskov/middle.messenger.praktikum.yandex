@@ -8,7 +8,6 @@ export default class Avatar extends Component{
 	}
 
 	render(){
-		console.log('Avatar render');
 		return this.compile(tmpl);
 	}
 }

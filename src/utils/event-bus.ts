@@ -1,4 +1,4 @@
-type ListnerFunction = (...args: object[]) => never;
+type ListnerFunction = (...args: object[]) => void | never;
 
 class EventBus {
 	listeners: {[key: string]: ListnerFunction[]};

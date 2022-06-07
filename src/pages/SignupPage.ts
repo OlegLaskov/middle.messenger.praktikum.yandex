@@ -6,8 +6,8 @@ import Button from '../components/button';
 import {REG_EXP, ERROR_MSG, Field} from '../utils/validationConst';
 import Link from '../components/link';
 import { PATH } from '../router/paths';
-import { SignupAPI } from '../api/signup-api';
-import form from '../components/form/form.hbs';
+import SignupAPI from '../api/signup-api';
+import Router from '../router';
 
 const signupAPI = new SignupAPI();
 const fields: Field[] = [
@@ -74,6 +74,7 @@ const button: Button = new Button(
 const link = new Link('div', {href: PATH.LOGIN, label: 'Войти'})
 
 export default class SignupPage extends Form {
+	router = new Router('#root');
 	constructor(){
 		super(
 			'main', 
@@ -88,6 +89,7 @@ export default class SignupPage extends Form {
 					f_submit: signupAPI.signup,
 					resolve: (resp: string)=>{
 						console.log('resp='+typeof resp, resp);
+						this.router.go(PATH.CHAT);
 					},
 					reject: (err: Error)=>{
 						console.log('err='+typeof err, err);

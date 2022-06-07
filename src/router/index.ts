@@ -54,7 +54,7 @@ export default class Router {
 				route.render(); //(route, pathname);
 			} catch(e){
 				console.log('Error:', e);
-				setTimeout(()=>{this.go(PATH.ERROR500);}, 1000);
+				// setTimeout(()=>{this.go(PATH.ERROR500);}, 1000);
 				
 			}
 		} else {
@@ -63,20 +63,20 @@ export default class Router {
 		}
 	}
 
-	go(pathname: string) {
+	public go(pathname: string) {
 		this.history.pushState({}, '', pathname);
 		this._onRoute(pathname);
 	}
 
-	back() {
+	public back() {
 		this.history.back();
 	}
 
-	forward() {
+	public forward() {
 		this.history.forward();
 	}
 
-	getRoute(pathname: string) {
+	public getRoute(pathname: string) {
 		return this.routes.find(route => route.match(pathname)) || null;
 	}
 }

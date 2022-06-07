@@ -1,12 +1,11 @@
 import {fetchWithRetry, RequestOptions} from '../utils/HTTP';
-import BaseAPI from './base-api';
 
 type Form = {[key: string]: string};
 
 
-export class SignupAPI extends BaseAPI {
+export default class SignupAPI {
 	
-	signup(form: Form){
+	public signup(form: Form){
 		const url = '/auth/signup',
 			options: RequestOptions = {method: 'post'};
 		options.data = form;

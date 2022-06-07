@@ -5,7 +5,7 @@ import './label.scss';
 export default class Label extends Component{
 
 	render(){
-		console.log('Label render');
+		// console.log('Label render');
 		return this.compile(tmpl);
 	}
 }

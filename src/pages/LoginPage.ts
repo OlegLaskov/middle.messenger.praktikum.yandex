@@ -6,8 +6,8 @@ import Button from '../components/button';
 import {REG_EXP, ERROR_MSG} from '../utils/validationConst';
 import Link from '../components/link';
 import { PATH } from '../router/paths';
+import LoginAPI from '../api/login-api';
 import Router from '../router';
-import { LoginAPI } from '../api/login-api';
 
 const loginApi = new LoginAPI();
 
@@ -38,7 +38,7 @@ const button = new Button('button', {attr: {type: 'submit', name: 'Sign in', cla
 const link = new Link('div', {href: PATH.SIGNUP, label: 'Нет аккаунта?'});
 
 export default class LoginPage extends Form {
-
+	router = new Router('#root');
 	constructor(){
 		super(
 			'main',
@@ -55,7 +55,7 @@ export default class LoginPage extends Form {
 						console.log('resp='+typeof resp, resp);
 						if(resp.toUpperCase() === 'OK'){
 							// TODO - Авторизован -> redirect to Main Page
-							
+							this.router.go(PATH.CHAT);
 						} else {
 							const res = JSON.parse(resp);
 							console.log('res', res, this);

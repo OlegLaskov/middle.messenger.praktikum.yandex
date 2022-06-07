@@ -8,7 +8,7 @@ export default class LeftNav extends Component{
 	}
 
 	render(){
-		console.log('LeftNav render');
+		// console.log('LeftNav render');
 		return this.compile(tmpl);
 	}
 }

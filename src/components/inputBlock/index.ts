@@ -41,7 +41,7 @@ export default class InputBlock extends Component{
 		return this.isValid;
 	}
 	render(){
-		console.log('InputBlock render');
+		console.log('InputBlock render=', this.props);
 		return this.compile(tmpl, this.props);
 	}
 }

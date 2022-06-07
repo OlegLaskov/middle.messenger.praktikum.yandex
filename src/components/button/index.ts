@@ -8,7 +8,6 @@ export default class Button extends Component{
 	}
 
 	render(){
-		console.log('Button render');
 		return this.compile(tmpl);
 	}
 }

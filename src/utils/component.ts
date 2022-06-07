@@ -1,5 +1,6 @@
 import EventBus from './event-bus';
 import {v4 as makeUUID} from 'uuid';
+import { isEqual } from './utils';
 
 abstract class Component {
 	static EVENTS = {
@@ -128,6 +129,7 @@ abstract class Component {
 
 	private _componentDidUpdate(oldProps: {[key:string|symbol]: any}, newProps: {[key:string|symbol]: any}): void {
 		const response = this.componentDidUpdate(oldProps, newProps);
+		console.log('_componentDidUpdate', response, oldProps, newProps);
 		if(response){
 			this._render();
 		}
@@ -150,6 +152,7 @@ abstract class Component {
 			}
 			return true;
 		}
+		// return isEqual(oldProps, newProps);
 	}
 
 	setProps = (nextProps: object): void => {
@@ -197,6 +200,7 @@ abstract class Component {
 		return new Proxy(props, {
 			get(target, prop) {
 				if (isPrivateProp(prop)) {
+					console.log('Error: isPrivateProp', target, prop);
 					throw new Error("Нет доступа");
 				} else {
 					const value: any = target[prop];

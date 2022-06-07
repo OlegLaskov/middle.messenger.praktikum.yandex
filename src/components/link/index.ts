@@ -8,7 +8,6 @@ export default class Link extends Component{
 	}
 
 	render(){
-		console.log('Link render');
 		return this.compile(tmpl);
 	}
 }

@@ -2,7 +2,7 @@ import Input from '../components/input';
 import List from '../components/list';
 import Label from '../components/label';
 import { PATH } from '../router/paths';
-import ChatList from '../components/chatList';
+import ChatList from '../components/list/chat-list';
 import ChatItem from '../components/chatItem';
 // import Component from '../utils/component';
 

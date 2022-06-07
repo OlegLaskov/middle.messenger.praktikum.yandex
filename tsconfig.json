@@ -1,7 +1,8 @@
 {
 	"compilerOptions": {
 		"outDir": "dist",
-		"module": "commonjs",
+		"module": "es2022",
+    	"moduleResolution": "Node",
 		"noImplicitAny": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,

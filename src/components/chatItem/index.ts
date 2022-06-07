@@ -19,7 +19,7 @@ export default class ChatItem extends Component{
 	}
 
 	render(){
-		console.log('ChatItem render=', this.props);
+		// console.log('ChatItem render=', this.props);
 		return this.compile(tmpl, this.props);
 	}
 }
