@@ -2,7 +2,6 @@ import {fetchWithRetry, METHODS, RequestOptions} from '../utils/HTTP';
 
 type Form = {[key: string]: string};
 
-
 class UserAPI {
 
 	public getUser(){

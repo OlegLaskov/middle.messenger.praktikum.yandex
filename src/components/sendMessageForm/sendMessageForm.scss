@@ -1,0 +1,68 @@
+$blueButton: #0071f0;
+$focusButton: rgba(0, 113, 240, 0.7);
+$backgroundNav: #FBFBFB;
+$backgroundInput: #EFEFEF;
+$blackFont: #1E1E1E;
+$grayFont: #999999;
+$border: #EAEAEA;
+
+.send_message {
+	box-sizing: border-box;
+	margin: 0 10px;
+	padding: 5px 4px;
+	border-top: solid 1px $border;
+
+	&__attach_btn {
+		display: inline-block;
+		height: inherit;
+		width: inherit;
+		color: $grayFont;
+		background-color: $backgroundNav;
+		border: 0 transparent;
+		font-size: 1.4em;
+		cursor: pointer;
+		margin: 4px 5px;
+		padding: 0;
+		position: relative;
+		vertical-align: middle;
+	}
+
+	&__block {
+		display: inline-block;
+		vertical-align: middle;
+		width: calc(100% - 72px);
+	}
+
+	&__input {
+		box-sizing: border-box;
+			width: 100%; // calc(100% - 33px);
+			height: 32px;
+			padding: 4px 5px;
+			margin: 0;
+			color: $blackFont;
+			background-color: $backgroundInput;
+			border: 1px solid $backgroundInput;
+			border-radius: 30px;
+			outline: none;
+			transition: 0.3s;
+			vertical-align: middle;
+	}
+
+	&__button {
+		height: inherit;
+		width: inherit;
+		color: $blueButton;
+		background-color: $backgroundNav;
+		border: 0 transparent;
+		font-size: 2em;
+		cursor: pointer;
+		margin: 0;
+		padding: 0;
+		position: relative;
+		vertical-align: middle;
+	}
+
+	&__button:hover {
+		color: $focusButton;
+	}
+}

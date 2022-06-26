@@ -7,6 +7,7 @@ export const REG_EXP = {
 	PHONE: /^\+*(?!(?:.* ){4})(?!.* {2})(?:[ ]*\d){10,15}[-]*$/,
 	PASSWORD: /^(?=.*?[A-ZА-Я])(?=.*?[0-9])(.){8,40}$/,
 	DISPLAY_NAME: /^[A-ZА-Я]{1}[A-ZА-Яa-zа-я-]{2,}( ["|(]?[A-ZА-Я]{1}[A-ZА-Яa-zа-я-]{2,}["|)]?){0,2}$/,
+	NO_EMPTY: /\S+/
 };
 
 export const ERROR_MSG = {

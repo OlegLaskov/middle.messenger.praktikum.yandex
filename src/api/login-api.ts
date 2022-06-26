@@ -1,18 +1,19 @@
-import {fetchWithRetry, RequestOptions} from '../utils/HTTP';
+import {fetchWithRetry, METHODS, RequestOptions} from '../utils/HTTP';
 
 type Form = {[key: string]: string};
 
-export default class LoginAPI {
+class LoginAPI {
 	
 	public login(form: Form){
 		const url = '/auth/signin',
-			options: RequestOptions = {method: 'post'};
+			options: RequestOptions = {method: METHODS.POST};
 		options.data = form;
 		return fetchWithRetry(url, options);
 	}
 	public logout(){
 		const url = '/auth/logout',
-			options: RequestOptions = {method: 'post'};
+			options: RequestOptions = {method: METHODS.POST};
 		return fetchWithRetry(url, options);
 	}
 }
+export default new LoginAPI;

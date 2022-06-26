@@ -60,7 +60,7 @@ $blueInput: #1a73a8;
 		transition: 0.3s;
 
 		&__show {
-			display: block;
+			display: block!important;
 		}
 		&__last {
 			display: block;

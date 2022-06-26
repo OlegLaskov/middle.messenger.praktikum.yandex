@@ -1,0 +1,26 @@
+.chatNav {
+
+	&__avatar {
+		box-sizing: border-box;
+		display: inline-block;
+		vertical-align: middle;
+	}
+	&__img {
+		vertical-align: middle;
+	}
+	&__title {
+		box-sizing: border-box;
+		display: inline-block;
+		vertical-align: middle;
+		width: calc(100% - 87px);
+	}
+	&__menuBtn {
+		box-sizing: border-box;
+		display: inline-block;
+		vertical-align: middle;
+		padding: 5px 10px;
+		margin: 5px 10px;
+		cursor: pointer;
+		
+	}
+}

@@ -1,13 +1,19 @@
 import tmpl from './inputBlock.hbs';
-import Component from '../../utils/component';
+import Component, { TProps } from '../../utils/component';
 import './inputBlock.scss';
+import Input from '../input';
 
 export default class InputBlock extends Component{
-	constructor(tagName = "div", propsAndChildren: {[key:string|symbol]: any} = {}, defaultClass = 'form__group'){
+	constructor(tagName = "div", propsAndChildren: TProps = {}, defaultClass = 'form__group'){
+
+		if(propsAndChildren.input && !(propsAndChildren.input instanceof Component)){
+			propsAndChildren.input = new Input(undefined, propsAndChildren.input);
+		}
 
 		if(!propsAndChildren.events){
 			propsAndChildren.events = {};
 		}
+		
 		if(!propsAndChildren.events.focusout && propsAndChildren.valid){
 			propsAndChildren.events.focusout = (e: FocusEvent)=>{
 				this.validate(e);
@@ -41,7 +47,7 @@ export default class InputBlock extends Component{
 		return this.isValid;
 	}
 	render(){
-		console.log('InputBlock render=', this.props);
+		// console.log('InputBlock render=', this.props);
 		return this.compile(tmpl, this.props);
 	}
 }

@@ -6,10 +6,8 @@ import Button from '../components/button';
 import {REG_EXP, ERROR_MSG} from '../utils/validationConst';
 import Link from '../components/link';
 import { PATH } from '../router/paths';
-import LoginAPI from '../api/login-api';
 import Router from '../router';
-
-const loginApi = new LoginAPI();
+import loginApi from '../api/login-api';
 
 const fields = [
 	{
@@ -52,7 +50,7 @@ export default class LoginPage extends Form {
 				request: {
 					f_submit: loginApi.login,
 					resolve: (resp: string)=>{
-						console.log('resp='+typeof resp, resp);
+						// console.log('resp='+typeof resp, resp);
 						if(resp.toUpperCase() === 'OK'){
 							// TODO - Авторизован -> redirect to Main Page
 							this.router.go(PATH.CHAT);

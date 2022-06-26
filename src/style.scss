@@ -8,6 +8,10 @@ $blueInput: #1a73a8;
 $backgroundSearchInput: #EFEFEF;
 $blackFont: #1E1E1E;
 $grayFont: #999999;
+$blueButton: #0071f0;
+$focusButton: rgba(0, 113, 240, 0.7);
+$chatColor: #FBFBFB;
+$selectedChatColor: #E4EDFD;
 
 body {
 	font-family: $font;
@@ -55,7 +59,9 @@ li {
 	}
 	&-profile {
 		@extend %container;
-		width: calc(100vw - 64px);
+		width: calc(100vw - 81px);
+		position: relative;
+		left: 64px;
 	}
 }
 
@@ -86,12 +92,14 @@ li {
 }
 .nav {
 	box-sizing: border-box;
+	height: 100%;
 	width: auto;
 	background-color: $backgroundNav;
 	border-right: solid 1px $lightBorder;
 
 	&__upper {
-		width: 290px;
+		box-sizing: border-box;
+		width: 310px;
 		margin: 5px 10px;
 		border-bottom: 1px solid $lightBorder;
 	}
@@ -112,9 +120,10 @@ li {
 	}
 
 	&__search_input {
-		width: calc(100% - 10px);
+		box-sizing: border-box;
+		width: 100%; // calc(100% - 10px);
 		text-align: center;
-		padding: 4px 5px;
+		padding: 4px 5px 4px 40px;
 		margin: 10px 0;
 		color: $blackFont;
 		background-color: $backgroundSearchInput;
@@ -122,20 +131,31 @@ li {
 		border-radius: 5px;
 		outline: none;
 		transition: 0.3s;
+		background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E") no-repeat 13px center;
 	}
-	
+	&__search_input:focus {
+		text-align: left;
+	}
 }
 
 .chat_list {
-	height: calc(100vh - 97px);
+	box-sizing: border-box;
+	height: calc(100vh - 135px);
 	overflow-y: auto;
+	width: 327px;
 
 	&__item {
+		box-sizing: border-box;
 		margin: 5px 10px;
 		padding-bottom: 5px;
 		border-bottom: 1px solid $lightBorder;
 		font-size: 1.05rem;
 		color: $blackFont;
+		background-color: $chatColor;
+
+		&__selected {
+			background-color: $selectedChatColor;
+		}
 	}
 }
 
@@ -143,5 +163,20 @@ li {
 
 	&__select_chat_msg {
 		color: $grayFont;
+	}
+}
+
+.chat {
+	width: calc(100vw - 331px);
+
+	&__nav {
+		height: 46px;
+		margin: 0 10px;
+		
+	}
+
+	&__body {
+		height: calc(100% - 94px);
+		margin: 0 10px;
 	}
 }

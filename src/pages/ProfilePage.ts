@@ -1,9 +1,6 @@
-import Form from '../components/form';
-// import Input from '../components/input';
 import List from '../components/list';
-// import LineInput from '../components/lineinput';
 import Button from '../components/button';
-import {REG_EXP, ERROR_MSG, Field, FieldBlock} from '../utils/validationConst';
+import {REG_EXP, ERROR_MSG, Field} from '../utils/validationConst';
 import LeftNav from '../components/leftnav';
 import Avatar from '../components/avatar';
 import { PATH } from '../router/paths';
@@ -11,6 +8,9 @@ import Link from '../components/link';
 import userApi from '../api/user-api';
 import store from '../utils/store';
 import InputList from '../components/list/input-list';
+import ProfileForm from '../components/form/profile-form';
+import Component from '../utils/component';
+import Router from '../router';
 
 export type User = {
 	"id": number,
@@ -24,6 +24,7 @@ export type User = {
 }
 
 export default class ProfilePage extends List {
+	router = new Router('#root');
 	constructor(props: {readonly: boolean, user?: User} 
 		= {readonly:true}) {
 			console.log('ProfilePage', props);
@@ -56,37 +57,6 @@ export default class ProfilePage extends List {
 					valid: REG_EXP.PHONE, errorMsg: ERROR_MSG.PHONE},
 			];
 		
-		/* const inputArr: Input[] = fields.map(({type, name, value, autocomplete}, i: number)=>{
-			return new Input(
-				'input', 
-				{attr: {type, id: name, name, value, readonly, autocomplete, autofocus: (!readonly && i===0)}},
-				'form__input input__right'
-				);
-		}); */
-		
-		/* const lineInputArr: Input[]|LineInput[] = fields.map(({type, label, name, valid, errorMsg}, i)=>{
-			const lineinput: FieldBlock = {label, input: inputArr[i]};
-	
-			if(!readonly){
-				lineinput.valid = valid; 
-				lineinput.fieldErrorMsg =  errorMsg;
-			}
-	
-			return type === 'hidden' ? inputArr[i]
-				: new LineInput(
-					'div', 
-					lineinput
-				);
-		}); */
-		
-		/* const inputObj: {[key: string|symbol]: Input|LineInput} = fields.reduce(
-			(obj: {[key:string|symbol]: Input|LineInput}, field, i) => {
-			obj[field.name] = lineInputArr[i];
-			return obj;
-		}, {});
-		
-		const inputs: List = new List('div', inputObj); */
-
 		const inputObj = fields.reduce((obj: {[key:string|symbol]: Field}, field, i)=>{
 			obj[field.name] = field;
 			return obj;
@@ -123,7 +93,7 @@ export default class ProfilePage extends List {
 			)
 			: null;
 		
-		const form: Form = new Form(
+		const form: Component = new ProfileForm(
 			'main', 
 			{
 				formClass: 'profile',
@@ -136,15 +106,19 @@ export default class ProfilePage extends List {
 				user,
 				request: {
 					f_submit: userApi.changeProfile,
-					/* url: '/user/profile',
-					options: {
-						method: 'put'
-					}, */
 					resolve: (resp: string)=>{
 						console.log('resp='+typeof resp, resp);
+						const res = JSON.parse(resp);
+						const {reason} = res;
+						if(reason){
+							form.setProps({...form.props, errorMsg: reason});
+						} else {
+							this.router.go(PATH.PROFILE);
+						}
 					},
 					reject: (err: Error)=>{
 						console.log('err='+typeof err, err);
+						this.setProps({...this.props, errorMsg: 'Server error'});
 					}
 				}
 			},
@@ -157,26 +131,27 @@ export default class ProfilePage extends List {
 			'div', 
 			{
 				first: leftnav,
-				second: form
+				second: form,
+				user
 			},
 			'body'
 		)
 	}
 
 	componentDidMount(): void {
-		store.set('loading', true);
+		store.set('userLoading', true);
 		userApi.getUser()
 			.then((user)=>{
 				if(user && typeof user === 'string'){
 					user = JSON.parse(user);
 					store.set('user', user);
-					store.set('loading', false);
+					store.set('userLoading', false);
 					console.log('user=', user);
 				}
 			})
 			.catch((e)=>{
 				console.log(e);
-				store.set('loading', false);
+				store.set('userLoading', false);
 			});
 		
 	}

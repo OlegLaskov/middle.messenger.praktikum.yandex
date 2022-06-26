@@ -6,10 +6,9 @@ import Button from '../components/button';
 import {REG_EXP, ERROR_MSG, Field} from '../utils/validationConst';
 import Link from '../components/link';
 import { PATH } from '../router/paths';
-import SignupAPI from '../api/signup-api';
 import Router from '../router';
+import signupApi from '../api/signup-api';
 
-const signupAPI = new SignupAPI();
 const fields: Field[] = [
 	{
 		type: 'email', name: 'email', label: 'Почта', autocomplete: 'email', 
@@ -86,7 +85,7 @@ export default class SignupPage extends Form {
 				button,
 				link,
 				request: {
-					f_submit: signupAPI.signup,
+					f_submit: signupApi.signup,
 					resolve: (resp: string)=>{
 						console.log('resp='+typeof resp, resp);
 						this.router.go(PATH.CHAT);

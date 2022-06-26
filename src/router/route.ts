@@ -1,17 +1,17 @@
-import Component from "../utils/component";
+import Component, { TProps } from "../utils/component";
 import { isEqualPath } from "../utils/utils";
 import {default as renderDOM} from '../utils/render';
 
 export default class Route {
 	private _pathname: string;
-	private _blockClass: {new(props: object): Component};
+	private _blockClass: {new(tag: string|undefined, props: object): Component};
 	private _block: Component|null;
 	private _props;
 
 	constructor(
 		pathname: string, 
 		view: {new(): Component}, 
-		props: {[key:string|symbol]: any}
+		props: TProps
 	) {
 		this._pathname = pathname;
 		this._blockClass = view;
@@ -39,7 +39,7 @@ export default class Route {
 	render(): void {
 		if(!this._block){
 			console.log('route: render props=', this._props);
-			this._block = new this._blockClass(this._props);
+			this._block = new this._blockClass(undefined, this._props);
 			renderDOM(this._props.rootQuery, this._block);
 			return;
 		}

@@ -10,21 +10,13 @@ export function connect(ExtComponent: typeof Component, mapStateToProps?: (state
 				const state = store.getState();
 				if(mapStateToProps){
 					console.log('mapStateToProps', state);
-					this.setProps({...mapStateToProps(state)});
+					this.setProps({...this.props, ...mapStateToProps(state)});
 				} else {
 					console.log('NOT mapStateToProps', state);
-					this.setProps({...state});
+					
+					this.setProps({...this.props, ...state});
 				}
 			});
 		}
-		/* render(): DocumentFragment {
-			let result: DocumentFragment;
-			try {
-				result = this.render();
-			} catch(e){
-				throw new Error("Method not implemented.");
-			}
-			return result;
-		} */
 	}
 }

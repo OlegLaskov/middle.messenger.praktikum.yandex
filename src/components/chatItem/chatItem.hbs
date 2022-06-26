@@ -9,7 +9,9 @@
 		</div>
 		<div class="chatItem__main">
 			<div class="chatItem__content">{{ content }}</div>
-			<div class="chatItem__unread_count">{{ unread_count }}</div>
+			{{#if unread_count }}
+				<div class="chatItem__unread_count">{{ unread_count }}</div>
+			{{/if}}
 		</div>
 	</div>
 </div>

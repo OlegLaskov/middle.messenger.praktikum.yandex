@@ -1,14 +1,15 @@
-import {fetchWithRetry, RequestOptions} from '../utils/HTTP';
+import {fetchWithRetry, METHODS, RequestOptions} from '../utils/HTTP';
 
 type Form = {[key: string]: string};
 
 
-export default class SignupAPI {
+class SignupAPI {
 	
 	public signup(form: Form){
 		const url = '/auth/signup',
-			options: RequestOptions = {method: 'post'};
+			options: RequestOptions = {method: METHODS.POST};
 		options.data = form;
 		return fetchWithRetry(url, options);
 	}
 }
+export default new SignupAPI;

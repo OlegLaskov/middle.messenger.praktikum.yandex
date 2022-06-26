@@ -9,6 +9,7 @@ $backgroundNav: #FBFBFB;
 	margin: 0;
 	padding: 0;
 	border: 0;
+	position: fixed;
 
 	&__a {
 		display: block;
@@ -34,7 +35,7 @@ $backgroundNav: #FBFBFB;
 		width: 32px;
 		top: 0;
 		bottom: 0;
-		margin: auto 16px;
+		margin: auto 8px;
 		
 	}
 	&__button:hover {

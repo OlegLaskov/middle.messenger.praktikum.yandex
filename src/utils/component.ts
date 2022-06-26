@@ -1,8 +1,12 @@
 import EventBus from './event-bus';
 import {v4 as makeUUID} from 'uuid';
-import { isEqual } from './utils';
+// import { isEqual } from './utils';
 
-abstract class Component {
+export type TProps = {
+	[key:string|symbol]: any
+}
+
+class Component {
 	static EVENTS = {
 		INIT: 'init',
 		FLOW_CDM: 'flow:component-did-mount',
@@ -15,12 +19,12 @@ abstract class Component {
 	private _element: HTMLElement;
 	private _meta: {tagName: string, props: object};
 	uid: string;
-	props: {[key:string|symbol]: any};
+	props: TProps;
 	children: {[key:string]: Component};
 	eventBus: ()=>EventBus;
-	state: {[key:string|symbol]: any} = {};
+	state: TProps = {};
 
-	constructor(tagName = 'div', propsAndChildren: {[key:string|symbol]: any} = {}, defaultClass = '') {
+	constructor(tagName = 'div', propsAndChildren: TProps = {}, defaultClass = '') {
 		const { children, props } = this._getChildren(propsAndChildren);
 		
 		const { attr = {} } = props;
@@ -53,11 +57,11 @@ abstract class Component {
 		eventBus.emit(Component.EVENTS.INIT);
 	}
 
-	private _getChildren(propsAndChildren: {[key:string|symbol]: any}): {
+	private _getChildren(propsAndChildren: TProps): {
 		children: {[key: string|symbol]: Component}, props: {[key: string|symbol]: any}
 	} {
 		const children: {[key:string|symbol]: Component} = {};
-		const props: {[key:string|symbol]: any} = {};
+		const props: TProps = {};
 
 		Object.entries(propsAndChildren).forEach(([key, value]: [string, any]) => {
 			if (value instanceof Component) {
@@ -127,15 +131,16 @@ abstract class Component {
 		this.eventBus().emit(Component.EVENTS.FLOW_CDM);
 	}
 
-	private _componentDidUpdate(oldProps: {[key:string|symbol]: any}, newProps: {[key:string|symbol]: any}): void {
+	private _componentDidUpdate(oldProps: TProps, newProps: TProps): void {
 		const response = this.componentDidUpdate(oldProps, newProps);
-		console.log('_componentDidUpdate', response, oldProps, newProps);
+		// console.log('_componentDidUpdate', response, oldProps, newProps);
 		if(response){
 			this._render();
 		}
 	}
 
-	componentDidUpdate(oldProps: {[key:string|symbol]: any}, newProps: {[key:string|symbol]: any}): boolean {
+	componentDidUpdate(oldProps: TProps, newProps: TProps): boolean {
+		console.log('componentDidUpdate', oldProps, newProps, !this.compareProps(oldProps, newProps));
 		return !this.compareProps(oldProps, newProps);
 	}
 
@@ -159,9 +164,8 @@ abstract class Component {
 		if (!nextProps) {
 			return;
 		}
-		const oldProps: {[key:string|symbol]: any} = {};
 
-		Object.assign(oldProps, this.props);
+		const oldProps: TProps = Object.assign({}, this.props);
 		
 		this.props = this._makePropsProxy({ ...nextProps, uid: this.uid });
 		this._componentDidUpdate(oldProps, this.props);
@@ -185,13 +189,15 @@ abstract class Component {
 		this.addAtribute();
 	}
 
-	abstract render(): DocumentFragment;
+	render(): DocumentFragment {
+		return new DocumentFragment();
+	}
 
 	getContent(): HTMLElement {
 		return this.element;
 	}
 
-	private _makePropsProxy(props: {[key:string|symbol]: any}): {[key:string|symbol]: any} {
+	private _makePropsProxy(props: TProps): TProps {
 
 		// eslint-disable-next-line @typescript-eslint/no-this-alias
 		const self = this;
@@ -237,11 +243,11 @@ abstract class Component {
 		this.getContent().style.display = "none";
 	}
 
-	compile(template: (context: any, options?: any)=>string, props?: {[key:string|symbol]: any}): DocumentFragment {
+	compile(template: (context: any, options?: any)=>string, props?: TProps): DocumentFragment {
 		if(props == null){
 			props = this.props;
 		}
-		const propsAndStubs: {[key:string|symbol]: any} = { ...props };
+		const propsAndStubs: TProps = { ...props };
 		Object.entries(this.children).forEach(([key, child]) => {
 			propsAndStubs[key] = `<div data-id="${child.uid}"></div>`
 		});

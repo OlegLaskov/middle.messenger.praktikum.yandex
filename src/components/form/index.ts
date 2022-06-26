@@ -1,11 +1,11 @@
-import Component from "../../utils/component";
+import Component, { TProps } from "../../utils/component";
 import tmpl from './form.hbs';
 import './form.scss';
 import InputBlock from "../inputBlock";
 
 export default class Form extends Component {
 	
-	constructor(tagName = "div", propsAndChildren: {[key:string|symbol]: any} = {}, defaultClass = 'container-form'){
+	constructor(tagName = "div", propsAndChildren: TProps = {}, defaultClass = 'container-form'){
 		
 		if(!propsAndChildren.events){
 			propsAndChildren.events = {};

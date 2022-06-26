@@ -1,12 +1,12 @@
 // import * as Handlebars from 'handlebars';
 import tmpl from './error.hbs';
-import Component from '../../utils/component';
+import Component, { TProps } from '../../utils/component';
 import Link from '../link';
 import { PATH } from '../../router/paths';
 
 export default class Error extends Component{
 
-	constructor(tagName = "div", propsAndChildren?: {[key:string|symbol]: any}, defaultClass = 'container-error'){
+	constructor(tagName = "div", propsAndChildren?: TProps, defaultClass = 'container-error'){
 		if(!propsAndChildren){
 			propsAndChildren = {
 				title: '404',

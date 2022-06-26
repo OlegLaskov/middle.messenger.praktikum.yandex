@@ -16,9 +16,17 @@ type Indexed<T = unknown> = {
 };
 
 export function isEqual(a: object, b: object): boolean {
+	// console.log('isEqual 0', typeof a, typeof b);
+	
 	if(typeof a !== 'object' || typeof b !== 'object') throw new Error('not object');
+	if(Array.isArray(b)){
+		if(!Array.isArray(a) || a.length !== b.length){
+			return false;
+		}
+	}
 	for (const key in a as Indexed) {
 		if(Object.prototype.hasOwnProperty.call(a, key) && typeof (<Indexed> a)[key] !== 'function') {
+			// console.log('isEqual key=', key, a[key]);
 			const el = (<Indexed> a)[key];
 			if(!Object.prototype.hasOwnProperty.call(b, key) || typeof el !== typeof (<Indexed> b)[key]){
 				return false;
