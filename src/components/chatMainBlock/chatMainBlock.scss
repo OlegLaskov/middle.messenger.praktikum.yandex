@@ -1,0 +1,13 @@
+$menuBackground: #fff;
+$menuShadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
+
+.chatMenu {
+	position: absolute;
+	top: 40px;
+	right: 10px;
+	background-color: $menuBackground;
+	box-shadow: $menuShadow;
+	border-radius: 12px;
+	padding: 5px;
+	// display: none;
+}

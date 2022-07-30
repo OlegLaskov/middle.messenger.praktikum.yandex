@@ -41,3 +41,59 @@ export function isEqual(a: object, b: object): boolean {
 	}
 	return true;
 }
+
+export type PlainObject<T = any> = {
+    [k in string]: T;
+};
+
+function isPlainObject(value: unknown): value is PlainObject {
+    return typeof value === 'object'
+        && value !== null
+        && value.constructor === Object
+        && Object.prototype.toString.call(value) === '[object Object]';
+}
+
+function isArray(value: unknown): value is [] {
+    return Array.isArray(value);
+}
+
+function isArrayOrObject(value: unknown): value is [] | PlainObject {
+    return isPlainObject(value) || isArray(value);
+}
+
+export function cloneDeep<T extends object = object>(obj: T) {
+	let res:PlainObject|null = null;
+	if(isArray(obj)){
+		res = cloneArray(obj);
+	} else {
+		res = cloneObj(obj);
+	}
+	return res;
+}
+
+function cloneArray(arr: unknown[]): unknown[] {
+	const res:unknown[] = [];
+	for (let i = 0; i < arr.length; i++) {
+		const el = arr[i];
+		if(isArrayOrObject(el)){
+			res.push(cloneDeep(el));
+		} else {
+			res.push(el);
+		}
+	}
+	return res;
+}
+function cloneObj(obj: PlainObject): PlainObject {
+	const res: PlainObject = {};
+	for (const key in obj) {
+		if (Object.prototype.hasOwnProperty.call(obj, key)) {
+			const el = (<PlainObject> obj)[key];
+			if(isArrayOrObject(el)){
+				res[key] = cloneDeep(el);
+			} else {
+				res[key] = el;
+			}
+		}
+	}
+	return res;
+}

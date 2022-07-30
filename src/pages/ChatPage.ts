@@ -6,7 +6,10 @@ import ChatList from '../components/list/chat-list';
 import store from '../utils/store';
 import chatApi from '../api/chat-api';
 import AddChatForm from '../components/addChatForm';
-import chatMainBlock from '../components/list/chat-main-block';
+import chatMainBlock from '../components/chatMainBlock';
+import Modal from '../components/modal';
+import InputBlock from '../components/inputBlock';
+import { ERROR_MSG, REG_EXP } from '../utils/validationConst';
 
 function updateChatList(){
 	store.set('chatsLoading', true);
@@ -79,12 +82,42 @@ export default class ChatPage extends List {
 		);
 	
 		const main = new chatMainBlock();
-	
-		super(
+
+		const chatPage = new List(
 			'div', 
 			{
 				nav,
 				main
+			},
+			'body'
+		);
+
+		const fieldLoginName = 'login';
+		const loginInput = new InputBlock(
+			undefined,
+			{
+				input: {attr: {type: 'text', name: fieldLoginName, value: '', autofocus: true}},
+				name: fieldLoginName,
+				label: 'Логин',
+				valid: REG_EXP.LOGIN, 
+				fieldErrorMsg: ERROR_MSG.LOGIN
+			}
+		);
+		const modalAddUser = new Modal(
+			undefined,
+			{
+				header: 'Добавить пользователя',
+				body: loginInput,
+				buttonLabel: ''
+			},
+			'modal'
+		);
+	
+		super(
+			'div', 
+			{
+				chatPage,
+				modalAddUser
 			},
 			'body'
 		)

@@ -25,9 +25,10 @@ export type User = {
 
 export default class ProfilePage extends List {
 	router = new Router('#root');
-	constructor(props: {readonly: boolean, user?: User} 
+	constructor(tag = 'div', props: {readonly: boolean, user?: User} 
 		= {readonly:true}) {
-			console.log('ProfilePage', props);
+
+		console.log('ProfilePage', props);
 			
 		const {readonly, user} = props;
 
@@ -138,7 +139,7 @@ export default class ProfilePage extends List {
 		)
 	}
 
-	componentDidMount(): void {
+/* 	componentDidMount(): void {
 		store.set('userLoading', true);
 		userApi.getUser()
 			.then((user)=>{
@@ -155,5 +156,5 @@ export default class ProfilePage extends List {
 			});
 		
 	}
-	
+ */	
 }

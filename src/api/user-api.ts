@@ -16,5 +16,11 @@ class UserAPI {
 		options.data = form;
 		return fetchWithRetry(url, options);
 	}
+	public changePassword(form: Form){
+		const url = '/user/password',
+			options: RequestOptions = {method: METHODS.PUT};
+		options.data = form;
+		return fetchWithRetry(url, options);
+	}
 }
 export default new UserAPI;

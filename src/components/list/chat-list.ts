@@ -43,11 +43,12 @@ class ChatList extends List{
 		let res = false;
 		const oldChatList = oldProps.chats || [];
 		const newChatList = newProps.chats;
-		console.log('ChatList DidUpdate: isEqual:', oldProps.selectedChat, oldProps, newProps);
+		console.log('ChatList DidUpdate: selectedChat='+ oldProps.selectedChat, 'oldProps=', oldProps, 
+		'newProps=', newProps, 'oldChatList=', oldChatList, 'newChatList=', newChatList);
 		
 		res = newChatList && (!isEqual(oldChatList, newChatList) || 
 			(newProps?.children && newChatList?.length !== Object.keys(newProps.children).length));
-		console.log('ChatList: DidUpdate: res=', res, oldProps.loading !== newProps.loading);
+		console.log('ChatList: DidUpdate: res='+ res, oldProps.loading !== newProps.loading);
 		if(res){
 			const newPropsChildren: TProps = {};
 

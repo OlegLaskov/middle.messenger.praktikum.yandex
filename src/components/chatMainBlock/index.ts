@@ -1,13 +1,17 @@
 import * as Handlebars from 'handlebars';
-import List from '.';
+import List from '../list';
 import { TProps } from '../../utils/component';
 import { connect } from '../../utils/HOC';
 import { Indexed } from '../../utils/store';
 import { isEqual } from '../../utils/utils';
 import ChatNav from '../chatNav';
 import Label from '../label';
+import label from '../label/label.hbs';
+import Menu from '../menu';
+import MenuItem from '../menuitem';
 import SendMessageForm from '../sendMessageForm';
 import Spiner from '../spiner';
+import './chatMainBlock.scss';
 
 class ChatMainBlock extends List{
 	startPage: TProps;
@@ -22,8 +26,27 @@ class ChatMainBlock extends List{
 			title: '',
 			icon: 'fa-solid fa-ellipsis-vertical'
 		}, 'chat__nav');
+
 		const chatBody = new Label('div', {label: 'Chat Body'}, 'chat__body');
+
 		const messageBlock = new SendMessageForm();
+
+		const chatMenuItems = ['Добавить пользователя', 'Удалить пользователя'].map(label=>(new MenuItem(
+			undefined,
+			{label}
+		)));
+		const chatMenu = new Menu(
+			undefined,
+			/* {
+				0: chatMenuItems[0],
+				1: chatMenuItems[1]
+			}, */
+			chatMenuItems.reduce((acc, item, i)=>{
+				acc[i] = item;
+				return acc;
+			},{}),
+			'chatMenu'
+		);
 
 		const startPage = {
 			message: new Label('p', {label: 'Выберите чат, чтобы отправить сообщение'}, 'main__select_chat_msg')
@@ -31,7 +54,8 @@ class ChatMainBlock extends List{
 		const mainPage = {
 			chatNav,
 			chatBody,
-			messageBlock
+			messageBlock,
+			chatMenu
 		};
 	
 		propsAndChildren = {...propsAndChildren, ...startPage, ...mainPage}

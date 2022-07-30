@@ -1,0 +1,26 @@
+$backgroundModal: rgba(0,0,0,0.4);
+$backgroundModalDialog: #FFFFFF;
+$modalShadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
+
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: $backgroundModal;
+
+	&__dialog {
+		background-color: $backgroundModalDialog;
+		margin: auto;
+		padding: 20px;
+		box-shadow: $modalShadow;
+		border-radius: 12px;
+		width: 80%;
+	}
+}
+

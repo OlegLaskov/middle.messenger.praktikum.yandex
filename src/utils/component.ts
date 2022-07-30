@@ -1,5 +1,6 @@
 import EventBus from './event-bus';
 import {v4 as makeUUID} from 'uuid';
+import { cloneDeep } from './utils';
 // import { isEqual } from './utils';
 
 export type TProps = {
@@ -165,7 +166,7 @@ class Component {
 			return;
 		}
 
-		const oldProps: TProps = Object.assign({}, this.props);
+		const oldProps: TProps = cloneDeep(this.props); // Object.assign({}, this.props);
 		
 		this.props = this._makePropsProxy({ ...nextProps, uid: this.uid });
 		this._componentDidUpdate(oldProps, this.props);
