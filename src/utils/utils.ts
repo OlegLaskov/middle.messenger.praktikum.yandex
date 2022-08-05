@@ -39,6 +39,11 @@ export function isEqual(a: object, b: object): boolean {
 			}
 		}
 	}
+	for (const key in b as Indexed) {
+		if(!Object.prototype.hasOwnProperty.call(a, key)){
+			return false;
+		}
+	}
 	return true;
 }
 

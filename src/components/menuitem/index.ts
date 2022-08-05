@@ -6,15 +6,6 @@ export default class MenuItem extends Component{
 
 	constructor(tagName = "div", propsAndChildren: TProps = {}, defaultClass = 'menuItem'){
 
-		if(!propsAndChildren.events){
-			propsAndChildren.events = {};
-		}
-		if(!propsAndChildren.events.click){
-			propsAndChildren.events.click = (event)=>{
-				console.log('MenuItem: click', event.target.textContent, JSON.stringify(this.props));
-				
-			};
-		}
 		super(tagName, propsAndChildren, defaultClass);
 		
 	}

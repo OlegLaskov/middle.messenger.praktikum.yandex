@@ -1,6 +1,6 @@
 import EventBus from './event-bus';
 import {v4 as makeUUID} from 'uuid';
-import { cloneDeep } from './utils';
+import { cloneDeep, isEqual } from './utils';
 // import { isEqual } from './utils';
 
 export type TProps = {
@@ -23,6 +23,7 @@ class Component {
 	props: TProps;
 	children: {[key:string]: Component};
 	eventBus: ()=>EventBus;
+	isShow = true;
 	state: TProps = {};
 
 	constructor(tagName = 'div', propsAndChildren: TProps = {}, defaultClass = '') {
@@ -146,19 +147,7 @@ class Component {
 	}
 
 	compareProps(oldProps: any, newProps: any): boolean {
-		if(oldProps === newProps){
-			return true;
-		} else {
-			if(!oldProps || !newProps || typeof oldProps !== 'object' || typeof newProps !== 'object') return false;
-			if(Object.keys(oldProps).length !== Object.keys(newProps).length) return false;
-			for (const prop in oldProps) {
-				if (Object.prototype.hasOwnProperty.call(oldProps, prop)) {
-					if(oldProps[prop] !== newProps[prop]) return false;
-				}
-			}
-			return true;
-		}
-		// return isEqual(oldProps, newProps);
+		return isEqual(oldProps, newProps);
 	}
 
 	setProps = (nextProps: object): void => {
@@ -238,10 +227,12 @@ class Component {
 
 	show(): void {
 		this.getContent().style.display = "block";
+		this.isShow = true;
 	}
 
 	hide(): void {
 		this.getContent().style.display = "none";
+		this.isShow = false;
 	}
 
 	compile(template: (context: any, options?: any)=>string, props?: TProps): DocumentFragment {

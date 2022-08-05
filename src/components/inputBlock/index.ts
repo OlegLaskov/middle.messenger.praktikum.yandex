@@ -7,6 +7,7 @@ export default class InputBlock extends Component{
 	constructor(tagName = "div", propsAndChildren: TProps = {}, defaultClass = 'form__group'){
 
 		if(propsAndChildren.input && !(propsAndChildren.input instanceof Component)){
+			console.log('InputBlock: createInput');
 			propsAndChildren.input = new Input(undefined, propsAndChildren.input);
 		}
 

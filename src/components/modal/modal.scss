@@ -20,7 +20,13 @@ $modalShadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
 		padding: 20px;
 		box-shadow: $modalShadow;
 		border-radius: 12px;
-		width: 80%;
+		width: 300px;
+		z-index: inherit;
+	}
+	&__header {
+		margin: 20px 0;
+		background-color: inherit;
+		z-index: inherit;
 	}
 }
 

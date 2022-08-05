@@ -9,10 +9,6 @@ export default class Menu extends List{
 		super(tagName, propsAndChildren, defaultClass);
 	}
 
-	componentDidMount(): void {
-		// this.hide();
-	}
-
 	render(){
 		console.log('Menu render=', this.props);
 		let tmpl = '';

@@ -24,24 +24,24 @@ class ChatMainBlock extends List{
 		const chatNav = new ChatNav('div', {
 			avatar: '',
 			title: '',
-			icon: 'fa-solid fa-ellipsis-vertical'
+			icon: 'fa-solid fa-ellipsis-vertical',
+			// toggleOpenChatMenu: this.toggleOpenChatMenu
 		}, 'chat__nav');
 
 		const chatBody = new Label('div', {label: 'Chat Body'}, 'chat__body');
 
 		const messageBlock = new SendMessageForm();
 
-		const chatMenuItems = ['Добавить пользователя', 'Удалить пользователя'].map(label=>(new MenuItem(
+		const chatMenuItems = [
+			{label: 'Добавить пользователя', id: 'addUserItemMenu'}, 
+			{label: 'Удалить пользователя', id: 'deleteUserItemMenu'}
+		].map(item=>(new MenuItem(
 			undefined,
-			{label}
+			{label: item.label, attr: {id: item.id}}
 		)));
 		const chatMenu = new Menu(
 			undefined,
-			/* {
-				0: chatMenuItems[0],
-				1: chatMenuItems[1]
-			}, */
-			chatMenuItems.reduce((acc, item, i)=>{
+			chatMenuItems.reduce((acc:TProps, item, i)=>{
 				acc[i] = item;
 				return acc;
 			},{}),
@@ -58,14 +58,42 @@ class ChatMainBlock extends List{
 			chatMenu
 		};
 	
-		propsAndChildren = {...propsAndChildren, ...startPage, ...mainPage}
+		if(!propsAndChildren.events){
+			propsAndChildren.events = {};
+		}
+		if(!propsAndChildren.events.click){
+			propsAndChildren.events.click = (event: PointerEvent)=>{
+				console.log('ChatMainBlock: click', event, 'target=', (<HTMLBodyElement> event.target).id, 
+					JSON.stringify(this.props.chatInfo), !!this.props.toggleOpenChatMenu);
+				const id = (<HTMLBodyElement> event.target).id;
+				if(id==='addUserItemMenu'){
+					console.log('addUserItemMenu', this.props.chatInfo);
+					// open Add User Modal
+					propsAndChildren.toggleAddUserModal(true);
+				} else if(id==='deleteUserItemMenu'){
+					console.log('deleteUserItemMenu', this.props.chatInfo);
+					// open Delete User Modal
+					propsAndChildren.toggleDeleteUserModal(true);
+				}
+				this.toggleOpenChatMenu(id === 'chatMenuToggle' 
+					|| id === 'chatMenuToggleIcon');
+			};
+		}
+		propsAndChildren = {...propsAndChildren, ...startPage, ...mainPage, isOpenChatMenu: false}
 		super(tagName, propsAndChildren, defaultClass);
 		this.startPage = startPage;
 		this.mainPage = mainPage;
 	}
+
+	toggleOpenChatMenu = (toggle: boolean) => {
+		const value = toggle ? !this.props.isOpenChatMenu : false;
+		this.setProps({...this.props, isOpenChatMenu: value});
+	}
+
 	componentDidMount(): void {
 		console.log('ChatMainBlock: Mount:', this.startPage);
-		this.render();
+	// this.children.chatNav.setProps({...this.children.chatNav.props, toggleOpenChatMenu: this.toggleOpenChatMenu});
+		
 	}
 
 	componentDidUpdate(oldProps: TProps, newProps: TProps): boolean {
@@ -94,13 +122,18 @@ class ChatMainBlock extends List{
 
 		const {loading, chatInfo, attr} = this.props;
 
-		console.log('ChatMainBlock render=', this.props, ', children=', this.children, ', attr=', attr);
+		console.log('ChatMainBlock render=', this.props, ', children=', this.children, ', attr=', attr, 
+		', tAUM', !!this.props.toggleAddUserModal);
 		if(loading){
 			return (new Spiner()).render();
 		}
 
 		let tmpl = '';
 		const content = !chatInfo ? this.startPage : this.mainPage;
+
+		if(this.children.chatMenu){
+			this.props.isOpenChatMenu ? this.children.chatMenu.show() : this.children.chatMenu.hide();
+		}
 
 		if(content && Object.keys(content).length){
 			Object.keys(content).forEach(key => {
