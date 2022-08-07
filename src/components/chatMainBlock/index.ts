@@ -6,12 +6,12 @@ import { Indexed } from '../../utils/store';
 import { isEqual } from '../../utils/utils';
 import ChatNav from '../chatNav';
 import Label from '../label';
-import label from '../label/label.hbs';
 import Menu from '../menu';
 import MenuItem from '../menuitem';
 import SendMessageForm from '../sendMessageForm';
 import Spiner from '../spiner';
 import './chatMainBlock.scss';
+import ChatBody from '../chatBody';
 
 class ChatMainBlock extends List{
 	startPage: TProps;
@@ -28,7 +28,26 @@ class ChatMainBlock extends List{
 			// toggleOpenChatMenu: this.toggleOpenChatMenu
 		}, 'chat__nav');
 
-		const chatBody = new Label('div', {label: 'Chat Body'}, 'chat__body');
+		const chatBody = new ChatBody('div', {
+			message: [
+				{msgClass: 'message__left', 
+					content: 'Привет! Смотри, тут всплыл интересный кусок лунной космической истории \
+— НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас \
+мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще \
+находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой. \n\nХассельблад \
+в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. \
+Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.', time: '11:56'},
+				{msgClass: 'message__right', content: 'Test Message 001', time: '12:00'},
+				{msgClass: 'message__left', 
+					content: 'Привет! Смотри, тут всплыл интересный кусок лунной космической истории \
+— НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас \
+мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще \
+находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой. \n\nХассельблад \
+в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. \
+Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.', time: '11:56'},
+				{msgClass: 'message__right', content: 'Test Message 001', time: '12:00'},
+			]
+		}, 'chat__body');
 
 		const messageBlock = new SendMessageForm();
 
@@ -100,7 +119,7 @@ class ChatMainBlock extends List{
 		const {chatInfo, attr} = newProps;
 		console.log('ChatMainBlock:', oldProps, newProps, !isEqual(oldProps, newProps));
 
-		if(chatInfo && (!oldProps.chatInfo || oldProps.chatInfo !== chatInfo)){
+		if(chatInfo && (!oldProps.chatInfo || !isEqual(oldProps.chatInfo, chatInfo))){
 			attr.class = 'chat';
 
 			console.log('ChatMainBlock: chatInfo=', chatInfo);

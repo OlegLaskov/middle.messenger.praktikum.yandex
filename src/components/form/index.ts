@@ -8,7 +8,11 @@ export default class Form extends Component {
 	constructor(tagName = "div", propsAndChildren: TProps = {}, defaultClass = 'container-form'){
 		
 		if(!propsAndChildren.events){
-			propsAndChildren.events = {};
+			propsAndChildren.events = {
+				submit: (e: Event)=>{
+					e.preventDefault();
+				}
+			};
 		}
 		if(!propsAndChildren.events.keyup){
 			propsAndChildren.events.keyup = (e: Event)=>{
@@ -39,6 +43,7 @@ export default class Form extends Component {
 					
 				}
 			};
+
 		}
 		
 		super(tagName, propsAndChildren, defaultClass);

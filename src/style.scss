@@ -176,7 +176,9 @@ li {
 	}
 
 	&__body {
-		height: calc(100% - 94px);
+		box-sizing: border-box;
+		height: calc(100vh - 94px);
 		margin: 0 10px;
+		overflow-y: auto;
 	}
 }

@@ -11,13 +11,19 @@ import chatMainBlock from '../components/chatMainBlock';
 import Modal from '../components/modal';
 import InputBlock from '../components/inputBlock';
 import { ERROR_MSG, REG_EXP } from '../utils/validationConst';
+import Form from '../components/form';
+import Button from '../components/button';
+import Router from '../router';
+import userApi from '../api/user-api';
 
+const router = new Router('#root');
 function updateChatList(){
 	store.set('chatsLoading', true);
 	chatApi.request()
 		.then((chats)=>{
 			if(chats && typeof chats === 'string'){
 				chats = JSON.parse(chats);
+				if(!Array.isArray(chats)) router.go(PATH.LOGIN);
 				store.set('chats', chats);
 				store.set('chatsLoading', false);
 				console.log('chats=', chats);
@@ -83,7 +89,7 @@ export default class ChatPage extends List {
 		);
 	
 		const fieldLoginName = 'login';
-		const loginInput1 = new InputBlock(
+		const loginAddInput = new InputBlock(
 			undefined,
 			{
 				input: {attr: {type: 'text', name: fieldLoginName, value: '', placeholder: ' ', autofocus: true}},
@@ -93,7 +99,7 @@ export default class ChatPage extends List {
 				fieldErrorMsg: ERROR_MSG.LOGIN
 			}
 		);
-		const loginInput2 = new InputBlock(
+		const loginDelInput = new InputBlock(
 			undefined,
 			{
 				input: {attr: {type: 'text', name: fieldLoginName, value: '', placeholder: ' ', autofocus: true}},
@@ -103,23 +109,91 @@ export default class ChatPage extends List {
 				fieldErrorMsg: ERROR_MSG.LOGIN
 			}
 		);
+		const addUserBtn = new Button(undefined,
+			{
+				label: 'Добавить',
+				attr: {type: 'submit', id: 'addUserToChat'}
+			});
+		const addUserForm = new Form(undefined,
+			{
+				// formClass: 'form',
+				title: 'Добавить пользователя',
+				inputs: new List(undefined, {loginAddInput}),
+				button: addUserBtn,
+				request: {
+					f_submit: userApi.searchUsersByLogin,
+					resolve: (resp: string)=>{
+						console.log('resp='+typeof resp, resp);
+						toggleAddUserModal(false);
+						resp = JSON.parse(resp);
+						if(Array.isArray(resp)){
+							const users = resp.map(user=>user.id),
+								chatId = this.children?.chatPage?.children?.main?.props?.chatInfo?.id;
+							
+							console.log('users', users, 'chatId', chatId);
+							chatApi.addUser(users, chatId).then(resp=>{
+								console.log('addUser: resp='+typeof resp, resp);
+								
+							}).catch(err=>{
+								console.log('addUser: err='+typeof err, err);
+							})
+						}
+					},
+					reject: (err: Error)=>{
+						console.log('err='+typeof err, err);
+						this.setProps({...this.props, errorMsg: 'Server error'});
+					}
+				}
+			},
+			'modal__dialog');
 		const modalAddUser = new Modal(
 			undefined,
 			{
-				header: 'Добавить пользователя',
-				body: loginInput1,
-				buttonId: 'addUserToChat',
-				buttonLabel: 'Добавить'
+				form: addUserForm
 			},
 			'modal'
 		);
+		const deleteUserBtn = new Button(undefined,
+			{
+				label: 'Удалить',
+				attr: {type: 'submit', id: 'deleteUserToChat'}
+			});
+		const deleteUserForm = new Form(undefined,
+			{
+				// formClass: 'form',
+				title: 'Удалить пользователя',
+				inputs: new List(undefined, {loginDelInput}),
+				button: deleteUserBtn,
+				request: {
+					f_submit: userApi.searchUsersByLogin,
+					resolve: (resp: string)=>{
+						console.log('resp='+typeof resp, resp);
+						toggleDeleteUserModal(false);
+						resp = JSON.parse(resp);
+						if(Array.isArray(resp)){
+							const users = resp.map(user=>user.id),
+								chatId = this.children?.chatPage?.children?.main?.props?.chatInfo?.id;
+							
+							console.log('users', users, 'chatId', chatId);
+							chatApi.deleteUser(users, chatId).then(resp=>{
+								console.log('deleteUser: resp='+typeof resp, resp);
+								
+							}).catch(err=>{
+								console.log('deleteUser: err='+typeof err, err);
+							})
+						}
+					},
+					reject: (err: Error)=>{
+						console.log('err='+typeof err, err);
+						this.setProps({...this.props, errorMsg: 'Server error'});
+					}
+				}
+			},
+			'modal__dialog');
 		const modalDeleteUser = new Modal(
 			undefined,
 			{
-				header: 'Удалить пользователя',
-				body: loginInput2,
-				buttonId: 'deleteUserFromChat',
-				buttonLabel: 'Удалить'
+				form: deleteUserForm
 			},
 			'modal'
 		);

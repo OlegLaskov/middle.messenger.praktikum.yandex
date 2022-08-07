@@ -1,8 +1,10 @@
-export function queryStringify(data: {[key: string]: string|number|boolean}): string {
+export function queryStringify(data: {[key: string]: string|number|boolean|number[]}): string {
 	const arr: string[] = [];
 	for (const key in data) {
 		if (Object.prototype.hasOwnProperty.call(data, key)) {
-			arr.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+			const value = Array.isArray(data[key]) ? '['+(<number[]> data[key]).join() +']' 
+			: (<string|number|boolean> data[key]);
+			arr.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
 		}
 	}
 	return arr.length ? '?' + arr.join('&') : '';
@@ -40,7 +42,7 @@ export function isEqual(a: object, b: object): boolean {
 		}
 	}
 	for (const key in b as Indexed) {
-		if(!Object.prototype.hasOwnProperty.call(a, key)){
+		if(Object.prototype.hasOwnProperty.call(b, key) && !Object.prototype.hasOwnProperty.call(a, key)){
 			return false;
 		}
 	}

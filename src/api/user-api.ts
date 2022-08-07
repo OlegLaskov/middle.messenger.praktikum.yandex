@@ -22,5 +22,12 @@ class UserAPI {
 		options.data = form;
 		return fetchWithRetry(url, options);
 	}
+
+	public searchUsersByLogin(form: Form){
+		const url = '/user/search',
+			options: RequestOptions = {method: METHODS.POST};
+		options.data = form;
+		return fetchWithRetry(url, options);
+	}
 }
 export default new UserAPI;

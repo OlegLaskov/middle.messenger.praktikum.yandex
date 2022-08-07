@@ -9,7 +9,7 @@ export const METHODS = {
 
 export type RequestOptions = {
 	method?: string,
-	data?: {[key: string]: string|number|boolean},
+	data?: {[key: string]: string|number|boolean|number[]},
 	timeout?: number,
 	retries?: number,
 	headers?: {[key: string]: string}
