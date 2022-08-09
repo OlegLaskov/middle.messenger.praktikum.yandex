@@ -1,7 +1,6 @@
 import EventBus from './event-bus';
 import {v4 as makeUUID} from 'uuid';
 import { cloneDeep, isEqual } from './utils';
-// import { isEqual } from './utils';
 
 export type TProps = {
 	[key:string|symbol]: any
@@ -142,7 +141,7 @@ class Component {
 	}
 
 	componentDidUpdate(oldProps: TProps, newProps: TProps): boolean {
-		console.log('componentDidUpdate', oldProps, newProps, !this.compareProps(oldProps, newProps));
+		// console.log('componentDidUpdate', oldProps, newProps, !this.compareProps(oldProps, newProps));
 		return !this.compareProps(oldProps, newProps);
 	}
 
@@ -154,7 +153,8 @@ class Component {
 		if (!nextProps) {
 			return;
 		}
-
+		// console.log('oldProps', JSON.stringify(this.props));
+		// console.log('nextProps', JSON.stringify(nextProps));
 		const oldProps: TProps = cloneDeep(this.props); // Object.assign({}, this.props);
 		
 		this.props = this._makePropsProxy({ ...nextProps, uid: this.uid });

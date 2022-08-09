@@ -1,4 +1,5 @@
 import EventBus from "./event-bus";
+import { cloneDeep } from "./utils";
 
 export enum StoreEvents {
 	Updated = 'updated',
@@ -8,14 +9,14 @@ export type Indexed<T = unknown> = {
 	[key in string]: T;
 };
 
-function set(object: Indexed | unknown, path: string, value: unknown): Indexed | unknown {
-	if(typeof object !== 'object') return object;
+function set(object: Indexed | unknown, path: string, value: unknown): Indexed  {
+	// if(typeof object !== 'object') return object;
 	if(typeof path !== 'string') throw new Error('path must be string');
 
 	const result = path.split('.').reduceRight<Indexed>((acc, key) => ({
 		[key]: acc,
 	}), value as any);
-	return merge(object as Indexed, result);
+	return merge(cloneDeep(object as Indexed), result);
 }
 
 function merge(lhs: Indexed, rhs: Indexed): Indexed {
@@ -41,10 +42,8 @@ class Store extends EventBus {
 	}
 
 	public set(path: string, value: unknown) {
-		set(this.state, path, value);
+		this.state = set(this.state, path, value);
 		this.emit(StoreEvents.Updated);
-		// console.log('state=', this.state);
-		
 	}
 }
 

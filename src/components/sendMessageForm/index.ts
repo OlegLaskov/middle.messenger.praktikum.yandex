@@ -18,7 +18,7 @@ export default class SendMessageForm extends Form {
 		const sendMessageInput = new Input(
 			undefined,
 			{
-				attr: {type: 'text', name: 'content', placeholder: 'Введите сообщение'}
+				attr: {type: 'text', name: 'content', placeholder: 'Введите сообщение', autocomplete: 'off'}
 			},
 			'send_message__input'
 		);
@@ -39,22 +39,42 @@ export default class SendMessageForm extends Form {
 				attachFile,
 				inputs: sendMessageInputBlock,
 				button: sendMessageBtn,
-				request: {
-					f_submit: chatApi.sendMessage,
-					resolve: (resp: string)=>{
-						console.log('resp='+typeof resp, resp);
-					},
-					reject: (err: Error)=>{
-						console.log('err='+typeof err, err);
+				events: {submit: (e: Event)=>{
+					e.preventDefault();
+	
+					const isValid = this.validate();
+					const {form} = this.state;
+					console.log('SendMessageForm: isValid=' + isValid, form);
+	
+					if(isValid){
+						chatApi.sendMessage(form);
+						this.clearForm();
 					}
-				}
+				}}
 			},
 			'send_message'
 		)
 	}
 
+	validate(){
+		let isValid = true;
+		if(this.children){
+			const children = this.children;
+			for (const child in children) {
+				if(children[child] instanceof InputBlock && !(<InputBlock> children[child]).validate()){
+					isValid = false;
+				}
+			}
+		}
+		return isValid;
+	}
+
+	clearForm(){
+		(<InputBlock> this.children.inputs).clearInput();
+	}
+
 	render(){
-		// console.log('AddChatForm render=', this.props);
+		console.log('SendMessageForm render=', this.props, 'children=', this.children);
 		return this.compile(tmpl, this.props);
 	}
 }

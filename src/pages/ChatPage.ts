@@ -243,6 +243,21 @@ export default class ChatPage extends List {
 	}
 
 	componentDidMount(){
+		store.set('userLoading', true);
+		userApi.getUser()
+			.then((user)=>{
+				if(user && typeof user === 'string'){
+					user = JSON.parse(user);
+					store.set('user', user);
+					store.set('userLoading', false);
+					console.log('user=', user);
+				}
+			})
+			.catch((e)=>{
+				console.log(e);
+				store.set('userLoading', false);
+			});
+
 		updateChatList();
 	}
 	render(): DocumentFragment {

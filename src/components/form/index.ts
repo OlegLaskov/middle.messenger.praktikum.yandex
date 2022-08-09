@@ -8,11 +8,23 @@ export default class Form extends Component {
 	constructor(tagName = "div", propsAndChildren: TProps = {}, defaultClass = 'container-form'){
 		
 		if(!propsAndChildren.events){
-			propsAndChildren.events = {
-				submit: (e: Event)=>{
-					e.preventDefault();
+			propsAndChildren.events = {};
+		}
+		if(!propsAndChildren.events.submit){
+			propsAndChildren.events.submit = (e: Event)=>{
+				e.preventDefault();
+
+				const isValid = this.validate();
+				const {form} = this.state;
+				console.log('form: isValid=' + isValid, form);
+
+				const {f_submit, resolve, reject} = this.props.request;
+				if(isValid && f_submit){
+					f_submit(form)
+					.then(resolve)
+					.catch(reject);
 				}
-			};
+			}
 		}
 		if(!propsAndChildren.events.keyup){
 			propsAndChildren.events.keyup = (e: Event)=>{
@@ -26,25 +38,6 @@ export default class Form extends Component {
 				}
 			};
 		}
-		if(!propsAndChildren.events.click){
-			propsAndChildren.events.click = (e: Event)=>{
-				if(e.target && (<HTMLButtonElement> e.target).getAttribute('type') === 'submit'){
-					e.preventDefault();
-					const isValid = this.validate();
-					const {form} = this.state;
-					console.log('isValid=' + isValid, form);
-
-					const {f_submit, resolve, reject} = this.props.request;
-					if(isValid && f_submit){
-						f_submit(form)
-						.then(resolve)
-						.catch(reject);
-					}
-					
-				}
-			};
-
-		}
 		
 		super(tagName, propsAndChildren, defaultClass);
 		this.state.form = {};
@@ -56,15 +49,24 @@ export default class Form extends Component {
 			const children = this.children.inputs.children;
 			for (const child in children) {
 				if(children[child] instanceof InputBlock && !(<InputBlock> children[child]).validate()){
-					isValid = false
+					isValid = false;
 				}
 			}
 		}
 		return isValid;
 	}
 
+	clearForm(){
+		const inputs = this.children.inputs.children;
+		for(const i in inputs){
+			if(inputs[i] instanceof InputBlock){
+				(<InputBlock> inputs[i]).clearInput();
+			}
+		}
+	}
+
 	render(){
-		console.log('Form render=', this.props);
+		console.log('Form render=', this.props, 'children=', this.children);
 		return this.compile(tmpl, this.props);
 	}
 }

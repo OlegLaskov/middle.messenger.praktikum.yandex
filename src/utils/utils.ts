@@ -18,8 +18,6 @@ type Indexed<T = unknown> = {
 };
 
 export function isEqual(a: object, b: object): boolean {
-	// console.log('isEqual 0', typeof a, typeof b);
-	
 	if(typeof a !== 'object' || typeof b !== 'object') throw new Error('not object');
 	if(Array.isArray(b)){
 		if(!Array.isArray(a) || a.length !== b.length){
@@ -28,13 +26,12 @@ export function isEqual(a: object, b: object): boolean {
 	}
 	for (const key in a as Indexed) {
 		if(Object.prototype.hasOwnProperty.call(a, key) && typeof (<Indexed> a)[key] !== 'function') {
-			// console.log('isEqual key=', key, a[key]);
 			const el = (<Indexed> a)[key];
 			if(!Object.prototype.hasOwnProperty.call(b, key) || typeof el !== typeof (<Indexed> b)[key]){
 				return false;
 			}
 			const elb = (<Indexed> b)[key];
-			if(typeof el === 'object'){
+			if(el != null && typeof el === 'object' && elb != null && typeof elb === 'object'){
 				if(!isEqual((<object> el), (<object> elb))) return false;
 			} else if(el !== elb){
 				return false;
@@ -68,7 +65,7 @@ function isArrayOrObject(value: unknown): value is [] | PlainObject {
     return isPlainObject(value) || isArray(value);
 }
 
-export function cloneDeep<T extends object = object>(obj: T) {
+export function cloneDeep<T extends object|unknown[] = object>(obj: T|unknown[]) {
 	let res:PlainObject|null = null;
 	if(isArray(obj)){
 		res = cloneArray(obj);
@@ -94,7 +91,7 @@ function cloneObj(obj: PlainObject): PlainObject {
 	const res: PlainObject = {};
 	for (const key in obj) {
 		if (Object.prototype.hasOwnProperty.call(obj, key)) {
-			const el = (<PlainObject> obj)[key];
+			const el = obj[key];
 			if(isArrayOrObject(el)){
 				res[key] = cloneDeep(el);
 			} else {

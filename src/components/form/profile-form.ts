@@ -27,7 +27,7 @@ class ProfileForm extends Form {
 	}
 
 	render(){
-		console.log('ProfileForm render=', this.props);
+		console.log('ProfileForm render=', this.props, 'children=', this.children);
 		if(this.props.loading){
 			return (new Spiner()).render();
 		}

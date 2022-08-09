@@ -12,8 +12,6 @@ export function connect(ExtComponent: typeof Component, mapStateToProps?: (state
 					console.log('mapStateToProps', state);
 					this.setProps({...this.props, ...mapStateToProps(state)});
 				} else {
-					console.log('NOT mapStateToProps', state);
-					
 					this.setProps({...this.props, ...state});
 				}
 			});

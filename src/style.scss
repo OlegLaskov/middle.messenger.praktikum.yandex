@@ -140,7 +140,7 @@ li {
 
 .chat_list {
 	box-sizing: border-box;
-	height: calc(100vh - 135px);
+	height: calc(100vh - 136px);
 	overflow-y: auto;
 	width: 327px;
 
@@ -167,9 +167,11 @@ li {
 }
 
 .chat {
+	box-sizing: border-box;
 	width: calc(100vw - 331px);
 
 	&__nav {
+		box-sizing: border-box;
 		height: 46px;
 		margin: 0 10px;
 		
@@ -177,7 +179,7 @@ li {
 
 	&__body {
 		box-sizing: border-box;
-		height: calc(100vh - 94px);
+		height: calc(100vh - 96px);
 		margin: 0 10px;
 		overflow-y: auto;
 	}

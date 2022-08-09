@@ -30,7 +30,6 @@ export default class InputBlock extends Component{
 		const {name, value} = <HTMLInputElement> e.target;
 		if(name){
 			const {valid} = this.props;
-			
 			if(valid){
 				this.isValid = false;
 				if(typeof valid !== 'function'){
@@ -47,8 +46,12 @@ export default class InputBlock extends Component{
 		}
 		return this.isValid;
 	}
+
+	clearInput(){
+		(<HTMLInputElement> this.children.input.element).value = '';
+	}
+
 	render(){
-		// console.log('InputBlock render=', this.props);
 		return this.compile(tmpl, this.props);
 	}
 }
