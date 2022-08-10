@@ -15,15 +15,26 @@ type Tfile = {
 };
 export type Tmsg = {
 	type: string,
+	id: number,
 	content?: string,
 	user_id?: number,
-	chat_id?: number,
+	chat_id: number,
 	time?: string,
 	file?: Tfile,
 
 	msgClass?: string,
-	formatedTime?: string
+	formatedTime?: string,
+	theTime: Date,
+	timestamp: number
 };
+
+type TchatMsgs = {
+	[key in string]: Tmsg
+}
+
+export type TstoreMsgs = {
+	[key in string]: TchatMsgs
+}
 
 class ChatAPI extends BaseAPI {
 
@@ -60,11 +71,20 @@ class ChatAPI extends BaseAPI {
 
 	transformMsg = (msg:Tmsg)=>{
 		msg.msgClass = msg.user_id === this.userId ? 'message__right' : 'message__left';
-		msg.formatedTime = msg.time ? 
-			(new Date(msg.time)).toLocaleTimeString(undefined, {hour: '2-digit', minute: '2-digit'})
-			: '';
+		msg.theTime = new Date(msg.time || new Date());
+		msg.formatedTime = msg.theTime.toLocaleTimeString(undefined, {hour: '2-digit', minute: '2-digit'});
+		msg.timestamp = msg.theTime.getTime();
 		return msg;
 	};
+
+	messagesFromArrayToObj = (msgs: Tmsg[]) => {
+		return msgs.reduceRight((acc, msg):TstoreMsgs=>{
+			const {id, chat_id} = msg;
+			!acc[chat_id] && (acc[chat_id]={});
+			acc[chat_id][id] = msg;
+			return acc;
+		}, {} as TstoreMsgs);
+	}
 
 	initSocket = (userId: number, chatId: number) => { // , token: string
 		if(this.pingInterval){
@@ -90,6 +110,7 @@ class ChatAPI extends BaseAPI {
 					console.log('Соединение закрыто чисто');
 				} else {
 					console.log('Обрыв соединения');
+					this.initSocket(userId, chatId);
 				}
 				console.log(`Код: ${event.code} | Причина: ${event.reason}`);
 			});
@@ -100,18 +121,19 @@ class ChatAPI extends BaseAPI {
 				
 				if(Array.isArray(parsedData)){
 					const messages = parsedData.map(this.transformMsg);
-					store.set('messages', messages.reverse());
+					const storeMsg = this.messagesFromArrayToObj(messages);
+					store.set('messages', storeMsg);
 				} else {
-					const {type} = parsedData;
+					const {type, id} = parsedData;
 					if(type === 'message'){
-						let messages = <Tmsg[] | undefined> (store.getState()).messages;
+						/* let messages = <Tmsg[] | undefined> (store.getState()).messages;
 
 						if(!messages){
 							messages = [];
-						}
+						} */
 						parsedData.chat_id = chatId;
-						messages.push(this.transformMsg(parsedData));
-						store.set('messages', messages);
+						// messages.push(this.transformMsg(parsedData));
+						store.set(`messages.${chatId}.${id}`, this.transformMsg(parsedData));
 					}
 				}
 			});
@@ -164,7 +186,7 @@ class ChatAPI extends BaseAPI {
 				do{
 					this.socket.send(JSON.stringify({type: 'get old', content: content.toString()}));
 					content+=20;
-				}while(content < res.unread_count);
+				}while(content < res.unread_count); // 100
 			})
 			.catch((err: Error)=>{
 				console.log('err='+typeof err, err);

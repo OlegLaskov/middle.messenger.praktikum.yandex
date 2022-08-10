@@ -3,7 +3,7 @@ import Component, { TProps } from '../../utils/component';
 import './chatBody.scss';
 import store, { Indexed } from '../../utils/store';
 import { connect } from '../../utils/HOC';
-import { Tmsg } from '../../api/chat-api';
+import { Tmsg, TstoreMsgs } from '../../api/chat-api';
 
 class ChatBody extends Component{
 	constructor(tagName = "div", propsAndChildren: TProps = {}, defaultClass = 'chat__body'){
@@ -30,12 +30,15 @@ class ChatBody extends Component{
 	}
 }
 
-function mapStateToProps(state: Indexed<unknown>){
-	const {messages, selectedChat} = state;
+type TchatBodyStore = {messages: TstoreMsgs|undefined, selectedChat: number|undefined};
+
+function mapStateToProps(state: TchatBodyStore){
+	const {messages, selectedChat}: TchatBodyStore = state;
 	console.log('ChatBody: mapStateToProps: messages=', messages);
 	return {
 		selectedChat,
-		messages: messages && (<Tmsg[]> messages).filter((msg:Tmsg)=>(msg.chat_id === selectedChat))
+		messages: messages && selectedChat && messages[selectedChat] 
+			&& Object.values(messages[selectedChat]).sort((a,b)=>(a.timestamp-b.timestamp))
 	}
 }
 

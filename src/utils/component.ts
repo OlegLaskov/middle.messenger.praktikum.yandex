@@ -155,7 +155,7 @@ class Component {
 		}
 		// console.log('oldProps', JSON.stringify(this.props));
 		// console.log('nextProps', JSON.stringify(nextProps));
-		const oldProps: TProps = cloneDeep(this.props); // Object.assign({}, this.props);
+		const oldProps: TProps = Object.assign({}, this.props); // cloneDeep(this.props);
 		
 		this.props = this._makePropsProxy({ ...nextProps, uid: this.uid });
 		this._componentDidUpdate(oldProps, this.props);
