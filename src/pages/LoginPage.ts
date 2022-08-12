@@ -41,6 +41,7 @@ export default class LoginPage extends Form {
 		super(
 			'main',
 			{
+				containerClass: 'container-form-login',
 				formClass: 'form',
 				titleClass: 'form__title',
 				title: 'Вход',
@@ -67,7 +68,7 @@ export default class LoginPage extends Form {
 					}
 				}
 			},
-			'container-form-login'
+			'body'
 		);
 	}
 	componentDidMount(){

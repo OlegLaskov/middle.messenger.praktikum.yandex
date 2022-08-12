@@ -78,6 +78,7 @@ export default class SignupPage extends Form {
 		super(
 			'main', 
 			{
+				containerClass: 'container-form-signup',
 				formClass: 'form',
 				titleClass: 'form__title',
 				title: 'Регистрация',
@@ -95,7 +96,7 @@ export default class SignupPage extends Form {
 					}
 				}
 			},
-			'container-form-signup'
+			'body'
 		)
 	}
 }

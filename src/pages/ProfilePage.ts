@@ -97,6 +97,7 @@ export default class ProfilePage extends List {
 		const form: Component = new ProfileForm(
 			'main', 
 			{
+				containerClass: 'container-profile',
 				formClass: 'profile',
 				titleClass: 'form__title',
 				avatar,
@@ -123,7 +124,7 @@ export default class ProfilePage extends List {
 					}
 				}
 			},
-			'container-profile'
+			'body'
 		);
 		
 		const leftnav: LeftNav = new LeftNav('nav', {href: PATH.CHAT});

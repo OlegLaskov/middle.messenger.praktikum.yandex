@@ -2,28 +2,14 @@ import Form from ".";
 import tmpl from './form.hbs';
 import './form.scss';
 import Spiner from '../spiner';
-import { connect } from "../../utils/HOC";
+import { connect, saveUserDataToStore } from "../../utils/HOC";
 import store, { Indexed } from "../../utils/store";
 import userApi from "../../api/user-api";
 
 class ProfileForm extends Form {
 
 	componentDidMount(): void {
-		store.set('userLoading', true);
-		userApi.getUser()
-			.then((user)=>{
-				if(user && typeof user === 'string'){
-					user = JSON.parse(user);
-					store.set('user', user);
-					store.set('userLoading', false);
-					console.log('user=', user);
-				}
-			})
-			.catch((e)=>{
-				console.log(e);
-				store.set('userLoading', false);
-			});
-		
+		saveUserDataToStore();
 	}
 
 	render(){

@@ -15,6 +15,7 @@ import Form from '../components/form';
 import Button from '../components/button';
 import Router from '../router';
 import userApi from '../api/user-api';
+import { saveUserDataToStore } from '../utils/HOC';
 
 const router = new Router('#root');
 function updateChatList(){
@@ -228,11 +229,11 @@ export default class ChatPage extends List {
 				nav,
 				main
 			},
-			'body'
+			'container'
 		);
 
 		super(
-			'div', 
+			'main', 
 			{
 				chatPage,
 				modalAddUser,
@@ -243,21 +244,7 @@ export default class ChatPage extends List {
 	}
 
 	componentDidMount(){
-		store.set('userLoading', true);
-		userApi.getUser()
-			.then((user)=>{
-				if(user && typeof user === 'string'){
-					user = JSON.parse(user);
-					store.set('user', user);
-					store.set('userLoading', false);
-					console.log('user=', user);
-				}
-			})
-			.catch((e)=>{
-				console.log(e);
-				store.set('userLoading', false);
-			});
-
+		saveUserDataToStore();
 		updateChatList();
 	}
 	render(): DocumentFragment {

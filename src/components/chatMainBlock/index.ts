@@ -18,7 +18,7 @@ class ChatMainBlock extends List{
 	startPage: TProps;
 	mainPage: TProps;
 
-	constructor(tagName = "main", propsAndChildren: TProps = {}, defaultClass = 'container-error'){
+	constructor(tagName = "div", propsAndChildren: TProps = {}, defaultClass = 'container-error'){
 
 		const {chats} = propsAndChildren;
 		console.log({chats});
