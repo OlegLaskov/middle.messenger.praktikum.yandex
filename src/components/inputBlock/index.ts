@@ -17,6 +17,12 @@ export default class InputBlock extends Component{
 		
 		if(!propsAndChildren.events.focusout && propsAndChildren.valid){
 			propsAndChildren.events.focusout = (e: FocusEvent)=>{
+				const type = (<HTMLInputElement> e.target).type;
+				type != 'file' && this.validate(e);
+			};
+		}
+		if(!propsAndChildren.events.change && propsAndChildren.valid){
+			propsAndChildren.events.change = (e: FocusEvent)=>{
 				this.validate(e);
 			};
 		}

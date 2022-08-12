@@ -6,11 +6,15 @@ import Avatar from '../components/avatar';
 import { PATH } from '../router/paths';
 import Link from '../components/link';
 import userApi from '../api/user-api';
-import store from '../utils/store';
 import InputList from '../components/list/input-list';
 import ProfileForm from '../components/form/profile-form';
 import Component from '../utils/component';
 import Router from '../router';
+import Modal from '../components/modal';
+import InputBlock from '../components/inputBlock';
+import Form from '../components/form';
+import { Indexed } from '../utils/store';
+import { connect } from '../utils/HOC';
 
 export type User = {
 	"id": number,
@@ -34,10 +38,19 @@ export default class ProfilePage extends List {
 
 		const {email, login, first_name, second_name, display_name, phone} = user || {};
 		
-		const classAvatar: string = readonly ? 'avatar avatar__changable' : 'avatar';
+		const classAvatar = readonly ? 'avatar avatar__changable' : 'avatar';
 
-		const avatarProps: {[key: string]: string} = readonly ? {changephoto: 'changephoto'} : {};
-		const avatar: Avatar = new Avatar(
+		const avatarProps = readonly ? {changephoto: 'changephoto'} : {};
+		const mapStateToProps = (state: Indexed<unknown>)=>{
+			console.log('Avatar: mapStateToProps: state', state);
+			let avatar = (<User> state?.user)?.avatar;
+			avatar && (avatar = 'https://ya-praktikum.tech/api/v2/resources/' + avatar);
+			return {
+				avatar
+			}
+		}
+		const ConnectedAvatar = connect(Avatar, mapStateToProps);
+		const avatar = new ConnectedAvatar(
 			'div',
 			avatarProps,
 			classAvatar
@@ -127,35 +140,87 @@ export default class ProfilePage extends List {
 			'body'
 		);
 		
-		const leftnav: LeftNav = new LeftNav('nav', {href: PATH.CHAT});
+		const leftnav = new LeftNav('nav', {href: PATH.CHAT});
+
+		const avatarName = 'avatar';
+		const imgInput = new InputBlock(
+			undefined,
+			{
+				input: {attr: {type: 'file', accept:"image/*", name: avatarName, placeholder: ' ', autofocus: true}},
+				name: avatarName,
+				label: 'Аватар',
+				valid: REG_EXP.NO_EMPTY, 
+				fieldErrorMsg: 'Нужно выбрать файл'
+			}
+		);
+		const changeAvatarBtn = new Button(undefined,
+			{
+				label: 'Поменять',
+				attr: {type: 'submit', id: 'changeAvatarBtn'}
+			});
+
+		const changeAvatarForm = new Form(undefined,
+			{
+				// formClass: 'form',
+				title: 'Загрузить файл',
+				inputs: new List(undefined, {imgInput}),
+				button: changeAvatarBtn,
+				request: {
+					f_submit: userApi.changeAvatar,
+					resolve: (resp: string)=>{
+						console.log('resp='+typeof resp, resp);
+						// toggleChangeAvatarModal(false);
+						// resp = JSON.parse(resp);
+					},
+					reject: (err: Error)=>{
+						console.log('err='+typeof err, err);
+						this.setProps({...this.props, errorMsg: 'Server error'});
+					}
+				}
+			},
+			'modal__dialog');
+		
+		const changeAvatarModal = new Modal(
+			undefined,
+			{
+				form: changeAvatarForm
+			},
+			'modal'
+		);
+
+		const events = {click: (event: PointerEvent)=>{
+			console.log('ChatMainBlock: click', event, 'target=', (<HTMLBodyElement> event.target).id, 
+				JSON.stringify(this.props.chatInfo), !!this.props.toggleOpenChatMenu);
+			const id = (<HTMLBodyElement> event.target).id;
+			if(id === 'avatar' || id === 'avatarImg'){
+				this.toggleChangeAvatarModal(true);
+			} else if(id === 'modal'){
+				this.toggleChangeAvatarModal(false);
+			}
+		}};
 	
 		super(
 			'div', 
 			{
 				first: leftnav,
 				second: form,
-				user
+				changeAvatarModal,
+				user,
+				events
 			},
 			'body'
 		)
 	}
 
-/* 	componentDidMount(): void {
-		store.set('userLoading', true);
-		userApi.getUser()
-			.then((user)=>{
-				if(user && typeof user === 'string'){
-					user = JSON.parse(user);
-					store.set('user', user);
-					store.set('userLoading', false);
-					console.log('user=', user);
-				}
-			})
-			.catch((e)=>{
-				console.log(e);
-				store.set('userLoading', false);
-			});
-		
+	toggleChangeAvatarModal = (mode: boolean) =>{
+		const changeAvatarModal = this.children.changeAvatarModal;
+		console.log('toggleAvatarModal=', mode);
+		if(mode){
+			changeAvatarModal.show();
+		} else if(mode === false){
+			changeAvatarModal.hide();
+		} else {
+			changeAvatarModal.isShow ? changeAvatarModal.hide() : changeAvatarModal.show();
+		}
 	}
- */	
 }

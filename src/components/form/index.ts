@@ -16,6 +16,9 @@ export default class Form extends Component {
 
 				const isValid = this.validate();
 				const {form} = this.state;
+				/* if(form.avatar){
+					form = e.target;
+				} */
 				console.log('form: isValid=' + isValid, form);
 
 				const {f_submit, resolve, reject} = this.props.request;
@@ -35,6 +38,24 @@ export default class Form extends Component {
 						this.state.form = {};
 					}
 					this.state.form[name] = value;
+				}
+			};
+		}
+		if(!propsAndChildren.events.change){
+			propsAndChildren.events.change = (e: FocusEvent)=>{
+				console.log('Form: event: change', e);
+				const {name, value, tagName, type, files} = <HTMLInputElement> e.target;
+				console.log('change: name=', name, 'value=', value, 'tagName=', tagName, 'type=', type);
+				if(name && tagName === 'INPUT'){
+					if(!this.state.form){
+						this.state.form = {};
+					}
+					if(type === 'file'){
+						this.state.form = {avatar: files?.[0]}; 
+					} else {
+						this.state.form[name] = value;
+					}
+					console.log('Form=', this.state.form);
 				}
 			};
 		}

@@ -3,8 +3,7 @@ import tmpl from './form.hbs';
 import './form.scss';
 import Spiner from '../spiner';
 import { connect, saveUserDataToStore } from "../../utils/HOC";
-import store, { Indexed } from "../../utils/store";
-import userApi from "../../api/user-api";
+import { Indexed } from "../../utils/store";
 
 class ProfileForm extends Form {
 

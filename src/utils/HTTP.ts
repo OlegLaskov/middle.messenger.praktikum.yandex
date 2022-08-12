@@ -9,7 +9,7 @@ export const METHODS = {
 
 export type RequestOptions = {
 	method?: string,
-	data?: {[key: string]: string|number|boolean|number[]},
+	data?: {[key: string]: string|number|boolean|number[]} | FormData,
 	timeout?: number,
 	retries?: number,
 	headers?: {[key: string]: string}
@@ -30,7 +30,7 @@ class HTTPTransport {
 	}
 
 	get = (url: string, options: RequestOptions = {}) => {
-		if(options.data){
+		if(options.data && !(options.data instanceof FormData)){
 			url += queryStringify(options.data);
 			delete options.data;
 		}
@@ -61,7 +61,13 @@ class HTTPTransport {
 
 			xhr.open(method, url);
 
-			!headers['Content-Type'] && (headers['content-type'] = 'application/json');
+			if(!headers['Content-Type']){
+				console.log('Content-Type !!! application/json');
+				headers['content-type'] = 'application/json'
+			} else {
+				console.log('!!! Content-Type:', headers, 'data=', data);
+			}
+			// !headers['Content-Type'] && (headers['content-type'] = 'application/json');
 
 			for (const key in headers) {
 				if (Object.prototype.hasOwnProperty.call(headers, key)) {

@@ -1,1 +1,5 @@
-<div class="avatar__img" width="130px" height="130px"></div>
+<div id="avatar" class="avatar__img {{imgClass}}" width="{{size}}px" height="{{size}}px">
+	{{#if avatar}}
+	<img id="avatarImg" src="{{avatar}}" alt="avatar" height="{{size}}px">
+	{{/if}}
+</div>
