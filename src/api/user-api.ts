@@ -1,7 +1,7 @@
 import {fetchWithRetry, METHODS, RequestOptions} from '../utils/HTTP';
 
 type Form = {[key: string]: string};
-type FormWithFile = {avatar: File};
+export type FormWithFile = {avatar: File};
 
 class UserAPI {
 

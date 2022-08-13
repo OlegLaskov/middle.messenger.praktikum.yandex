@@ -5,7 +5,7 @@ import LeftNav from '../components/leftnav';
 import Avatar from '../components/avatar';
 import { PATH } from '../router/paths';
 import Link from '../components/link';
-import userApi from '../api/user-api';
+import userApi, { FormWithFile } from '../api/user-api';
 import InputList from '../components/list/input-list';
 import ProfileForm from '../components/form/profile-form';
 import Component from '../utils/component';
@@ -13,7 +13,7 @@ import Router from '../router';
 import Modal from '../components/modal';
 import InputBlock from '../components/inputBlock';
 import Form from '../components/form';
-import { Indexed } from '../utils/store';
+import store, { Indexed } from '../utils/store';
 import { connect } from '../utils/HOC';
 
 export type User = {
@@ -166,11 +166,13 @@ export default class ProfilePage extends List {
 				inputs: new List(undefined, {imgInput}),
 				button: changeAvatarBtn,
 				request: {
-					f_submit: userApi.changeAvatar,
+					f_submit: (form: FormWithFile)=>{
+						this.toggleChangeAvatarModal(false); 
+						return userApi.changeAvatar(form);
+					},
 					resolve: (resp: string)=>{
-						console.log('resp='+typeof resp, resp);
-						// toggleChangeAvatarModal(false);
-						// resp = JSON.parse(resp);
+						const user = JSON.parse(resp);
+						store.set('user', user);
 					},
 					reject: (err: Error)=>{
 						console.log('err='+typeof err, err);

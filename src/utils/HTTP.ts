@@ -88,8 +88,8 @@ class HTTPTransport {
 			xhr.onabort = reject;
 			xhr.onerror = reject;
 			xhr.ontimeout = reject;
-
-			method === METHODS.GET ? xhr.send() : xhr.send(JSON.stringify(data));
+			const body = data instanceof FormData ? data : JSON.stringify(data);
+			method === METHODS.GET ? xhr.send() : xhr.send(body);
 			
 		});
 	};
