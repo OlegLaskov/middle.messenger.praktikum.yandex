@@ -146,7 +146,7 @@ export default class ProfilePage extends List {
 		const imgInput = new InputBlock(
 			undefined,
 			{
-				input: {attr: {type: 'file', accept:"image/*", name: avatarName, placeholder: ' ', autofocus: true}},
+				input: {attr: {type: 'file', accept:"image/*", name: avatarName, id: avatarName}},
 				name: avatarName,
 				label: 'Аватар',
 				valid: REG_EXP.NO_EMPTY, 
@@ -192,7 +192,7 @@ export default class ProfilePage extends List {
 			console.log('ChatMainBlock: click', event, 'target=', (<HTMLBodyElement> event.target).id, 
 				JSON.stringify(this.props.chatInfo), !!this.props.toggleOpenChatMenu);
 			const id = (<HTMLBodyElement> event.target).id;
-			if(id === 'avatar' || id === 'avatarImg'){
+			if(id === 'avatarDiv' || id === 'avatarImg'){
 				this.toggleChangeAvatarModal(true);
 			} else if(id === 'modal'){
 				this.toggleChangeAvatarModal(false);

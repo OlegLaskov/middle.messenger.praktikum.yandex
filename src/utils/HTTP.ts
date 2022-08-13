@@ -61,11 +61,13 @@ class HTTPTransport {
 
 			xhr.open(method, url);
 
-			if(!headers['Content-Type']){
+			console.log('request:'+url, headers, 'data=', data, 'instanceof FormData=', data instanceof FormData);
+
+			if(!headers['Content-Type'] && !(data instanceof FormData)){
 				console.log('Content-Type !!! application/json');
 				headers['content-type'] = 'application/json'
 			} else {
-				console.log('!!! Content-Type:', headers, 'data=', data);
+				console.log('!!! Content-Type:'+url, headers, 'data=', data);
 			}
 			// !headers['Content-Type'] && (headers['content-type'] = 'application/json');
 
