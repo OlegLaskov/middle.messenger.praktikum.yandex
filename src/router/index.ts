@@ -33,8 +33,6 @@ export default class Router {
 		window.onpopstate = event => {
 			const doc = event?.currentTarget;
 			if(doc){
-				console.log('ONPOPSTATE: pathname', (<Document> doc).location?.pathname);
-				alert('location');
 				this._onRoute((<Document> doc).location?.pathname);
 			}
 		}
@@ -51,10 +49,9 @@ export default class Router {
 		this._currentRoute = route;
 		if(route){
 			try{
-				route.render(); //(route, pathname);
+				route.render();
 			} catch(e){
 				console.log('Error:', e);
-				// setTimeout(()=>{this.go(PATH.ERROR500);}, 1000);
 				
 			}
 		} else {

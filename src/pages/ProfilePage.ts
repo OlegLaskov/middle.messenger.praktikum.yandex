@@ -32,8 +32,6 @@ export default class ProfilePage extends List {
 	constructor(tag = 'div', props: {readonly: boolean, user?: User} 
 		= {readonly:true}) {
 
-		console.log('ProfilePage', props);
-			
 		const {readonly, user} = props;
 
 		const {email, login, first_name, second_name, display_name, phone} = user || {};
@@ -42,7 +40,6 @@ export default class ProfilePage extends List {
 
 		const avatarProps = readonly ? {changephoto: 'changephoto'} : {};
 		const mapStateToProps = (state: Indexed<unknown>)=>{
-			console.log('Avatar: mapStateToProps: state', state);
 			let avatar = (<User> state?.user)?.avatar;
 			avatar && (avatar = 'https://ya-praktikum.tech/api/v2/resources/' + avatar);
 			return {
@@ -71,7 +68,7 @@ export default class ProfilePage extends List {
 					valid: REG_EXP.PHONE, errorMsg: ERROR_MSG.PHONE},
 			];
 		
-		const inputObj = fields.reduce((obj: {[key:string|symbol]: Field}, field, i)=>{
+		const inputObj = fields.reduce((obj: {[key:string|symbol]: Field}, field)=>{
 			obj[field.name] = field;
 			return obj;
 		}, {});
@@ -122,7 +119,6 @@ export default class ProfilePage extends List {
 				request: {
 					f_submit: userApi.changeProfile,
 					resolve: (resp: string)=>{
-						console.log('resp='+typeof resp, resp);
 						const res = JSON.parse(resp);
 						const {reason} = res;
 						if(reason){
@@ -191,8 +187,6 @@ export default class ProfilePage extends List {
 		);
 
 		const events = {click: (event: PointerEvent)=>{
-			console.log('ChatMainBlock: click', event, 'target=', (<HTMLBodyElement> event.target).id, 
-				JSON.stringify(this.props.chatInfo), !!this.props.toggleOpenChatMenu);
 			const id = (<HTMLBodyElement> event.target).id;
 			if(id === 'avatarDiv' || id === 'avatarImg'){
 				this.toggleChangeAvatarModal(true);
@@ -216,7 +210,6 @@ export default class ProfilePage extends List {
 
 	toggleChangeAvatarModal = (mode: boolean) =>{
 		const changeAvatarModal = this.children.changeAvatarModal;
-		console.log('toggleAvatarModal=', mode);
 		if(mode){
 			changeAvatarModal.show();
 		} else if(mode === false){

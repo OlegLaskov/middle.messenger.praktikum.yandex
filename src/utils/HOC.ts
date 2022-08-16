@@ -15,7 +15,6 @@ export function connect(ExtComponent: typeof Component, mapStateToProps?: (state
 			store.on(StoreEvents.Updated, ()=>{
 				const state = store.getState();
 				if(mapStateToProps){
-					console.log('mapStateToProps', state);
 					this.setProps({...this.props, ...mapStateToProps(state)});
 				} else {
 					this.setProps({...this.props, ...state});
@@ -34,7 +33,6 @@ export function saveUserDataToStore(){
 					if(!user.id) router.go(PATH.LOGIN);
 					store.set('user', user);
 					store.set('userLoading', false);
-					console.log('user=', user);
 				}
 			})
 			.catch((e)=>{

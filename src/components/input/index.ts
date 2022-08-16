@@ -1,5 +1,5 @@
 import tmpl from './input.hbs';
-import Component, { TProps } from '../../utils/component';
+import Component from '../../utils/component';
 import './input.scss';
 
 export type InputAttributes = {
@@ -21,21 +21,10 @@ export default class Input extends Component{
 		super(tagName, propsAndChildren, defaultClass);
 	}
 
-	componentDidMount(){
-		// console.log('Input DidMount=', JSON.stringify(this.props));
-
-	}
-
-	componentDidUpdate(oldProps: TProps, newProps: TProps): boolean {
-		// console.log('Input DidUpdate=', JSON.stringify(this.props));
-		return !this.compareProps(oldProps, newProps);
-	}
-
 	validate(){
 		return true;
 	}
 	render(){
-		// console.log('Input render=', this.props);
 		return this.compile(tmpl);
 	}
 }

@@ -1,6 +1,5 @@
 import {fetchWithRetry, METHODS, RequestOptions} from '../utils/HTTP';
 import store from '../utils/store';
-import { cloneDeep } from '../utils/utils';
 import BaseAPI from './base-api';
 
 type Tcreate = {title: string};
@@ -47,7 +46,6 @@ class ChatAPI extends BaseAPI {
 		const url = this.BASE_URL,
 			options: RequestOptions = {method: METHODS.POST};
 		options.data = data;
-		console.log({url, options});
 		return fetchWithRetry(url, options);
 	}
 	request = (query?: string): Promise<string | Error> => {
@@ -86,16 +84,18 @@ class ChatAPI extends BaseAPI {
 		}, {} as TstoreMsgs);
 	}
 
-	initSocket = (userId: number, chatId: number) => { // , token: string
-		if(this.pingInterval){
-			clearInterval(this.pingInterval);
-		}
+	initSocket = (userId: number, chatId: number) => {
+
+		this.pingInterval && clearInterval(this.pingInterval);
+
+		this.socket && this.socket.close();
+
 		this.userId = userId;
 		const url = this.BASE_URL + '/token/' + chatId,
-			options: RequestOptions = {method: METHODS.POST};
+			options = {method: METHODS.POST};
+
 		fetchWithRetry(url, options)
 		.then((resp: string)=>{
-			console.log('initSocket: resp=', resp);
 			const res = JSON.parse(resp);
 			const {token} = res;
 			this.socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`);
@@ -126,13 +126,7 @@ class ChatAPI extends BaseAPI {
 				} else {
 					const {type, id} = parsedData;
 					if(type === 'message'){
-						/* let messages = <Tmsg[] | undefined> (store.getState()).messages;
-
-						if(!messages){
-							messages = [];
-						} */
 						parsedData.chat_id = chatId;
-						// messages.push(this.transformMsg(parsedData));
 						store.set(`messages.${chatId}.${id}`, this.transformMsg(parsedData));
 					}
 				}
@@ -161,11 +155,9 @@ class ChatAPI extends BaseAPI {
 		}
 	}
 	sendMessage = (data: {content: string, type?: string}) => {
-		console.log('sendMessage=', data, ', socket=', this.socket);
 		if(this.socket){
 			data.type = 'message';
 			this.socket.send(JSON.stringify(data));
-			console.log('SENT !!!');
 		} else {
 			console.log('sendMessage: NO SOCKET');
 		}
@@ -173,7 +165,6 @@ class ChatAPI extends BaseAPI {
 	}
 
 	getMessages = (chatId: number) => {
-		console.log('getMessages: socket=', this.socket);
 		if(this.socket){
 			const url = this.BASE_URL + '/new/' + chatId, // get new message count
 				options: RequestOptions = {method: METHODS.GET};

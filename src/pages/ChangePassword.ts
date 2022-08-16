@@ -8,7 +8,6 @@ import {REG_EXP, ERROR_MSG, Field, FieldBlock} from '../utils/validationConst';
 import LeftNav from '../components/leftnav';
 import Avatar from '../components/avatar';
 import { PATH } from '../router/paths';
-import store from '../utils/store';
 import userApi from '../api/user-api';
 import { User } from './ProfilePage';
 import Router from '../router';
@@ -17,10 +16,7 @@ export default class ChangePassword extends List {
 	router = new Router('#root');
 	constructor(tag = 'div', props: {user?: User} = {}) {
 
-		console.log('ChangePassword', props);
-
 		const classAvatar = 'avatar';
-
 		const avatarProps = {};
 		const avatar: Avatar = new Avatar(
 			'div',
@@ -92,7 +88,6 @@ export default class ChangePassword extends List {
 				request: {
 					f_submit: userApi.changePassword,
 					resolve: (resp: string)=>{
-						console.log('resp='+typeof resp, resp);
 						const res = JSON.parse(resp);
 						const {reason} = res;
 						if(reason){

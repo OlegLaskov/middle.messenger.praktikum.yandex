@@ -3,7 +3,6 @@ import Component from '../../utils/component';
 
 export default class List extends Component{
 	render(){
-		console.log('List render=', this.props);
 		let tmpl = '';
 		if(this.children && Object.keys(this.children).length){
 			Object.keys(this.children).forEach(key => {

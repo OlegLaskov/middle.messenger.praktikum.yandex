@@ -36,7 +36,6 @@ export default class AddChatForm extends Form {
 				request: {
 					f_submit: chatApi.create,
 					resolve: (resp: string)=>{
-						console.log('resp='+typeof resp, resp);
 						updateChatList();
 					},
 					reject: (err: Error)=>{
@@ -49,7 +48,6 @@ export default class AddChatForm extends Form {
 	}
 
 	render(){
-		// console.log('AddChatForm render=', this.props);
 		return this.compile(tmpl, this.props);
 	}
 }

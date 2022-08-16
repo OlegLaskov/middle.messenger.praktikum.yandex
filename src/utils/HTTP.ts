@@ -61,15 +61,7 @@ class HTTPTransport {
 
 			xhr.open(method, url);
 
-			console.log('request:'+url, headers, 'data=', data, 'instanceof FormData=', data instanceof FormData);
-
-			if(!headers['Content-Type'] && !(data instanceof FormData)){
-				console.log('Content-Type !!! application/json');
-				headers['content-type'] = 'application/json'
-			} else {
-				console.log('!!! Content-Type:'+url, headers, 'data=', data);
-			}
-			// !headers['Content-Type'] && (headers['content-type'] = 'application/json');
+			!headers['Content-Type'] && !(data instanceof FormData) && (headers['content-type'] = 'application/json');
 
 			for (const key in headers) {
 				if (Object.prototype.hasOwnProperty.call(headers, key)) {

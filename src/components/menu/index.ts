@@ -10,7 +10,6 @@ export default class Menu extends List{
 	}
 
 	render(){
-		console.log('Menu render=', this.props);
 		let tmpl = '';
 		if(this.children && Object.keys(this.children).length){
 			Object.keys(this.children).forEach(key => {

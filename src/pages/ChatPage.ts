@@ -27,7 +27,6 @@ function updateChatList(){
 				if(!Array.isArray(chats)) router.go(PATH.LOGIN);
 				store.set('chats', chats);
 				store.set('chatsLoading', false);
-				console.log('chats=', chats);
 			}
 		})
 		.catch((e)=>{
@@ -124,20 +123,15 @@ export default class ChatPage extends List {
 				request: {
 					f_submit: userApi.searchUsersByLogin,
 					resolve: (resp: string)=>{
-						console.log('resp='+typeof resp, resp);
 						toggleAddUserModal(false);
 						resp = JSON.parse(resp);
 						if(Array.isArray(resp)){
 							const users = resp.map(user=>user.id),
 								chatId = this.children?.chatPage?.children?.main?.props?.chatInfo?.id;
 							
-							console.log('users', users, 'chatId', chatId);
-							chatApi.addUser(users, chatId).then(resp=>{
-								console.log('addUser: resp='+typeof resp, resp);
-								
-							}).catch(err=>{
+							chatApi.addUser(users, chatId).catch(err=>{
 								console.log('addUser: err='+typeof err, err);
-							})
+							});
 						}
 					},
 					reject: (err: Error)=>{
@@ -168,20 +162,15 @@ export default class ChatPage extends List {
 				request: {
 					f_submit: userApi.searchUsersByLogin,
 					resolve: (resp: string)=>{
-						console.log('resp='+typeof resp, resp);
 						toggleDeleteUserModal(false);
 						resp = JSON.parse(resp);
 						if(Array.isArray(resp)){
 							const users = resp.map(user=>user.id),
 								chatId = this.children?.chatPage?.children?.main?.props?.chatInfo?.id;
 							
-							console.log('users', users, 'chatId', chatId);
-							chatApi.deleteUser(users, chatId).then(resp=>{
-								console.log('deleteUser: resp='+typeof resp, resp);
-								
-							}).catch(err=>{
+							chatApi.deleteUser(users, chatId).catch(err=>{
 								console.log('deleteUser: err='+typeof err, err);
-							})
+							});
 						}
 					},
 					reject: (err: Error)=>{
@@ -200,7 +189,6 @@ export default class ChatPage extends List {
 		);
 
 		const toggleAddUserModal = (mode: boolean) =>{
-			console.log('toggleAddUserModal=', mode);
 			if(mode){
 				modalAddUser.show();
 			} else if(mode === false){
@@ -211,7 +199,6 @@ export default class ChatPage extends List {
 		}
 	
 		const toggleDeleteUserModal = (mode: boolean) =>{
-			console.log('toggleDeleteUserModal=', mode);
 			if(mode){
 				modalDeleteUser.show();
 			} else if(mode === false){
@@ -248,7 +235,6 @@ export default class ChatPage extends List {
 		updateChatList();
 	}
 	render(): DocumentFragment {
-		console.log('ChatPage render=', this.props, 'children', this.children);
 		let tmpl = '';
 		if(this.children && Object.keys(this.children).length){
 			Object.keys(this.children).forEach(key => {

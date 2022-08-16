@@ -12,17 +12,23 @@ export default class ChatItem extends Component{
 		}
 		if(!propsAndChildren.events.click){
 			propsAndChildren.events.click = ()=>{
-				console.log('click', this.props.id, JSON.stringify(this.props));
 				const {id} = this.props;
 				store.set('selectedChat', id);
 			};
+		}
+		if(!propsAndChildren.attr){
+			propsAndChildren.attr = {id: `chatItem${propsAndChildren.id}`};
 		}
 		super(tagName, propsAndChildren, defaultClass);
 		
 	}
 
 	render(){
-		// console.log('ChatItem render=', this.props);
+		if(this.props.selected){
+			this.props.attr.class = `chatItem ${this.props.selected}`;
+		} else {
+			this.props.attr.class = 'chatItem';
+		}
 		return this.compile(tmpl, this.props);
 	}
 }

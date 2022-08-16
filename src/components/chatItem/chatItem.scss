@@ -7,22 +7,22 @@ $selected: #E4EDFD;
 	box-sizing: border-box;
 	width: auto;
 	height: 72px;
-	border-bottom: 1px solid $lightBorder;
-	margin: 0 10px;
-	padding: 0;
-	display: flex;
+	margin: 0;
+	padding: 0 10px;
+	// display: flex;
 	cursor: pointer;
 	position: relative;
 
 	&__inner {
 		box-sizing: border-box;
 		position: absolute;
-		top: 2;
-		left: -10px;
+		top: 5px;
+		left: 0px;
 		padding: 0 10px;
 		display: flex;
 		height: 67px;
 		width: 310px;
+		border-bottom: 1px solid $lightBorder;
 	}
 	&__selected {
 		background-color: $selected !important;

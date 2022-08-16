@@ -26,22 +26,11 @@ class UserAPI {
 
 	public changeAvatar(form: FormWithFile){
 		const url = '/user/profile/avatar',
-			options: RequestOptions = {method: METHODS.PUT}, //, headers: {'Content-Type': 'multipart/form-data'}
+			options: RequestOptions = {method: METHODS.PUT},
 			avatarData = new FormData();
-		/* for (const key in form) {
-			console.log('key', key, form[key]);
-			avatarData.append(key, form[key]);
-		} */
 		const {avatar} = form;
-		const fileName = avatar.name;
-		console.log('changeAvatar: avatar=', form, 'avatar', avatar, 'fileName', fileName);
-		avatarData.append('avatar', avatar, fileName);
-		// avatarData.avatar = form.avatar;
+		avatarData.append('avatar', avatar);
 		options.data = avatarData;
-		console.log('options', options);
-		
-		console.log('avatarData: =', avatarData.get('avatar'));
-		
 		return fetchWithRetry(url, options);
 	}
 

@@ -44,7 +44,6 @@ export default class SendMessageForm extends Form {
 	
 					const isValid = this.validate();
 					const {form} = this.state;
-					console.log('SendMessageForm: isValid=' + isValid, form);
 	
 					if(isValid){
 						chatApi.sendMessage(form);
@@ -74,7 +73,6 @@ export default class SendMessageForm extends Form {
 	}
 
 	render(){
-		console.log('SendMessageForm render=', this.props, 'children=', this.children);
 		return this.compile(tmpl, this.props);
 	}
 }

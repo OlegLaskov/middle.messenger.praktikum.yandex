@@ -11,7 +11,6 @@ export default class MenuItem extends Component{
 	}
 
 	render(){
-		console.log('MenuItem render=', this.props);
 		return this.compile(tmpl, this.props);
 	}
 }

@@ -51,13 +51,10 @@ export default class LoginPage extends Form {
 				request: {
 					f_submit: loginApi.login,
 					resolve: (resp: string)=>{
-						// console.log('resp='+typeof resp, resp);
 						if(resp.toUpperCase() === 'OK'){
-							// TODO - Авторизован -> redirect to Main Page
 							this.router.go(PATH.CHAT);
 						} else {
 							const res = JSON.parse(resp);
-							console.log('res', res, this);
 							const {reason} = res;
 							this.setProps({...this.props, errorMsg: reason});
 						}

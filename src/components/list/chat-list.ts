@@ -43,12 +43,11 @@ class ChatList extends List{
 		let res = false;
 		const oldChatList = oldProps.chats || [];
 		const newChatList = newProps.chats;
-		console.log('ChatList DidUpdate: selectedChat='+ oldProps.selectedChat, 'oldProps=', oldProps, 
-		'newProps=', newProps, 'oldChatList=', oldChatList, 'newChatList=', newChatList);
 		
 		res = newChatList && (!isEqual(oldChatList, newChatList) || 
-			(newProps?.children && newChatList?.length !== Object.keys(newProps.children).length));
-		console.log('ChatList: DidUpdate: res='+ res, oldProps.loading !== newProps.loading);
+			(newProps?.children && newChatList?.length !== Object.keys(newProps.children).length))
+			|| (newProps?.children && !newProps.loading && oldProps.loading);
+
 		if(res){
 			const newPropsChildren: TProps = {};
 
@@ -60,7 +59,6 @@ class ChatList extends List{
 					newPropsChildren[key].avatar = new URL('/resources/miniAvatar.jpg', import.meta.url);
 				}
 			}
-			console.log('ChatList: newPropsChildren=', newPropsChildren);
 			newProps.children = newPropsChildren;
 			const newChildren: TProps = {};
 			for (const key in newPropsChildren) {
@@ -72,12 +70,9 @@ class ChatList extends List{
 					newChildren[key] = new ChatItem(undefined, newPropsChildren[key]);
 				}
 			}
-			// this.setProps({...this.props, ...newChildren});
 			this.children = newChildren;
-
-			
 		}
-		console.log('ChatList: selectedChat=', oldProps?.selectedChat, newProps?.selectedChat);
+
 		if(oldProps?.selectedChat !== newProps?.selectedChat){
 			let key, chatProps;
 			if(oldProps?.selectedChat){
@@ -98,7 +93,6 @@ class ChatList extends List{
 		return res;
 	}
 	render(){
-		console.log('ChatList render=', this.props, ', children=', this.children);
 		if(this.props.loading){
 			return (new Spiner()).render();
 		}

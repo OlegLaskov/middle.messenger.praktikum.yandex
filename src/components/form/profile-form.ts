@@ -12,7 +12,6 @@ class ProfileForm extends Form {
 	}
 
 	render(){
-		console.log('ProfileForm render=', this.props, 'children=', this.children);
 		if(this.props.loading){
 			return (new Spiner()).render();
 		}
@@ -24,7 +23,6 @@ class ProfileForm extends Form {
 	}
 }
 function mapStateToProps(state: Indexed<unknown>){
-	console.log('ProfileForm: mapStateToProps: state', state);
 	
 	return {
 		loading: state.userLoading,

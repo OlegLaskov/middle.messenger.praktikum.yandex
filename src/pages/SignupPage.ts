@@ -87,8 +87,7 @@ export default class SignupPage extends Form {
 				link,
 				request: {
 					f_submit: signupApi.signup,
-					resolve: (resp: string)=>{
-						console.log('resp='+typeof resp, resp);
+					resolve: ()=>{
 						this.router.go(PATH.CHAT);
 					},
 					reject: (err: Error)=>{

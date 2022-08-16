@@ -9,7 +9,6 @@ import LineInput from '../lineinput';
 
 class InputList extends List{
 	componentDidMount(){
-		console.log('componentDidMount=', JSON.stringify(this.props), Object.keys(this.children));
 		if(this.props.children && Object.keys(this.props.children).length){
 			const {children, readonly} = this.props;
 			const newChildren: TProps = {};
@@ -27,7 +26,6 @@ class InputList extends List{
 		let res = false;
 		const oldFieldList = oldProps.children;
 		const newFieldList = newProps.children;
-		console.log('InputList DidUpdate', newFieldList && JSON.stringify((newFieldList)), newProps && newProps.user);
 		
 		res = !this.compareProps(oldProps, newProps);
 		!res && (res = !this.compareProps(oldFieldList, newFieldList));
@@ -48,7 +46,6 @@ class InputList extends List{
 		return res;
 	}
 	render(){
-		console.log('InputList render=', (this.props), ', children=', this.children);
 		let tmpl = '';
 		if(this.children && Object.keys(this.children).length){
 			Object.keys(this.children).forEach(key => {

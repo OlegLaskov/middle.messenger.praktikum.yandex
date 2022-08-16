@@ -11,8 +11,6 @@ export default class Modal extends Component{
 		}
 		if(!propsAndChildren.events.click){
 			propsAndChildren.events.click = (event: PointerEvent)=>{
-				console.log('Modal: click: event=', event, 'id=', (<HTMLBodyElement> event.target).id, 'props=', 
-				JSON.stringify(this.props));
 				if((<HTMLBodyElement> event.target).className === 'modal'){
 					this.hide();
 				}
@@ -23,7 +21,6 @@ export default class Modal extends Component{
 	}
 
 	render(){
-		console.log('Modal render=', this.props, 'children', this.children);
 		return this.compile(tmpl, this.props);
 	}
 }
