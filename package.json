@@ -7,7 +7,7 @@
 		"dev": "parcel -p3000 src/index.html",
 		"build": "parcel build src/index.html",
 		"start": "parcel build src/index.html && node server.js",
-		"test": "mocha"
+		"test": "mocha -r jsdom-global/register"
 	},
 	"keywords": [
 		"messenger",
@@ -33,6 +33,8 @@
 		"express": "4.17.3",
 		"express-handlebars": "6.0.5",
 		"hbs": "4.2.0",
+		"jsdom": "20.0.0",
+		"jsdom-global": "3.0.2",
 		"mocha": "10.0.0",
 		"parcel": "2.5.0",
 		"parcel-transformer-hbs": "1.0.4",
