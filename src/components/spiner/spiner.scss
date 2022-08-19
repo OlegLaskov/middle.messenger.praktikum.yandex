@@ -1,4 +1,5 @@
-$spiner_color: #0071f0;
+@import '../../globalVar.scss';
+$spiner_color: $blueButton;
 
 .spiner {
 	box-sizing: border-box;

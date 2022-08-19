@@ -76,7 +76,7 @@ export default class ChangePassword extends List {
 		const link = null;
 		
 		const form: Component = new ProfileForm(
-			'main', 
+			'div', 
 			{
 				formClass: 'profile',
 				titleClass: 'form__title',

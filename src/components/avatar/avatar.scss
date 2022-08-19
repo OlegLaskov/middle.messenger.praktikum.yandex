@@ -1,11 +1,12 @@
 $bkgrAvatar: #EFEFEF;
+$avatarSize: 130px;
 
 .avatar {
 	margin: 20px;
 	text-align: center;
 	height: auto;
-	min-height: 130px;
-	width: 130px;
+	min-height: $avatarSize;
+	width: $avatarSize;
 	background-color: $bkgrAvatar;
 	border-radius: 50%;
 	position: relative;
@@ -23,8 +24,8 @@ $bkgrAvatar: #EFEFEF;
 		position: absolute;
 		top: 0px;
 		left: 0px;
-		height: 130px;
-		width: 130px;
+		height: $avatarSize;
+		width: $avatarSize;
 		cursor: default;
 	}
 	&__noPhoto {
@@ -34,7 +35,7 @@ $bkgrAvatar: #EFEFEF;
 		text-align: center;
 	}
 	&__img img {
-		max-width: 130px;
+		max-width: $avatarSize;
 		object-fit:cover;
 	}
 	&__changable:hover &__img {

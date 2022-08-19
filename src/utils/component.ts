@@ -210,8 +210,14 @@ class Component {
 				self.eventBus().emit(Component.EVENTS.FLOW_CDU, oldTarget, target);
 				return true;
 			},
-			deleteProperty() {
-				throw new Error("Нет доступа");
+			deleteProperty(target, prop) {
+				if (isPrivateProp(prop)) {
+					console.log('Error: isPrivateProp', target, prop);
+					throw new Error("Нет доступа");
+				} else {
+					delete target[prop];
+					return true;
+				}
 			}
 		});
 	}

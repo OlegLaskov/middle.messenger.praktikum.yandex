@@ -16,6 +16,7 @@ import Button from '../components/button';
 import Router from '../router';
 import userApi from '../api/user-api';
 import { saveUserDataToStore } from '../utils/HOC';
+import Link from '../components/link';
 
 const router = new Router('#root');
 function updateChatList(){
@@ -39,15 +40,14 @@ export default class ChatPage extends List {
 
 	constructor(){
 
-		const linkProfile = new Label(
-			'a',
+		const linkProfile = new Link(
+			undefined,
 			{
-				attr: {
-					href: PATH.PROFILE
-				},
+				href: PATH.PROFILE,
 				label: 'Профиль >',
+				class1: 'nav__link_profile',
 			},
-			'nav__link_profile'
+			'nav__block nav__link_block'
 		);
 
 		const addChatForm = new AddChatForm(updateChatList);
@@ -233,6 +233,18 @@ export default class ChatPage extends List {
 	componentDidMount(){
 		saveUserDataToStore();
 		updateChatList();
+	}
+	show(): void {
+		saveUserDataToStore();
+		updateChatList();
+		this.getContent().style.display = "block";
+		this.isShow = true;
+	}
+	hide(): void {
+		this.getContent().style.display = "none";
+		this.isShow = false;
+		chatApi.closeSocket();
+		store.set('selectedChat', null);
 	}
 	render(): DocumentFragment {
 		let tmpl = '';

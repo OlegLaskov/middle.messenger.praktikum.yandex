@@ -1,7 +1,4 @@
-$lightBorder: #e0e0e0;
-$contentColor: #999999;
-$blue: #3369F3;
-$selected: #E4EDFD;
+@import '../../globalVar.scss';
 
 .chatItem {
 	box-sizing: border-box;
@@ -9,7 +6,6 @@ $selected: #E4EDFD;
 	height: 72px;
 	margin: 0;
 	padding: 0 10px;
-	// display: flex;
 	cursor: pointer;
 	position: relative;
 
@@ -25,7 +21,7 @@ $selected: #E4EDFD;
 		border-bottom: 1px solid $lightBorder;
 	}
 	&__selected {
-		background-color: $selected !important;
+		background-color: $selectedChatColor !important;
 	}
 
 	&__avatar {
@@ -66,7 +62,7 @@ $selected: #E4EDFD;
 		display: inline-block;
 		text-align: end;
 		font-size: 0.8rem;
-		color: $contentColor;
+		color: $grayFont;
 	}
 	&__main {
 		display: flex;
@@ -77,13 +73,13 @@ $selected: #E4EDFD;
 	&__content {
 		display: inline-block;
 		font-size: 0.9rem;
-		color: $contentColor;
+		color: $grayFont;
 	}
 	&__unread_count {
 		box-sizing: border-box;
 		font-size: 0.9rem;
-		background-color: $blue;
-		color: white;
+		background-color: $blueBackgrnd;
+		color: $menuBackground;
 		width: 20px;
 		height: 20px;
 		position: absolute;

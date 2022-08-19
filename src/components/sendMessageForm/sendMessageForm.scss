@@ -1,16 +1,10 @@
-$blueButton: #0071f0;
-$focusButton: rgba(0, 113, 240, 0.7);
-$backgroundNav: #FBFBFB;
-$backgroundInput: #EFEFEF;
-$blackFont: #1E1E1E;
-$grayFont: #999999;
-$border: #EAEAEA;
+@import '../../globalVar.scss';
 
 .send_message {
 	box-sizing: border-box;
 	margin: 0 10px;
 	padding: 5px 4px;
-	border-top: solid 1px $border;
+	border-top: solid 1px $grayLine;
 
 	&__attach_btn {
 		display: inline-block;

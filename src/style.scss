@@ -1,17 +1,4 @@
-$font: sans-serif;
-$lightShadow: #ccc;
-$blueLink: #0071f0;
-$backgroundNav: #FBFBFB;
-$lightBorder: #e0e0e0;
-$grayLabel: #9e9e9e;
-$blueInput: #1a73a8;
-$backgroundSearchInput: #EFEFEF;
-$blackFont: #1E1E1E;
-$grayFont: #999999;
-$blueButton: #0071f0;
-$focusButton: rgba(0, 113, 240, 0.7);
-$chatColor: #FBFBFB;
-$selectedChatColor: #E4EDFD;
+@import './globalVar.scss';
 
 body {
 	font-family: $font;
@@ -125,8 +112,8 @@ li {
 		padding: 4px 5px 4px 40px;
 		margin: 10px 0;
 		color: $blackFont;
-		background-color: $backgroundSearchInput;
-		border: 1px solid $backgroundSearchInput;
+		background-color: $backgroundInput;
+		border: 1px solid $backgroundInput;
 		border-radius: 5px;
 		outline: none;
 		transition: 0.3s;
@@ -139,7 +126,7 @@ li {
 
 .chat_list {
 	box-sizing: border-box;
-	height: calc(100vh - 136px);
+	height: calc(100vh - 147px);
 	overflow-y: auto;
 	width: 327px;
 
@@ -150,7 +137,7 @@ li {
 		border-bottom: 1px solid $lightBorder;
 		font-size: 1.05rem;
 		color: $blackFont;
-		background-color: $chatColor;
+		background-color: $backgroundNav;
 
 		&__selected {
 			background-color: $selectedChatColor;
@@ -162,6 +149,7 @@ li {
 
 	&__select_chat_msg {
 		color: $grayFont;
+		text-align: center;
 	}
 }
 

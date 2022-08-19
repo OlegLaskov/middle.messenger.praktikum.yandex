@@ -1,6 +1,4 @@
-$black: #1e1e1e;
-$grayLine: #eaeaea;
-$grayFont: #999999;
+@import '../../globalVar.scss';
 
 .line {
 	position: relative;
@@ -20,7 +18,7 @@ $grayFont: #999999;
 	}
 	&__key {
 		flex: 1;
-		color: $black;
+		color: $blackFont;
 		text-align: left;
 	}
 	&__value {

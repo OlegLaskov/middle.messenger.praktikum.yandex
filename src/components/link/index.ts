@@ -1,9 +1,25 @@
 import tmpl from './link.hbs';
-import Component from '../../utils/component';
+import Component, { TProps } from '../../utils/component';
+import Router from '../../router';
 import './link.scss';
 
 export default class Link extends Component{
-	constructor(tagName = "div", propsAndChildren = {}, defaultClass = 'link__group'){
+	router = new Router('#root');
+	constructor(tagName = "div", propsAndChildren:TProps = {}, defaultClass = 'link__group'){
+		
+		if(!propsAndChildren.events){
+			propsAndChildren.events = {};
+		}
+		if(!propsAndChildren.events.click){
+			propsAndChildren.events.click = (event: PointerEvent)=>{
+				event.preventDefault();
+				if(propsAndChildren.href){
+					
+					this.router.go(propsAndChildren.href);
+				}
+			};
+		}
+
 		super(tagName, propsAndChildren, defaultClass);
 	}
 

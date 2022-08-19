@@ -1,5 +1,4 @@
-$menuBackground: #fff;
-$menuShadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
+@import '../../globalVar.scss';
 
 .chatMenu {
 	position: absolute;
@@ -9,5 +8,4 @@ $menuShadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
 	box-shadow: $menuShadow;
 	border-radius: 12px;
 	padding: 5px;
-	// display: none;
 }

@@ -30,68 +30,70 @@ type TChat = {
 	last_message: TLastMessage
 }
 
-function getChatPropsById(chats: TChat[], id: number): TChat|null {
-	for (let i = 0; i < chats.length; i++) {
-		const chat = chats[i];
-		if(chat.id === id) return chat;
-	}
-	return null;
-}
 class ChatList extends List{
 
 	componentDidUpdate(oldProps: TProps, newProps: TProps): boolean {
 		let res = false;
-		const oldChatList = oldProps.chats || [];
-		const newChatList = newProps.chats;
+		const newChatArr = newProps.chats;
 		
-		res = newChatList && (!isEqual(oldChatList, newChatList) || 
-			(newProps?.children && newChatList?.length !== Object.keys(newProps.children).length))
-			|| (newProps?.children && !newProps.loading && oldProps.loading);
+		res = newChatArr && (!isEqual(oldProps, newProps));
 
 		if(res){
 			const newPropsChildren: TProps = {};
 
-			for (let i = 0; i < newChatList.length; i++) {
-				const chat = newChatList[i],
+			for (let i = 0; i < newChatArr.length; i++) {
+				const chat = newChatArr[i],
 					key = chat.id;
 				newPropsChildren[key] = chat;
 				if(!newPropsChildren[key].avatar){
 					newPropsChildren[key].avatar = new URL('/resources/miniAvatar.jpg', import.meta.url);
 				}
 			}
-			newProps.children = newPropsChildren;
-			const newChildren: TProps = {};
+			this.state = newPropsChildren;
+			
 			for (const key in newPropsChildren) {
-				if(oldProps.children && newProps.children && oldProps.children[key] 
-					&& isEqual(oldProps.children[key], newProps.children[key]) 
-					&& Object.prototype.hasOwnProperty.call(this.children, key)){
-						newChildren[key] = this.children[key];
-				} else {
-					newChildren[key] = new ChatItem(undefined, newPropsChildren[key]);
+
+				if(Object.prototype.hasOwnProperty.call(newPropsChildren, key)){
+					if(!Object.prototype.hasOwnProperty.call(this.children, key)){
+						this.children[key] = new ChatItem(undefined, newPropsChildren[key]);
+					} else {
+						this.children[key].setProps({...this.children[key].props, ...newPropsChildren[key]});
+					}
 				}
 			}
-			this.children = newChildren;
+
+			for (const key in this.children) {
+				if (Object.prototype.hasOwnProperty.call(this.children, key)
+					&& !Object.prototype.hasOwnProperty.call(newPropsChildren, key)) {
+						delete this.children[key];
+				}
+			}
 		}
 
-		if(oldProps?.selectedChat !== newProps?.selectedChat){
+		if((newProps?.selectedChat || oldProps?.selectedChat) && oldProps?.selectedChat !== newProps?.selectedChat){
 			let key, chatProps;
+
 			if(oldProps?.selectedChat){
 				key = oldProps.selectedChat;
-				chatProps = getChatPropsById(newChatList, key);
-				chatProps && (this.children[key] = new ChatItem(undefined, {...chatProps, selected: null}));
+				
+				chatProps = this.state[key];
+				this.children[key].setProps({...chatProps, attr: {class: 'chatItem'}});
 			}
-			key = newProps.selectedChat;
-			chatProps = getChatPropsById(newChatList, key);
-			this.children[key] = new ChatItem(undefined, {...chatProps, selected: 'chatItem__selected'});
+			if(newProps?.selectedChat){
+				key = newProps.selectedChat;
+				chatProps = this.state[key];
+				this.children[key].setProps({...chatProps, attr: {class: 'chatItem chatItem__selected'}});
+			}
 			res=true;
 		}
-
 
 		if(!res && oldProps.loading !== newProps.loading){
 			res = true;
 		}
+
 		return res;
 	}
+	
 	render(){
 		if(this.props.loading){
 			return (new Spiner()).render();
@@ -108,9 +110,9 @@ class ChatList extends List{
 }
 function mapStateToProps(state: Indexed<unknown>){
 	return {
-		loading: state.chatsLoading,
-		chats: state.chats,
-		selectedChat: state.selectedChat
+		loading: <boolean|undefined> state.chatsLoading,
+		chats: <TChat[]|undefined> state.chats,
+		selectedChat: <number|null|undefined> state.selectedChat
 	}
 }
 export default connect(ChatList, mapStateToProps);

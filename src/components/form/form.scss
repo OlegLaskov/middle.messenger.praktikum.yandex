@@ -1,7 +1,4 @@
-$lightShadow: #ccc;
-$lightBorder: #e0e0e0;
-$grayLabel: #9e9e9e;
-$blueInput: #1a73a8;
+@import '../../globalVar.scss';
 
 .form {
 	width: 300px;

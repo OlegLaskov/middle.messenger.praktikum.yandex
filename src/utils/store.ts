@@ -24,7 +24,7 @@ function merge(lhs: Indexed, rhs: Indexed): Indexed {
 		if (Object.prototype.hasOwnProperty.call(rhs, key)) {
 			const el = rhs[key];
 			if(!Object.prototype.hasOwnProperty.call(lhs, key) || typeof lhs[key] !== 'object' 
-				|| typeof rhs[key] !== 'object'){
+				|| typeof el !== 'object' || !el || Array.isArray(el)){
 					lhs[key] = el;
 			} else {
 				merge((<Indexed> lhs[key]), (<Indexed> el));
@@ -43,6 +43,11 @@ class Store extends EventBus {
 
 	public set(path: string, value: unknown) {
 		this.state = set(this.state, path, value);
+		this.emit(StoreEvents.Updated);
+	}
+
+	public clear(){
+		this.state = {};
 		this.emit(StoreEvents.Updated);
 	}
 }

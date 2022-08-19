@@ -1,6 +1,4 @@
-$backgroundModal: rgba(0,0,0,0.4);
-$backgroundModalDialog: #FFFFFF;
-$modalShadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
+@import '../../globalVar.scss';
 
 .modal {
 	display: none;
@@ -15,10 +13,10 @@ $modalShadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
 	background-color: $backgroundModal;
 
 	&__dialog {
-		background-color: $backgroundModalDialog;
+		background-color: $menuBackground;
 		margin: auto;
 		padding: 20px;
-		box-shadow: $modalShadow;
+		box-shadow: $menuShadow;
 		border-radius: 12px;
 		width: 360px;
 		z-index: inherit;

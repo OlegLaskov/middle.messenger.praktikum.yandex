@@ -1,7 +1,4 @@
-$backgroundInput: #EFEFEF;
-$blackFont: #1E1E1E;
-$blueButton: #0071f0;
-$focusButton: rgba(0, 113, 240, 0.7);
+@import '../../globalVar.scss';
 
 .nav {
 	&__add_chat {

@@ -39,7 +39,7 @@ class ChatAPI extends BaseAPI {
 
 	private BASE_URL = '/chats';
 	private userId: number;
-	private socket: WebSocket;
+	private socket: WebSocket|null;
 	private pingInterval: number;
 
 	create = (data: Tcreate): Promise<string | Error> =>{
@@ -87,6 +87,7 @@ class ChatAPI extends BaseAPI {
 	initSocket = (userId: number, chatId: number) => {
 
 		this.pingInterval && clearInterval(this.pingInterval);
+		this.pingInterval = 0;
 
 		this.socket && this.socket.close();
 
@@ -116,7 +117,7 @@ class ChatAPI extends BaseAPI {
 			});
 
 			this.socket.addEventListener('message', event => {
-				console.log('Получены данные='+typeof event.data, event.data);
+				console.log('Получены данные=', event.data);
 				const parsedData: Tmsg = JSON.parse(event.data);
 				
 				if(Array.isArray(parsedData)){
@@ -136,6 +137,7 @@ class ChatAPI extends BaseAPI {
 				console.log('Ошибка', event.message);
 			}); 
 
+			this.pingInterval && clearInterval(this.pingInterval);
 			this.pingInterval = setInterval(this.sendPing, 5000);
 		})
 		.catch((err: Error)=>{
@@ -144,15 +146,14 @@ class ChatAPI extends BaseAPI {
 	}
 
 	closeSocket = () => {
-		this.socket.close();
+		this.socket && this.socket.close();
+		this.socket = null;
+		this.pingInterval && clearInterval(this.pingInterval);
+		this.pingInterval = 0;
 	}
 
 	sendPing = () => {
-		if(this.socket){
-			this.socket.send(JSON.stringify({type: 'ping'}));
-		} else {
-			console.log('sendPing: NO SOCKET');
-		}
+			this.socket && this.socket.send(JSON.stringify({type: 'ping'}));
 	}
 	sendMessage = (data: {content: string, type?: string}) => {
 		if(this.socket){
@@ -161,7 +162,6 @@ class ChatAPI extends BaseAPI {
 		} else {
 			console.log('sendMessage: NO SOCKET');
 		}
-		
 	}
 
 	getMessages = (chatId: number) => {
@@ -175,7 +175,7 @@ class ChatAPI extends BaseAPI {
 
 				let content = 0;
 				do{
-					this.socket.send(JSON.stringify({type: 'get old', content: content.toString()}));
+					this.socket && this.socket.send(JSON.stringify({type: 'get old', content: content.toString()}));
 					content+=20;
 				}while(content < res.unread_count); // 100
 			})

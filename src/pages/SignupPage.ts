@@ -76,7 +76,7 @@ export default class SignupPage extends Form {
 	router = new Router('#root');
 	constructor(){
 		super(
-			'main', 
+			'div', 
 			{
 				containerClass: 'container-form-signup',
 				formClass: 'form',

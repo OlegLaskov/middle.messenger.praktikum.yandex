@@ -8,6 +8,7 @@ import Link from '../components/link';
 import { PATH } from '../router/paths';
 import Router from '../router';
 import loginApi from '../api/login-api';
+import store from '../utils/store';
 
 const fields = [
 	{
@@ -39,7 +40,7 @@ export default class LoginPage extends Form {
 	router = new Router('#root');
 	constructor(){
 		super(
-			'main',
+			'div',
 			{
 				containerClass: 'container-form-login',
 				formClass: 'form',
@@ -70,5 +71,15 @@ export default class LoginPage extends Form {
 	}
 	componentDidMount(){
 		loginApi.logout();
+		const state = store.getState();
+		if(state && Object.keys(state).length){
+			store.clear();
+		}
+	}
+	show(): void {
+		this.getContent().style.display = "block";
+		this.isShow = true;
+		loginApi.logout();
+		store.clear();
 	}
 }

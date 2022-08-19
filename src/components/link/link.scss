@@ -1,5 +1,4 @@
-$grayLine: #eaeaea;
-$blueLink: #0071f0;
+@import '../../globalVar.scss';
 
 .link {
 	&__group {
@@ -9,7 +8,7 @@ $blueLink: #0071f0;
 	}
 	&__link {
 		text-decoration: none;
-		color: $blueLink;
+		color: $blueButton;
 	}
 	&__to_left {
 		text-align: left;

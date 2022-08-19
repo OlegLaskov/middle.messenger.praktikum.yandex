@@ -14,7 +14,7 @@ import Modal from '../components/modal';
 import InputBlock from '../components/inputBlock';
 import Form from '../components/form';
 import store, { Indexed } from '../utils/store';
-import { connect } from '../utils/HOC';
+import { connect, saveUserDataToStore } from '../utils/HOC';
 
 export type User = {
 	"id": number,
@@ -105,7 +105,7 @@ export default class ProfilePage extends List {
 			: null;
 		
 		const form: Component = new ProfileForm(
-			'main', 
+			'div', 
 			{
 				containerClass: 'container-profile',
 				formClass: 'profile',
@@ -217,5 +217,11 @@ export default class ProfilePage extends List {
 		} else {
 			changeAvatarModal.isShow ? changeAvatarModal.hide() : changeAvatarModal.show();
 		}
+	}
+
+	show(): void {
+		saveUserDataToStore();
+		this.getContent().style.display = "block";
+		this.isShow = true;
 	}
 }
