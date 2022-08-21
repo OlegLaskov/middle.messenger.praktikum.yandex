@@ -21,3 +21,4 @@
 - `npm run build` — сборка стабильной версии,
 - `npm run start` — запуск стабильной версии,
 - `npm run test` — запуск тестов
+- `npm run lint` — запуск eslint и stylelint
