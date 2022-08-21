@@ -9,6 +9,6 @@
     	"scss/at-rule-no-unknown": true
 	},
 	"ignoreFiles": [
-		"build/*"
+		"dist/*"
 	]
 }
