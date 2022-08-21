@@ -1,5 +1,5 @@
 import { REG_EXP } from "../../utils/validationConst";
-import webSocketTransport from "../../core/webSocketTransport";
+import webSocketTransport from "../../core/WebSocketTransport";
 import Button from "../button";
 import Form from "../form";
 import Input from "../input";

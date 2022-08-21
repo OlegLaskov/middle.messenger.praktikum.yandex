@@ -16,7 +16,7 @@ import Router from '../router';
 import userApi from '../api/user-api';
 import { saveUserDataToStore } from '../core/HOC';
 import Link from '../components/link';
-import webSocketTransport from '../core/webSocketTransport';
+import webSocketTransport from '../core/WebSocketTransport';
 
 const router = new Router('#root');
 function updateChatList(){

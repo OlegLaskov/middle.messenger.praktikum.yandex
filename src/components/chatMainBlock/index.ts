@@ -1,6 +1,6 @@
 import * as Handlebars from 'handlebars';
 import List from '../list';
-import webSocketTransport from '../../core/webSocketTransport';
+import webSocketTransport from '../../core/WebSocketTransport';
 import { connect } from '../../core/HOC';
 import ChatNav from '../chatNav';
 import Label from '../label';
