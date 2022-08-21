@@ -70,12 +70,10 @@ export default class Form extends Component {
 	}
 
 	clearForm(){
-		console.log('clearForm');
 		const inputs = this.children.inputs.children;
 		for(const i in inputs){
 			if(inputs[i] instanceof InputBlock){
 				(<InputBlock> inputs[i]).clearInput();
-				console.log('clearInput='+i, inputs[i]);
 			}
 		}
 		this.state.form = {};
