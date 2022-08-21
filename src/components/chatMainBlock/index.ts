@@ -1,32 +1,31 @@
 import * as Handlebars from 'handlebars';
 import List from '../list';
-import { TProps } from '../../utils/component';
-import { connect } from '../../utils/HOC';
-import { Indexed } from '../../utils/store';
-import { isEqual } from '../../utils/utils';
+import webSocketTransport from '../../core/webSocketTransport';
+import { connect } from '../../core/HOC';
 import ChatNav from '../chatNav';
 import Label from '../label';
 import Menu from '../menu';
 import MenuItem from '../menuitem';
 import SendMessageForm from '../sendMessageForm';
 import Spiner from '../spiner';
-import './chatMainBlock.scss';
 import ChatBody from '../chatBody';
-import chatApi from '../../api/chat-api';
+import './chatMainBlock.scss';
+import { isEqual } from '../../utils/utils';
+import { Indexed, TProps, TTag } from '../../core/types';
 
 class ChatMainBlock extends List{
 	startPage: TProps;
 	mainPage: TProps;
 
-	constructor(tagName = "div", propsAndChildren: TProps = {}, defaultClass = 'container-error'){
+	constructor(propsAndChildren: TProps = {}, tagName: TTag = 'div', defaultClass = 'container-error'){
 
-		const chatNav = new ChatNav('div', {
+		const chatNav = new ChatNav({
 			avatar: '',
 			title: '',
 			icon: 'fa-solid fa-ellipsis-vertical',
-		}, 'chat__nav');
+		}, 'div', 'chat__nav');
 
-		const chatBody = new ChatBody('div', {}, 'chat__body');
+		const chatBody = new ChatBody({}, 'div', 'chat__body');
 
 		const messageBlock = new SendMessageForm();
 
@@ -34,20 +33,19 @@ class ChatMainBlock extends List{
 			{label: 'Добавить пользователя', id: 'addUserItemMenu'}, 
 			{label: 'Удалить пользователя', id: 'deleteUserItemMenu'}
 		].map(item=>(new MenuItem(
-			undefined,
 			{label: item.label, attr: {id: item.id}}
 		)));
 		const chatMenu = new Menu(
-			undefined,
 			chatMenuItems.reduce((acc:TProps, item, i)=>{
 				acc[i] = item;
 				return acc;
 			},{}),
-			'chatMenu'
+			undefined,
+			'chat-menu'
 		);
 
 		const startPage = {
-			message: new Label('p', {label: 'Выберите чат, чтобы отправить сообщение'}, 'main__select_chat_msg')
+			message: new Label({label: 'Выберите чат, чтобы отправить сообщение'}, 'p', 'main__select_chat_msg')
 		};
 		const mainPage = {
 			chatNav,
@@ -74,7 +72,7 @@ class ChatMainBlock extends List{
 			};
 		}
 		propsAndChildren = {...propsAndChildren, ...startPage, ...mainPage, isOpenChatMenu: false}
-		super(tagName, propsAndChildren, defaultClass);
+		super(propsAndChildren, tagName, defaultClass);
 		this.startPage = startPage;
 		this.mainPage = mainPage;
 	}
@@ -91,7 +89,7 @@ class ChatMainBlock extends List{
 			attr.class = 'chat';
 
 			if(user?.id && chatInfo.id){
-				chatApi.initSocket(user.id, chatInfo.id);
+				webSocketTransport.initSocket(user.id, chatInfo.id);
 			}
 
 			const {avatar, title} = chatInfo;

@@ -1,11 +1,11 @@
-@import '../../globalVar.scss';
+@import "../../globalVar.scss";
 
-.chatMenu {
-	position: absolute;
-	top: 40px;
-	right: 10px;
-	background-color: $menuBackground;
-	box-shadow: $menuShadow;
-	border-radius: 12px;
-	padding: 5px;
+.chat-menu {
+  position: absolute;
+  top: 40px;
+  right: 10px;
+  background-color: $menuBackground;
+  box-shadow: $menuShadow;
+  border-radius: 12px;
+  padding: 5px;
 }

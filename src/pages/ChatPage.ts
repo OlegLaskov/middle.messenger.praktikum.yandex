@@ -1,13 +1,12 @@
 import * as Handlebars from 'handlebars';
 import Input from '../components/input';
 import List from '../components/list';
-import Label from '../components/label';
 import { PATH } from '../router/paths';
 import ChatList from '../components/list/chat-list';
-import store from '../utils/store';
+import store from '../core/store';
 import chatApi from '../api/chat-api';
 import AddChatForm from '../components/addChatForm';
-import chatMainBlock from '../components/chatMainBlock';
+import ChatMainBlock from '../components/chatMainBlock';
 import Modal from '../components/modal';
 import InputBlock from '../components/inputBlock';
 import { ERROR_MSG, REG_EXP } from '../utils/validationConst';
@@ -15,8 +14,9 @@ import Form from '../components/form';
 import Button from '../components/button';
 import Router from '../router';
 import userApi from '../api/user-api';
-import { saveUserDataToStore } from '../utils/HOC';
+import { saveUserDataToStore } from '../core/HOC';
 import Link from '../components/link';
+import webSocketTransport from '../core/webSocketTransport';
 
 const router = new Router('#root');
 function updateChatList(){
@@ -41,56 +41,55 @@ export default class ChatPage extends List {
 	constructor(){
 
 		const linkProfile = new Link(
-			undefined,
 			{
 				href: PATH.PROFILE,
 				label: 'Профиль >',
 				class1: 'nav__link_profile',
 			},
+			undefined,
 			'nav__block nav__link_block'
 		);
 
 		const addChatForm = new AddChatForm(updateChatList);
 
 		const searchInput = new Input(
-			undefined,
 			{
 				attr: {
 					type: 'text',
 					placeholder: 'Поиск',
 				},
 			},
+			undefined,
 			'nav__search_input'
 		);
 	
 		const navProfile = new List(
-			'div',
 			{
-				profile: new List('div', {linkProfile}, 'nav__block nav__link_block'),
-				addChat: addChatForm, // new List('form', {addChatInputBlock, addChatBtn}, 'nav__block nav__add_chat'),
-				search: new List('div', {searchInput}, 'nav__block nav__search_block'),
+				profile: new List({linkProfile}, 'div', 'nav__block nav__link_block'),
+				addChat: addChatForm,
+				search: new List({searchInput}, 'div', 'nav__block nav__search_block'),
 			},
+			'div',
 			'nav__upper'
 		);
 	
 		const chatList = new ChatList(
-			'div',
 			{},
-			'chat_list'
+			'div',
+			'chat-list'
 		);
 
 		const nav = new List(
-			'nav', 
 			{
 				navProfile,
 				chatList
 			}, 
+			'nav', 
 			'nav'
 		);
 	
 		const fieldLoginName = 'login';
 		const loginAddInput = new InputBlock(
-			undefined,
 			{
 				input: {attr: {type: 'text', name: fieldLoginName, value: '', placeholder: ' ', autofocus: true}},
 				name: fieldLoginName,
@@ -100,7 +99,6 @@ export default class ChatPage extends List {
 			}
 		);
 		const loginDelInput = new InputBlock(
-			undefined,
 			{
 				input: {attr: {type: 'text', name: fieldLoginName, value: '', placeholder: ' ', autofocus: true}},
 				name: fieldLoginName,
@@ -109,16 +107,15 @@ export default class ChatPage extends List {
 				fieldErrorMsg: ERROR_MSG.LOGIN
 			}
 		);
-		const addUserBtn = new Button(undefined,
+		const addUserBtn = new Button(
 			{
 				label: 'Добавить',
 				attr: {type: 'submit', id: 'addUserToChat'}
 			});
-		const addUserForm = new Form(undefined,
+		const addUserForm = new Form(
 			{
-				// formClass: 'form',
 				title: 'Добавить пользователя',
-				inputs: new List(undefined, {loginAddInput}),
+				inputs: new List({loginAddInput}),
 				button: addUserBtn,
 				request: {
 					f_submit: userApi.searchUsersByLogin,
@@ -128,7 +125,7 @@ export default class ChatPage extends List {
 						if(Array.isArray(resp)){
 							const users = resp.map(user=>user.id),
 								chatId = this.children?.chatPage?.children?.main?.props?.chatInfo?.id;
-							
+							console.log('users=', users, 'chatId=', chatId);
 							chatApi.addUser(users, chatId).catch(err=>{
 								console.log('addUser: err='+typeof err, err);
 							});
@@ -140,24 +137,18 @@ export default class ChatPage extends List {
 					}
 				}
 			},
-			'modal__dialog');
-		const modalAddUser = new Modal(
 			undefined,
-			{
-				form: addUserForm
-			},
-			'modal'
-		);
-		const deleteUserBtn = new Button(undefined,
+			'modal__dialog');
+		const modalAddUser = new Modal({form: addUserForm});
+		const deleteUserBtn = new Button(
 			{
 				label: 'Удалить',
 				attr: {type: 'submit', id: 'deleteUserToChat'}
 			});
-		const deleteUserForm = new Form(undefined,
+		const deleteUserForm = new Form(
 			{
-				// formClass: 'form',
 				title: 'Удалить пользователя',
-				inputs: new List(undefined, {loginDelInput}),
+				inputs: new List({loginDelInput}),
 				button: deleteUserBtn,
 				request: {
 					f_submit: userApi.searchUsersByLogin,
@@ -167,7 +158,7 @@ export default class ChatPage extends List {
 						if(Array.isArray(resp)){
 							const users = resp.map(user=>user.id),
 								chatId = this.children?.chatPage?.children?.main?.props?.chatInfo?.id;
-							
+								console.log('users=', users, 'chatId=', chatId);
 							chatApi.deleteUser(users, chatId).catch(err=>{
 								console.log('deleteUser: err='+typeof err, err);
 							});
@@ -179,53 +170,44 @@ export default class ChatPage extends List {
 					}
 				}
 			},
-			'modal__dialog');
-		const modalDeleteUser = new Modal(
 			undefined,
-			{
-				form: deleteUserForm
-			},
-			'modal'
-		);
+			'modal__dialog');
+		const modalDeleteUser = new Modal({form: deleteUserForm});
 
 		const toggleAddUserModal = (mode: boolean) =>{
 			if(mode){
 				modalAddUser.show();
-			} else if(mode === false){
-				modalAddUser.hide();
 			} else {
-				modalAddUser.isShow ? modalAddUser.hide() : modalAddUser.show();
+				modalAddUser.hide();
 			}
 		}
 	
 		const toggleDeleteUserModal = (mode: boolean) =>{
 			if(mode){
 				modalDeleteUser.show();
-			} else if(mode === false){
-				modalDeleteUser.hide();
 			} else {
-				modalDeleteUser.isShow ? modalDeleteUser.hide() : modalDeleteUser.show();
+				modalDeleteUser.hide();
 			}
 		}
 	
-		const main = new chatMainBlock(undefined, {toggleAddUserModal, toggleDeleteUserModal});
+		const main = new ChatMainBlock({toggleAddUserModal, toggleDeleteUserModal});
 
 		const chatPage = new List(
-			'div', 
 			{
 				nav,
 				main
 			},
+			'div', 
 			'container'
 		);
 
 		super(
-			'main', 
 			{
 				chatPage,
 				modalAddUser,
 				modalDeleteUser
 			},
+			'main', 
 			'body'
 		)
 	}
@@ -243,7 +225,7 @@ export default class ChatPage extends List {
 	hide(): void {
 		this.getContent().style.display = "none";
 		this.isShow = false;
-		chatApi.closeSocket();
+		webSocketTransport.closeSocket();
 		store.set('selectedChat', null);
 	}
 	render(): DocumentFragment {

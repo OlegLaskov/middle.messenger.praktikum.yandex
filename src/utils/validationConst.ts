@@ -1,4 +1,5 @@
-import Component from "./component";
+import Component from "../core/component";
+import { ValidFunction } from "../core/types";
 
 export const REG_EXP = {
 	NAME: /^[A-ZА-Я]{1}[A-ZА-Яa-zа-я-]{2,}$/,
@@ -22,10 +23,8 @@ export const ERROR_MSG = {
 	DISPLAY_NAME: 'Допустимы 3 имени через пробел (Имя Отчество Фамилия)'
 };
 
-type ValidFunction = () => boolean;
-
 export interface Field {
-	type: string,
+	type: 'email' | 'text' | 'password' | 'hidden' | 'tel',
 	name: string,
 	value?: string,
 	label?: string|null,

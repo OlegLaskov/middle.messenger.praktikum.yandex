@@ -1,93 +1,102 @@
-@import '../../globalVar.scss';
+@import "../../globalVar.scss";
 
-.chatItem {
-	box-sizing: border-box;
-	width: auto;
-	height: 72px;
-	margin: 0;
-	padding: 0 10px;
-	cursor: pointer;
-	position: relative;
+.chat-item {
+  box-sizing: border-box;
+  width: auto;
+  height: 72px;
+  margin: 0;
+  padding: 0 10px;
+  cursor: pointer;
+  position: relative;
 
-	&__inner {
-		box-sizing: border-box;
-		position: absolute;
-		top: 5px;
-		left: 0px;
-		padding: 0 10px;
-		display: flex;
-		height: 67px;
-		width: 310px;
-		border-bottom: 1px solid $lightBorder;
-	}
-	&__selected {
-		background-color: $selectedChatColor !important;
-	}
+  &__inner {
+    box-sizing: border-box;
+    position: absolute;
+    top: 5px;
+    left: 0;
+    padding: 0 10px;
+    display: flex;
+    height: 67px;
+    width: 310px;
+    border-bottom: 1px solid $lightBorder;
+  }
 
-	&__avatar {
-		display: inline-block;
-		height: 100%;
-		width: 47px;
-		margin: 0;
-		padding-right: 5px;
-		font-size: 9px;
-		position: relative;
-		background-color: transparent;
-	}
-	&__img {
-		margin: 0;
-		position: absolute;
-		top: 50%;
-		transform: translate(0, -50%);
-	}
-	&__block {
-		display: inline-block;
-		height: 100%;
-		flex-grow: 100;
-		vertical-align: top;
-		padding: 2px 0;
-		background-color: transparent;
-	}
-	&__header {
-		display: flex;
-		width: 100%;
-		background-color: transparent;
-	}
-	&__title {
-		display: inline-block;
-		font-weight: 600;
-	}
-	&__time {
-		flex-grow: 100;
-		display: inline-block;
-		text-align: end;
-		font-size: 0.8rem;
-		color: $grayFont;
-	}
-	&__main {
-		display: flex;
-		position: relative;
-		height: 53px;
-		background-color: transparent;
-	}
-	&__content {
-		display: inline-block;
-		font-size: 0.9rem;
-		color: $grayFont;
-	}
-	&__unread_count {
-		box-sizing: border-box;
-		font-size: 0.9rem;
-		background-color: $blueBackgrnd;
-		color: $menuBackground;
-		width: 20px;
-		height: 20px;
-		position: absolute;
-		right: 0;
-		bottom: 10;
-		vertical-align: middle;
-		text-align: center;
-		border-radius: 50%;
-		padding-top: 2px;
-	}
+  &__selected {
+    background-color: $selectedChatColor !important;
+  }
+
+  &__avatar {
+    display: inline-block;
+    height: 100%;
+    width: 47px;
+    margin: 0;
+    padding-right: 5px;
+    font-size: 9px;
+    position: relative;
+    background-color: transparent;
+  }
+
+  &__img {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+
+  &__block {
+    display: inline-block;
+    height: 100%;
+    flex-grow: 100;
+    vertical-align: top;
+    padding: 2px 0;
+    background-color: transparent;
+  }
+
+  &__header {
+    display: flex;
+    width: 100%;
+    background-color: transparent;
+  }
+
+  &__title {
+    display: inline-block;
+    font-weight: 600;
+  }
+
+  &__time {
+    flex-grow: 100;
+    display: inline-block;
+    text-align: end;
+    font-size: 0.8rem;
+    color: $grayFont;
+  }
+
+  &__main {
+    display: flex;
+    position: relative;
+    height: 53px;
+    background-color: transparent;
+  }
+
+  &__content {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: $grayFont;
+  }
+
+  &__unread_count {
+    box-sizing: border-box;
+    font-size: 0.9rem;
+    background-color: $blueBackgrnd;
+    color: $menuBackground;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 0;
+    bottom: 10;
+    vertical-align: middle;
+    text-align: center;
+    border-radius: 50%;
+    padding-top: 2px;
+  }
 }

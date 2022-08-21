@@ -1,6 +1,5 @@
 import tmpl from './label.hbs';
-import Component from '../../utils/component';
-import './label.scss';
+import Component from '../../core/component';
 
 export default class Label extends Component{
 

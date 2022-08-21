@@ -1,1 +1,39 @@
+@import "../../globalVar.scss";
 
+.form {
+  &__input {
+    letter-spacing: 1px;
+    font-size: 1rem;
+    width: 100%;
+    padding: 0 0 10px;
+    border: none;
+    border-bottom: 1px solid $lightBorder;
+    background-color: transparent;
+    outline: none;
+    transition: 0.3s;
+
+    &__right {
+      text-align: right;
+    }
+  }
+
+  &__label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: inherit;
+    color: $grayLabel;
+    transition: 0.3s;
+  }
+
+  &__input:focus {
+    border-bottom: 1px solid $blueInput;
+  }
+
+  &__input:focus ~ &__label,
+  &__input:not(:placeholder-shown) ~ &__label {
+    top: -18px;
+    font-size: 12px;
+    color: $lightBorder;
+  }
+}

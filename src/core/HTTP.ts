@@ -1,4 +1,5 @@
-import {queryStringify} from './utils';
+import { queryStringify } from "../utils/utils";
+import { RequestOptions } from "./types";
 
 export const METHODS = {
 	GET:	'GET',
@@ -6,14 +7,6 @@ export const METHODS = {
 	PUT:	'PUT',
 	DELETE:	'DELETE'
 };
-
-export type RequestOptions = {
-	method?: string,
-	data?: {[key: string]: string|number|boolean|number[]} | FormData,
-	timeout?: number,
-	retries?: number,
-	headers?: {[key: string]: string}
-}
 
 const BASE_URL = 'https://ya-praktikum.tech/api/v2';
 
@@ -35,7 +28,7 @@ class HTTPTransport {
 			delete options.data;
 		}
 		options.method = METHODS.GET;
-		return this.request(url, options, options.timeout);
+		return this.request(url, options);
 	};
 
 	// PUT, POST, DELETE
@@ -43,18 +36,18 @@ class HTTPTransport {
 	// headers — obj
 	// data — obj
 	post = (url: string, options: RequestOptions = {}) => {
-		return this.request(url, {...options, method: METHODS.POST}, options.timeout);
+		return this.request(url, {...options, method: METHODS.POST});
 	};
 	put = (url: string, options: RequestOptions = {}) => {
-		return this.request(url, {...options, method: METHODS.PUT}, options.timeout);
+		return this.request(url, {...options, method: METHODS.PUT});
 	};
 	delete = (url: string, options: RequestOptions = {}) => {
-		return this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
+		return this.request(url, {...options, method: METHODS.DELETE});
 	};
 
 
-	request = (url: string, options: RequestOptions, timeout?: number ): Promise<XMLHttpRequest> => {
-		const {method = METHODS.GET, data, headers={}} = options;
+	request = (url: string, options: RequestOptions ): Promise<XMLHttpRequest> => {
+		const {method = METHODS.GET, data, headers={}, timeout} = options;
 
 		return new Promise((resolve, reject) => {
 			const xhr = new XMLHttpRequest();
@@ -90,7 +83,7 @@ class HTTPTransport {
 async function oneFetch(httpTran: HTTPTransport, url: string, options: RequestOptions): Promise<string|Error> {
 	let {retries=5} = options;
 	try{
-		const data: XMLHttpRequest = await httpTran.request(url, options, options.timeout);
+		const data: XMLHttpRequest = await httpTran.request(url, options);
 		return data.response;
 	} catch (e){
 		if(retries === 1){

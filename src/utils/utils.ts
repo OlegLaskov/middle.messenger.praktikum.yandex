@@ -1,3 +1,5 @@
+import { Indexed, PlainObject } from "../core/types";
+
 export function queryStringify(data: {[key: string]: string|number|boolean|number[]}): string {
 	const arr: string[] = [];
 	for (const key in data) {
@@ -12,10 +14,6 @@ export function queryStringify(data: {[key: string]: string|number|boolean|numbe
 export function isEqualPath(lhs: string, rhs: string): boolean {
 	return lhs === rhs;
 }
-
-type Indexed<T = unknown> = {
-	[key in string]: T;
-};
 
 export function isEqual(a: object, b: object): boolean {
 	if(typeof a !== 'object' || typeof b !== 'object') throw new Error('not object');
@@ -45,10 +43,6 @@ export function isEqual(a: object, b: object): boolean {
 	}
 	return true;
 }
-
-export type PlainObject<T = any> = {
-    [k in string]: T;
-};
 
 function isPlainObject(value: unknown): value is PlainObject {
     return typeof value === 'object'

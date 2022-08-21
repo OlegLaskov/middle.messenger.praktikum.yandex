@@ -1,11 +1,12 @@
-import Component, { TProps } from "../../utils/component";
+import Component from "../../core/component";
 import tmpl from './form.hbs';
 import './form.scss';
 import InputBlock from "../inputBlock";
+import { TProps, TTag } from "../../core/types";
 
 export default class Form extends Component {
 	
-	constructor(tagName = "div", propsAndChildren: TProps = {}, defaultClass = 'container-form'){
+	constructor(propsAndChildren: TProps = {}, tagName: TTag = "div", defaultClass = 'container-form'){
 		
 		if(!propsAndChildren.events){
 			propsAndChildren.events = {};
@@ -51,7 +52,7 @@ export default class Form extends Component {
 			};
 		}
 		
-		super(tagName, propsAndChildren, defaultClass);
+		super(propsAndChildren, tagName, defaultClass);
 		this.state.form = {};
 	}
 
@@ -69,12 +70,22 @@ export default class Form extends Component {
 	}
 
 	clearForm(){
+		console.log('clearForm');
 		const inputs = this.children.inputs.children;
 		for(const i in inputs){
 			if(inputs[i] instanceof InputBlock){
 				(<InputBlock> inputs[i]).clearInput();
+				console.log('clearInput='+i, inputs[i]);
 			}
 		}
+		this.state.form = {};
+		this.setProps({...this.props, errorMsg: null});
+	}
+
+	hide(): void {
+		this.getContent().style.display = "none";
+		this.isShow = false;
+		this.clearForm();
 	}
 
 	render(){

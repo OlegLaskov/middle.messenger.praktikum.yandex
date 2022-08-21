@@ -1,11 +1,11 @@
 import { expect } from "chai";
-import Component from "../utils/component";
+import Component from "./component";
 
 describe('Component testing', () => {
-	const div = new Component('div', {test: 'test'}, 'div__test');
-	const p = new Component('p', {attr: {id: 'test'}}, 'p__test test1');
-	const button = new Component('button', {events: {click: ()=>{console.log('test')}}}, 'button__test t2 t3');
-	const a = new Component('a', {attr: {href: '/login'}}, 't1 t2 t3 a__test');
+	const div = new Component({test: 'test'}, 'div', 'div__test');
+	const p = new Component({attr: {id: 'test'}}, 'p', 'p__test test1');
+	const button = new Component({events: {click: ()=>{console.log('test')}}}, 'button', 'button__test t2 t3');
+	const a = new Component({attr: {href: '/login'}}, 'a', 't1 t2 t3 a__test');
 	it('Tag test', () => {
 		expect(div.element.tagName.toUpperCase()).to.eq('DIV');
 		expect(p.element.tagName.toUpperCase()).to.eq('P');

@@ -1,13 +1,10 @@
+import { cloneDeep } from "../utils/utils";
 import EventBus from "./event-bus";
-import { cloneDeep } from "./utils";
+import { Indexed } from "./types";
 
 export enum StoreEvents {
 	Updated = 'updated',
 }
-
-export type Indexed<T = unknown> = {
-	[key in string]: T;
-};
 
 function set(object: Indexed | unknown, path: string, value: unknown): Indexed  {
 	// if(typeof object !== 'object') return object;

@@ -1,7 +1,7 @@
-import {fetchWithRetry, METHODS, RequestOptions} from '../utils/HTTP';
+import {fetchWithRetry, METHODS, RequestOptions} from '../core/HTTP';
+import { FormWithFile } from '../core/types';
 
 type Form = {[key: string]: string};
-export type FormWithFile = {avatar: File};
 
 class UserAPI {
 

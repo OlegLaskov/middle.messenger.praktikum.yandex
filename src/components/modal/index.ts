@@ -1,10 +1,11 @@
 import tmpl from './modal.hbs';
-import Component, { TProps } from '../../utils/component';
+import Component from '../../core/component';
+import { TProps, TTag } from '../../core/types';
 import './modal.scss';
 
 export default class Modal extends Component{
 
-	constructor(tagName = "div", propsAndChildren: TProps = {}, defaultClass = 'modal'){
+	constructor(propsAndChildren: TProps = {}, tagName: TTag = "div", defaultClass = 'modal'){
 
 		if(!propsAndChildren.events){
 			propsAndChildren.events = {};
@@ -16,7 +17,7 @@ export default class Modal extends Component{
 				}
 			};
 		}
-		super(tagName, propsAndChildren, defaultClass);
+		super(propsAndChildren, tagName, defaultClass);
 		
 	}
 

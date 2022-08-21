@@ -1,3 +1,6 @@
+import Component from '../core/component';
+import store from '../core/store';
+import { connect, saveUserDataToStore } from '../core/HOC';
 import List from '../components/list';
 import Button from '../components/button';
 import {REG_EXP, ERROR_MSG, Field} from '../utils/validationConst';
@@ -5,31 +8,18 @@ import LeftNav from '../components/leftnav';
 import Avatar from '../components/avatar';
 import { PATH } from '../router/paths';
 import Link from '../components/link';
-import userApi, { FormWithFile } from '../api/user-api';
+import userApi from '../api/user-api';
 import InputList from '../components/list/input-list';
 import ProfileForm from '../components/form/profile-form';
-import Component from '../utils/component';
 import Router from '../router';
 import Modal from '../components/modal';
 import InputBlock from '../components/inputBlock';
 import Form from '../components/form';
-import store, { Indexed } from '../utils/store';
-import { connect, saveUserDataToStore } from '../utils/HOC';
-
-export type User = {
-	"id": number,
-	"first_name": string,
-	"second_name": string,
-	"display_name": string|null,
-	"login": string,
-	"email": string,
-	"phone": string,
-	"avatar": string|null
-}
+import { FormWithFile, Indexed, User } from '../core/types';
 
 export default class ProfilePage extends List {
 	router = new Router('#root');
-	constructor(tag = 'div', props: {readonly: boolean, user?: User} 
+	constructor(props: {readonly: boolean, user?: User} 
 		= {readonly:true}) {
 
 		const {readonly, user} = props;
@@ -48,8 +38,8 @@ export default class ProfilePage extends List {
 		}
 		const ConnectedAvatar = connect(Avatar, mapStateToProps);
 		const avatar = new ConnectedAvatar(
-			'div',
 			avatarProps,
+			'div',
 			classAvatar
 		);
 		
@@ -73,31 +63,30 @@ export default class ProfilePage extends List {
 			return obj;
 		}, {});
 
-		const inputs: List = new InputList('div', {children: inputObj, readonly, user});
+		const inputs: List = new InputList({children: inputObj, readonly, user}, 'div');
 	
 		const button: Button|null = readonly ? null 
 			: new Button(
-				'button', 
 				{attr: {type: 'submit', name: 'save'}, label: 'Сохранить'},
+				'button', 
 				'form__button form__button__w250'
 			);
 	
 		const link = readonly ? new List(
-				'div',
 				{
 					changeprofile: new Link(
-						undefined,
 						{href: PATH.EDIT_PROFILE, class1: '', label: 'Изменить данные'},
+						undefined,
 						'link__group link__to_left'
 						),
 					changepass: new Link(
-						undefined,
 						{href: PATH.CHANGE_PASSWORD, class1: '', label: 'Изменить пароль'},
+						undefined,
 						'link__group link__to_left'
 					),
 					exit: new Link(
-						undefined,
 						{href: PATH.LOGIN, class1: 'color-red', label: 'Выйти'},
+						undefined,
 						'link__group link__to_left'
 					)
 				}
@@ -105,7 +94,6 @@ export default class ProfilePage extends List {
 			: null;
 		
 		const form: Component = new ProfileForm(
-			'div', 
 			{
 				containerClass: 'container-profile',
 				formClass: 'profile',
@@ -133,14 +121,14 @@ export default class ProfilePage extends List {
 					}
 				}
 			},
+			'div', 
 			'body'
 		);
 		
-		const leftnav = new LeftNav('nav', {href: PATH.CHAT});
+		const leftnav = new LeftNav({href: PATH.CHAT}, 'nav');
 
 		const avatarName = 'avatar';
 		const imgInput = new InputBlock(
-			undefined,
 			{
 				input: {attr: {type: 'file', accept:"image/*", name: avatarName, id: avatarName}},
 				name: avatarName,
@@ -149,17 +137,16 @@ export default class ProfilePage extends List {
 				fieldErrorMsg: 'Нужно выбрать файл'
 			}
 		);
-		const changeAvatarBtn = new Button(undefined,
+		const changeAvatarBtn = new Button(
 			{
 				label: 'Поменять',
 				attr: {type: 'submit', id: 'changeAvatarBtn'}
 			});
 
-		const changeAvatarForm = new Form(undefined,
+		const changeAvatarForm = new Form(
 			{
-				// formClass: 'form',
 				title: 'Загрузить файл',
-				inputs: new List(undefined, {imgInput}),
+				inputs: new List({imgInput}),
 				button: changeAvatarBtn,
 				request: {
 					f_submit: (form: FormWithFile)=>{
@@ -176,13 +163,14 @@ export default class ProfilePage extends List {
 					}
 				}
 			},
+			undefined,
 			'modal__dialog');
 		
 		const changeAvatarModal = new Modal(
-			undefined,
 			{
 				form: changeAvatarForm
 			},
+			undefined,
 			'modal'
 		);
 
@@ -196,7 +184,6 @@ export default class ProfilePage extends List {
 		}};
 	
 		super(
-			'div', 
 			{
 				first: leftnav,
 				second: form,
@@ -204,6 +191,7 @@ export default class ProfilePage extends List {
 				user,
 				events
 			},
+			'div', 
 			'body'
 		)
 	}

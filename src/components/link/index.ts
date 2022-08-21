@@ -1,11 +1,12 @@
 import tmpl from './link.hbs';
-import Component, { TProps } from '../../utils/component';
+import Component from '../../core/component';
 import Router from '../../router';
 import './link.scss';
+import { TProps, TTag } from '../../core/types';
 
 export default class Link extends Component{
 	router = new Router('#root');
-	constructor(tagName = "div", propsAndChildren:TProps = {}, defaultClass = 'link__group'){
+	constructor(propsAndChildren: TProps = {}, tagName: TTag = "div", defaultClass = 'link__group'){
 		
 		if(!propsAndChildren.events){
 			propsAndChildren.events = {};
@@ -20,7 +21,7 @@ export default class Link extends Component{
 			};
 		}
 
-		super(tagName, propsAndChildren, defaultClass);
+		super(propsAndChildren, tagName, defaultClass);
 	}
 
 	render(){

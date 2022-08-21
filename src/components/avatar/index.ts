@@ -1,16 +1,17 @@
 import tmpl from './avatar.hbs';
-import Component, { TProps } from '../../utils/component';
+import Component from '../../core/component';
 import './avatar.scss';
+import { TProps, TTag } from '../../core/types';
 
 export default class Avatar extends Component{
-	constructor(tagName = "div", propsAndChildren:TProps = {}, defaultClass = 'avatar'){
+	constructor(propsAndChildren:TProps = {}, tagName: TTag = "div", defaultClass = 'avatar'){
 		if(!propsAndChildren.size){
 			propsAndChildren.size = 130;
 		}
 		if(!propsAndChildren.photo){
 			propsAndChildren.imgClass = 'avatar__noPhoto';
 		}
-		super(tagName, propsAndChildren, defaultClass);
+		super(propsAndChildren, tagName, defaultClass);
 	}
 
 	render(){

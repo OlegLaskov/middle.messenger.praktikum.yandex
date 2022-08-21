@@ -1,4 +1,3 @@
-import Component from '../utils/component';
 import ProfileForm from '../components/form/profile-form';
 import Input from '../components/input';
 import List from '../components/list';
@@ -9,53 +8,77 @@ import LeftNav from '../components/leftnav';
 import Avatar from '../components/avatar';
 import { PATH } from '../router/paths';
 import userApi from '../api/user-api';
-import { User } from './ProfilePage';
 import Router from '../router';
+import { User } from '../core/types';
+import Form from '../components/form';
 
 export default class ChangePassword extends List {
 	router = new Router('#root');
-	constructor(tag = 'div', props: {user?: User} = {}) {
+	constructor(props: {user?: User} = {}) {
 
 		const classAvatar = 'avatar';
 		const avatarProps = {};
 		const avatar: Avatar = new Avatar(
-			'div',
 			avatarProps,
+			'div',
 			classAvatar
 		);
 		
 		const fields: Field[] = [
-				{type: 'password', label: 'Старый\u00A0пароль', name: 'oldPassword', value: '', 
-				valid: REG_EXP.PASSWORD, errorMsg: ERROR_MSG.PASSWORD, autocomplete: 'current-password'},
-				{type: 'password', label: 'Новый\u00A0пароль', name: 'newPassword', value: '', 
-				valid: REG_EXP.PASSWORD, errorMsg: ERROR_MSG.PASSWORD},
-				{type: 'password', label: 'Повторите\u00A0новый\u00A0пароль', name: 'confirmPassword', 
-				value: '', valid: REG_EXP.PASSWORD, errorMsg: ERROR_MSG.CONFIRM_NEW_PASSWORD},
-				{type: 'hidden', name: 'login', value: props?.user?.login, autocomplete: 'login'},
+				{
+					type: 'password', 
+					label: 'Старый\u00A0пароль', 
+					name: 'oldPassword', 
+					value: '', 
+					valid: REG_EXP.PASSWORD, 
+					errorMsg: ERROR_MSG.PASSWORD, 
+					autocomplete: 'current-password'
+				},
+				{
+					type: 'password', 
+					label: 'Новый\u00A0пароль', 
+					name: 'newPassword', 
+					value: '', 
+					valid: REG_EXP.PASSWORD, 
+					errorMsg: ERROR_MSG.PASSWORD
+				},
+				{
+					type: 'password', 
+					label: 'Повторите\u00A0новый\u00A0пароль', 
+					name: 'confirmPassword', 
+					value: '', 
+					valid: REG_EXP.PASSWORD, 
+					errorMsg: ERROR_MSG.CONFIRM_NEW_PASSWORD
+				},
+				{
+					type: 'hidden', 
+					name: 'login', 
+					value: props?.user?.login, 
+					autocomplete: 'login'
+				},
 			];
 		
 		const inputArr: Input[] = fields.map(({type, name, value, autocomplete}, i: number)=>{
 			return new Input(
-				'input', 
 				{attr: {type, id: name, name, value, autocomplete, autofocus: (i===0)}},
-				'form__input input__right'
+				'input', 
+				'form__input form__input__right'
 				);
 		});
 		
 		const lineInputArr: Input[]|LineInput[] = fields.map(({type, label, name, valid, errorMsg}, i)=>{
 			const lineinput: FieldBlock = {label, input: inputArr[i]};
 	
-			const fieldvalid = (name==='confirm_password') ? function(){
-				return (<HTMLInputElement> inputArr[1].element).value === (<HTMLInputElement> 
-					inputArr[2].element).value;
-			} : valid;
+			const fieldvalid = (name==='confirm_password') ? ()=>(
+				(<HTMLInputElement> inputArr[1].element).value === (<HTMLInputElement> 
+					inputArr[2].element).value) : valid;
 			lineinput.valid = fieldvalid; 
 			lineinput.fieldErrorMsg =  errorMsg;
 	
 			return type === 'hidden' ? inputArr[i]
 				: new LineInput(
-					'div', 
-					lineinput
+					lineinput,
+					'div'
 				);
 		});
 		
@@ -65,18 +88,17 @@ export default class ChangePassword extends List {
 			return obj;
 		}, {});
 		
-		const inputs: List = new List('div', inputObj);
+		const inputs: List = new List(inputObj, 'div');
 	
 		const button: Button|null = new Button(
-				'button', 
 				{attr: {type: 'submit', name: 'save'}, label: 'Сохранить'},
+				'button', 
 				'form__button form__button__w250'
 			);
 	
 		const link = null;
 		
-		const form: Component = new ProfileForm(
-			'div', 
+		const form = new ProfileForm(
 			{
 				formClass: 'profile',
 				titleClass: 'form__title',
@@ -88,6 +110,12 @@ export default class ChangePassword extends List {
 				request: {
 					f_submit: userApi.changePassword,
 					resolve: (resp: string)=>{
+						console.log('resp='+typeof resp, resp);
+						if(resp === 'OK'){
+							alert('Пароль успешно изменен');
+							this.router.go(PATH.PROFILE);
+							return;
+						}
 						const res = JSON.parse(resp);
 						const {reason} = res;
 						if(reason){
@@ -102,18 +130,25 @@ export default class ChangePassword extends List {
 					}
 				}
 			},
+			'div', 
 			'container-profile'
 		);
 		
-		const leftnav: LeftNav = new LeftNav('nav', {href: PATH.CHAT});
+		const leftnav: LeftNav = new LeftNav({href: PATH.CHAT}, 'nav');
 	
 		super(
-			'div', 
 			{
 				first: leftnav,
 				second: form
 			},
+			'div', 
 			'body'
 		)
 	}
+	hide(): void {
+		this.getContent().style.display = "none";
+		this.isShow = false;
+		(<Form> this.children.second).clearForm();
+	}
+
 }

@@ -1,11 +1,10 @@
 import * as Handlebars from 'handlebars';
 import ChatItem from '../chatItem';
 import List from '.';
-import { connect } from '../../utils/HOC';
-import { Indexed } from '../../utils/store';
+import { connect } from '../../core/HOC';
 import Spiner from '../spiner';
 import { isEqual } from '../../utils/utils';
-import { TProps } from '../../utils/component';
+import { Indexed, TProps } from '../../core/types';
 
 type TUser = {
 	first_name: string,
@@ -55,7 +54,7 @@ class ChatList extends List{
 
 				if(Object.prototype.hasOwnProperty.call(newPropsChildren, key)){
 					if(!Object.prototype.hasOwnProperty.call(this.children, key)){
-						this.children[key] = new ChatItem(undefined, newPropsChildren[key]);
+						this.children[key] = new ChatItem(newPropsChildren[key]);
 					} else {
 						this.children[key].setProps({...this.children[key].props, ...newPropsChildren[key]});
 					}
@@ -77,12 +76,12 @@ class ChatList extends List{
 				key = oldProps.selectedChat;
 				
 				chatProps = this.state[key];
-				this.children[key].setProps({...chatProps, attr: {class: 'chatItem'}});
+				this.children[key].setProps({...chatProps, attr: {class: 'chat-item'}});
 			}
 			if(newProps?.selectedChat){
 				key = newProps.selectedChat;
 				chatProps = this.state[key];
-				this.children[key].setProps({...chatProps, attr: {class: 'chatItem chatItem__selected'}});
+				this.children[key].setProps({...chatProps, attr: {class: 'chat-item chat-item__selected'}});
 			}
 			res=true;
 		}

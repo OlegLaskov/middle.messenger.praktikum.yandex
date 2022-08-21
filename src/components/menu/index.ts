@@ -1,12 +1,12 @@
 import * as Handlebars from 'handlebars';
-import { TProps } from '../../utils/component';
+import { TProps, TTag } from '../../core/types';
 import List from '../list';
 
 export default class Menu extends List{
 
-	constructor(tagName = "div", propsAndChildren: TProps = {}, defaultClass = 'menu'){
+	constructor(propsAndChildren: TProps = {}, tagName: TTag = "div", defaultClass = 'menu'){
 		
-		super(tagName, propsAndChildren, defaultClass);
+		super(propsAndChildren, tagName, defaultClass);
 	}
 
 	render(){

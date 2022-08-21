@@ -1,10 +1,7 @@
 import EventBus from './event-bus';
 import {v4 as makeUUID} from 'uuid';
-import { isEqual } from './utils';
-
-export type TProps = {
-	[key:string|symbol]: any
-}
+import { isEqual } from '../utils/utils';
+import { TChildren, TProps, TTag } from './types';
 
 class Component {
 	static EVENTS = {
@@ -25,7 +22,7 @@ class Component {
 	isShow = true;
 	state: TProps = {};
 
-	constructor(tagName = 'div', propsAndChildren: TProps = {}, defaultClass = '') {
+	constructor(propsAndChildren: TProps = {}, tagName: TTag = 'div', defaultClass = '') {
 		const { children, props } = this._getChildren(propsAndChildren);
 		
 		const { attr = {} } = props;
@@ -58,9 +55,7 @@ class Component {
 		eventBus.emit(Component.EVENTS.INIT);
 	}
 
-	private _getChildren(propsAndChildren: TProps): {
-		children: {[key: string|symbol]: Component}, props: {[key: string|symbol]: any}
-	} {
+	private _getChildren(propsAndChildren: TProps): {children: TChildren, props: TProps} {
 		const children: {[key:string|symbol]: Component} = {};
 		const props: TProps = {};
 
@@ -143,11 +138,11 @@ class Component {
 		return !this.compareProps(oldProps, newProps);
 	}
 
-	compareProps(oldProps: any, newProps: any): boolean {
+	compareProps(oldProps: TProps, newProps: TProps): boolean {
 		return isEqual(oldProps, newProps);
 	}
 
-	setProps = (nextProps: object): void => {
+	setProps = (nextProps: TProps): void => {
 		if (!nextProps) {
 			return;
 		}

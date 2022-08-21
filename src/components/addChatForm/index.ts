@@ -11,31 +11,30 @@ export default class AddChatForm extends Form {
 
 	constructor(updateChatList: ()=>void){
 		const addChatInput = new Input(
-			undefined,
 			{
 				attr: {type: 'text', name: 'title', placeholder: 'Добавить новый чат'}
 			},
+			undefined,
 			'nav__add_chat_input'
 		);
 		const addChatInputBlock = new InputBlock(
-			'div',
 			{name: 'add_chat_input', input: addChatInput, valid: REG_EXP.NO_EMPTY, 
 			fieldErrorMsg: 'Введите название чата'},
+			'div',
 			'nav__add_chat_input_block'
 		);
 		const addChatBtn = new Button(
-			undefined,
 			{label: '+', attr: {type: 'submit'}},
+			undefined,
 			'nav__add_chat_btn'
 		);
 		super(
-			'form',
 			{
 				inputs: addChatInputBlock,
 				button: addChatBtn,
 				request: {
 					f_submit: chatApi.create,
-					resolve: (resp: string)=>{
+					resolve: ()=>{
 						updateChatList();
 					},
 					reject: (err: Error)=>{
@@ -43,6 +42,7 @@ export default class AddChatForm extends Form {
 					}
 				}
 			},
+			'form',
 			'nav__block nav__add_chat'
 		)
 	}

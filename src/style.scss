@@ -1,173 +1,186 @@
-@import './globalVar.scss';
+@import "./globalVar.scss";
 
 body {
-	font-family: $font;
-	margin: 0;
-	padding: 0;
-	border: 0;
-	box-sizing: border-box;
-}
-input {
-	font-family: $font;
-	font-size: 1rem;
+  font-family: $font;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
 }
 
 ul {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 li {
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
 
 %container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 .container {
-	@extend %container;
+  @extend %container;
 
-	&-error {
-		@extend %container; height: 100vh; width: 100%;
-	}
-	&-form {
-		@extend %container; height: 100vh;
+  &-error {
+    @extend %container;
 
-		&-login {
-			@extend %container; height: calc(max(100vh,418px));
-		}
-		&-signup {
-			@extend %container; height: calc(max(100vh, 828px));
-		}
-	}
-	&-profile {
-		@extend %container;
-		width: calc(100vw - 81px);
-		position: relative;
-		left: 64px;
-	}
+    height: 100vh;
+    width: 100%;
+  }
+
+  &-form {
+    @extend %container;
+
+    height: 100vh;
+
+    &-login {
+      @extend %container;
+
+      height: calc(max(100vh, 418px));
+    }
+
+    &-signup {
+      @extend %container;
+
+      height: calc(max(100vh, 828px));
+    }
+  }
+
+  &-profile {
+    @extend %container;
+
+    width: calc(100vw - 81px);
+    position: relative;
+    left: 64px;
+  }
 }
 
 .error {
-	&__title, &__content {
-		text-align: center;
-	}
-	&__link {
-		text-decoration: none;
-	}
+  &__title,
+  &__content {
+    text-align: center;
+  }
+
+  &__link {
+    text-decoration: none;
+  }
 }
+
 .profile {
-	width: 510px;
-	align-items: center;
-	text-align: center;
-
+  width: 510px;
+  align-items: center;
+  text-align: center;
 }
+
 .color-red {
-	color: red !important;
+  color: red !important;
 }
+
 .body {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-	border: 0;
-	width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: 100%;
 }
+
 .nav {
-	box-sizing: border-box;
-	height: 100%;
-	width: auto;
-	background-color: $backgroundNav;
-	border-right: solid 1px $lightBorder;
+  box-sizing: border-box;
+  height: 100%;
+  width: auto;
+  background-color: $backgroundNav;
+  border-right: solid 1px $lightBorder;
 
-	&__upper {
-		box-sizing: border-box;
-		width: 310px;
-		margin: 5px 10px;
-		border-bottom: 1px solid $lightBorder;
-	}
+  &__upper {
+    box-sizing: border-box;
+    width: 310px;
+    margin: 5px 10px;
+    border-bottom: 1px solid $lightBorder;
+  }
 
-	&__block {
-		padding: 5px 0px;
-	}
+  &__block {
+    padding: 5px 0;
+  }
 
-	&__link_block {
-		text-align: right;
-	}
+  &__link_block {
+    text-align: right;
+  }
 
-	&__link_profile {
-		text-decoration: none;
-		color: $grayFont;
-		text-align: right;
-		border-bottom: none;
-	}
+  &__link_profile {
+    text-decoration: none;
+    color: $grayFont;
+    text-align: right;
+    border-bottom: none;
+  }
 
-	&__search_input {
-		box-sizing: border-box;
-		width: 100%; // calc(100% - 10px);
-		text-align: center;
-		padding: 4px 5px 4px 40px;
-		margin: 10px 0;
-		color: $blackFont;
-		background-color: $backgroundInput;
-		border: 1px solid $backgroundInput;
-		border-radius: 5px;
-		outline: none;
-		transition: 0.3s;
-		background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E") no-repeat 13px center;
-	}
-	&__search_input:focus {
-		text-align: left;
-	}
+  &__search_input {
+    box-sizing: border-box;
+    width: 100%;
+    text-align: center;
+    padding: 4px 5px 4px 40px;
+    margin: 10px 0;
+    color: $blackFont;
+    border: 1px solid $backgroundInput;
+    border-radius: 5px;
+    outline: none;
+    transition: 0.3s;
+    background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E") no-repeat 13px center;
+  }
+
+  &__search_input:focus {
+    text-align: left;
+  }
 }
 
-.chat_list {
-	box-sizing: border-box;
-	height: calc(100vh - 147px);
-	overflow-y: auto;
-	width: 327px;
+.chat-list {
+  box-sizing: border-box;
+  height: calc(100vh - 147px);
+  overflow-y: auto;
+  width: 327px;
 
-	&__item {
-		box-sizing: border-box;
-		margin: 5px 10px;
-		padding-bottom: 5px;
-		border-bottom: 1px solid $lightBorder;
-		font-size: 1.05rem;
-		color: $blackFont;
-		background-color: $backgroundNav;
+  &__item {
+    box-sizing: border-box;
+    margin: 5px 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid $lightBorder;
+    font-size: 1.05rem;
+    color: $blackFont;
+    background-color: $backgroundNav;
 
-		&__selected {
-			background-color: $selectedChatColor;
-		}
-	}
+    &__selected {
+      background-color: $selectedChatColor;
+    }
+  }
 }
 
 .main {
-
-	&__select_chat_msg {
-		color: $grayFont;
-		text-align: center;
-	}
+  &__select_chat_msg {
+    color: $grayFont;
+    text-align: center;
+  }
 }
 
 .chat {
-	box-sizing: border-box;
-	width: calc(100vw - 331px);
+  box-sizing: border-box;
+  width: calc(100vw - 331px);
 
-	&__nav {
-		box-sizing: border-box;
-		height: 46px;
-		margin: 0 10px;
-		
-	}
+  &__nav {
+    box-sizing: border-box;
+    height: 46px;
+    margin: 0 10px;
+  }
 
-	&__body {
-		box-sizing: border-box;
-		height: calc(100vh - 96px);
-		margin: 0 10px;
-		overflow-y: auto;
-	}
+  &__body {
+    box-sizing: border-box;
+    height: calc(100vh - 96px);
+    margin: 0 10px;
+    overflow-y: auto;
+  }
 }

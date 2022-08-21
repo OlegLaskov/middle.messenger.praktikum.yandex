@@ -1,7 +1,7 @@
 import * as Handlebars from 'handlebars';
 import List from '.';
-import { TProps } from '../../utils/component';
-import { connect } from '../../utils/HOC';
+import { connect } from '../../core/HOC';
+import { TProps } from '../../core/types';
 import { Field, FieldBlock } from '../../utils/validationConst';
 import Input from '../input';
 import LineInput from '../lineinput';
@@ -60,9 +60,9 @@ function createInputElement({type, label, name, valid, errorMsg, value, autocomp
 	readonly: boolean){
 
 	const input = new Input(
-		'input', 
 		{attr: {type, id: name, name, value, readonly, autocomplete, autofocus}},
-		'form__input input__right'
+		'input', 
+		'form__input form__input__right'
 		);
 	const lineinput: FieldBlock = {label, input};
 	
@@ -70,7 +70,7 @@ function createInputElement({type, label, name, valid, errorMsg, value, autocomp
 		lineinput.valid = valid; 
 		lineinput.fieldErrorMsg =  errorMsg;
 	}
-	return new LineInput('div', lineinput);
+	return new LineInput(lineinput, 'div');
 }
 
 export default connect(InputList);

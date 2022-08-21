@@ -1,68 +1,42 @@
-@import '../../globalVar.scss';
+@import "../../globalVar.scss";
 
 .form {
-	width: 300px;
-	padding: 0 32px;
-	border-radius: 10px;
-	box-shadow: 0 4px 16px $lightShadow;
-	letter-spacing: 1px;
-	z-index: inherit;
+  width: 300px;
+  padding: 0 32px;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px $lightShadow;
+  letter-spacing: 1px;
+  z-index: inherit;
 
-	&__title {
-		text-align: center;
-		margin: 32px 0;
-		font-weight: normal;
-	}
-	&__input {
-		letter-spacing: 1px;
-		font-size: 1rem;
-		width: 100%;
-		padding: 0 0 10px 0;
-		border: none;
-		border-bottom: 1px solid $lightBorder;
-		background-color: transparent;
-		outline: none;
-		transition: 0.3s;
-	}
-	&__input:focus {
-		border-bottom: 1px solid $blueInput;
-	}
-	&__input:focus ~ &__label,
-	&__input:not(:placeholder-shown) ~ &__label {
-		top: -18px;
-		font-size: 12px;
-		color: $lightBorder;
-	}
+  &__title {
+    text-align: center;
+    margin: 32px 0;
+    font-weight: normal;
+  }
 
-	&__group {
-		position: relative;
-		margin-bottom: 32px;
-	}
-	&__label {
-		position: absolute;
-		top: 0;
-		left: 0;
-		z-index: inherit;
-		color: $grayLabel;
-		transition: 0.3s;
-	}
-	&__errorMsg {
-		font-size: 0.8rem;
-		width: 100%;
-		padding: 0;
-		border: none;
-		color: red;
-		background-color: transparent;
-		outline: none;
-		display: none;
-		transition: 0.3s;
+  &__group {
+    position: relative;
+    margin-bottom: 32px;
+  }
 
-		&__show {
-			display: block!important;
-		}
-		&__last {
-			display: block;
-			padding-bottom: 20px;
-		}
-	}
+  &__errorMsg {
+    font-size: 0.8rem;
+    width: 100%;
+    padding: 0;
+    border: none;
+    color: red;
+    background-color: transparent;
+    outline: none;
+    display: none;
+    transition: 0.3s;
+
+    &__show {
+      display: block !important;
+    }
+
+    &__last {
+      display: block;
+      padding-bottom: 20px;
+    }
+  }
 }

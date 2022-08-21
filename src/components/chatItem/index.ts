@@ -1,11 +1,12 @@
 import tmpl from './chatItem.hbs';
-import Component, { TProps } from '../../utils/component';
+import Component from '../../core/component';
 import './chatItem.scss';
-import store from '../../utils/store';
+import store from '../../core/store';
+import { TProps, TTag } from '../../core/types';
 
 export default class ChatItem extends Component{
 
-	constructor(tagName = "div", propsAndChildren: TProps = {}, defaultClass = 'chatItem'){
+	constructor(propsAndChildren: TProps = {}, tagName: TTag = 'div', defaultClass = 'chat-item'){
 
 		if(!propsAndChildren.events){
 			propsAndChildren.events = {};
@@ -16,7 +17,7 @@ export default class ChatItem extends Component{
 				store.set('selectedChat', id);
 			};
 		}
-		super(tagName, propsAndChildren, defaultClass);
+		super(propsAndChildren, tagName, defaultClass);
 		
 	}
 

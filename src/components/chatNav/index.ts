@@ -1,12 +1,13 @@
-import Component, { TProps } from "../../utils/component";
+import Component from '../../core/component';
 import './chatNav.scss';
 import tmpl from './chatNav.hbs';
+import { TProps, TTag } from '../../core/types';
 
 export default class ChatNav extends Component{
 
-	constructor(tagName = "div", propsAndChildren: TProps = {}, defaultClass = 'chat__nav'){
+	constructor(propsAndChildren: TProps = {}, tagName: TTag = 'div', defaultClass = 'chat__nav'){
 
-		super(tagName, propsAndChildren, defaultClass);
+		super(propsAndChildren, tagName, defaultClass);
 		
 	}
 

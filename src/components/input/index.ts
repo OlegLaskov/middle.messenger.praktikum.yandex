@@ -1,24 +1,11 @@
 import tmpl from './input.hbs';
-import Component from '../../utils/component';
+import Component from '../../core/component';
 import './input.scss';
-
-export type InputAttributes = {
-	type: string,
-	id?: string,
-	name?: string,
-	placeholder?: string,
-	autocomplete?: string|null,
-	autofocus?: boolean,
-	value?: string|number,
-	readonly?: boolean
-}
-export type InputType = {
-	attr?: InputAttributes
-}
+import { InputType, TTag } from '../../core/types';
 
 export default class Input extends Component{
-	constructor(tagName = "input", propsAndChildren:InputType = {}, defaultClass = 'form__input'){
-		super(tagName, propsAndChildren, defaultClass);
+	constructor(propsAndChildren: InputType = {}, tagName: TTag = "input", defaultClass = 'form__input'){
+		super(propsAndChildren, tagName, defaultClass);
 	}
 
 	validate(){

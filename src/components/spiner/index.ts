@@ -1,12 +1,13 @@
 // import * as Handlebars from 'handlebars';
 import tmpl from './spiner.hbs';
-import Component, { TProps } from '../../utils/component';
+import Component from '../../core/component';
 import './spiner.scss';
+import { TProps, TTag } from '../../core/types';
 
 export default class Spiner extends Component{
 
-	constructor(tagName = "div", propsAndChildren?: TProps, defaultClass = 'spiner'){
-		super(tagName, propsAndChildren, defaultClass);
+	constructor(propsAndChildren?: TProps, tagName: TTag = "div", defaultClass = 'spiner'){
+		super(propsAndChildren, tagName, defaultClass);
 	}
 
 	render(){

@@ -1,12 +1,13 @@
 import tmpl from './menuItem.hbs';
-import Component, { TProps } from '../../utils/component';
+import Component from '../../core/component';
+import { TProps, TTag } from '../../core/types';
 import './menuItem.scss';
 
 export default class MenuItem extends Component{
 
-	constructor(tagName = "div", propsAndChildren: TProps = {}, defaultClass = 'menuItem'){
+	constructor(propsAndChildren: TProps = {}, tagName: TTag = "div", defaultClass = 'menu-item'){
 
-		super(tagName, propsAndChildren, defaultClass);
+		super(propsAndChildren, tagName, defaultClass);
 		
 	}
 

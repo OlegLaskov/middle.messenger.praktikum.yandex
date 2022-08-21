@@ -1,11 +1,12 @@
 import tmpl from './leftnav.hbs';
-import Component, { TProps } from '../../utils/component';
+import Component from '../../core/component';
 import Router from '../../router';
 import './leftnav.scss';
+import { TProps, TTag } from '../../core/types';
 
 export default class LeftNav extends Component{
 	router = new Router('#root');
-	constructor(tagName = "nav", propsAndChildren:TProps = {}, defaultClass = 'leftnav'){
+	constructor(propsAndChildren: TProps = {}, tagName: TTag = "nav", defaultClass = 'leftnav'){
 		if(!propsAndChildren.events){
 			propsAndChildren.events = {};
 		}
@@ -17,7 +18,7 @@ export default class LeftNav extends Component{
 				}
 			};
 		}
-		super(tagName, propsAndChildren, defaultClass);
+		super(propsAndChildren, tagName, defaultClass);
 	}
 
 	render(){

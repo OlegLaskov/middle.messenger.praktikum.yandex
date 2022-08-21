@@ -1,16 +1,16 @@
 import tmpl from './chatBody.hbs';
-import Component, { TProps } from '../../utils/component';
+import Component from '../../core/component';
 import './chatBody.scss';
-import { connect } from '../../utils/HOC';
-import { TstoreMsgs } from '../../api/chat-api';
+import { connect } from '../../core/HOC';
+import { TProps, TstoreMsgs, TTag } from '../../core/types';
 
 class ChatBody extends Component{
-	constructor(tagName = "div", propsAndChildren: TProps = {}, defaultClass = 'chat__body'){
+	constructor(propsAndChildren: TProps = {}, tagName: TTag = 'div', defaultClass = 'chat__body'){
 		if(!propsAndChildren.events){
 			propsAndChildren.events = {};
 		}
 
-		super(tagName, propsAndChildren, defaultClass);
+		super(propsAndChildren, tagName, defaultClass);
 	}
 
 	render(){

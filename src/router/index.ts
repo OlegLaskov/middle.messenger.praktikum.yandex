@@ -1,4 +1,4 @@
-import Component from "../utils/component";
+import Component from "../core/component";
 import { PATH } from "./paths";
 import Route from "./route";
 

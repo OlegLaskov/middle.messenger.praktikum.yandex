@@ -8,6 +8,7 @@ import Link from '../components/link';
 import { PATH } from '../router/paths';
 import Router from '../router';
 import signupApi from '../api/signup-api';
+import { ValidFunction } from '../core/types';
 
 const fields: Field[] = [
 	{
@@ -42,19 +43,19 @@ const fields: Field[] = [
 
 const inputArr: Input[] = fields.map(({type, name, autocomplete})=>{
 	return new Input(
-		'input', 
-		{attr: {type, id: name, name, placeholder: ' ', autocomplete}}
+		{attr: {type, id: name, name, placeholder: ' ', autocomplete}},
+		'input'
 		);
 });
 
 const inputBlockArr: InputBlock[] = fields.map(({name, label, valid, errorMsg}, i)=>{
-	const fieldvalid = (name==='confirm_password') ? function(){
+	const fieldvalid: ValidFunction|RegExp|undefined = (name==='confirm_password') ? function(){
 		return (<HTMLInputElement> inputArr[5].element).value === (<HTMLInputElement> inputArr[6].element).value;
 	} : valid;
 
 	return new InputBlock(
-		'div', 
-		{name, label, input: inputArr[i], valid: fieldvalid, fieldErrorMsg: errorMsg}
+		{name, label, input: inputArr[i], valid: fieldvalid, fieldErrorMsg: errorMsg},
+		'div'
 		);
 });
 
@@ -64,19 +65,18 @@ const inputObj: {[key: string|symbol]: InputBlock} = fields.reduce(
 	return obj;
 }, {});
 
-const inputs: List = new List('div', inputObj);
+const inputs: List = new List(inputObj, 'div');
 const button: Button = new Button(
-	'button', 
 	{attr: {type: 'submit', name: 'Sign up', class: ''}, 
-	label: 'Зарегистрироваться'}
+	label: 'Зарегистрироваться'},
+	'button'
 );
-const link = new Link('div', {href: PATH.LOGIN, label: 'Войти'})
+const link = new Link({href: PATH.LOGIN, label: 'Войти'}, 'div');
 
 export default class SignupPage extends Form {
 	router = new Router('#root');
 	constructor(){
 		super(
-			'div', 
 			{
 				containerClass: 'container-form-signup',
 				formClass: 'form',
@@ -95,6 +95,7 @@ export default class SignupPage extends Form {
 					}
 				}
 			},
+			'div', 
 			'body'
 		)
 	}

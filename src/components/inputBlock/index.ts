@@ -1,13 +1,14 @@
 import tmpl from './inputBlock.hbs';
-import Component, { TProps } from '../../utils/component';
+import Component from '../../core/component';
 import './inputBlock.scss';
 import Input from '../input';
+import { TProps, TTag } from '../../core/types';
 
 export default class InputBlock extends Component{
-	constructor(tagName = "div", propsAndChildren: TProps = {}, defaultClass = 'form__group'){
+	constructor(propsAndChildren: TProps = {}, tagName: TTag = "div", defaultClass = 'form__group'){
 
 		if(propsAndChildren.input && !(propsAndChildren.input instanceof Component)){
-			propsAndChildren.input = new Input(undefined, propsAndChildren.input);
+			propsAndChildren.input = new Input(propsAndChildren.input);
 		}
 
 		if(!propsAndChildren.events){
@@ -26,7 +27,7 @@ export default class InputBlock extends Component{
 			};
 		}
 
-		super(tagName, propsAndChildren, defaultClass);
+		super(propsAndChildren, tagName, defaultClass);
 	}
 
 	isValid: boolean;

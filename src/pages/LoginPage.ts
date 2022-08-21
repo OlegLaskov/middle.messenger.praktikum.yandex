@@ -8,7 +8,7 @@ import Link from '../components/link';
 import { PATH } from '../router/paths';
 import Router from '../router';
 import loginApi from '../api/login-api';
-import store from '../utils/store';
+import store from '../core/store';
 
 const fields = [
 	{
@@ -22,25 +22,24 @@ const fields = [
 ];
 
 const inputArr = fields.map(({type, name, autocomplete})=>{
-	return new Input('input', {attr: {type, id: name, name, placeholder: ' ', autocomplete}});
+	return new Input({attr: {type, id: name, name, placeholder: ' ', autocomplete}}, 'input');
 });
 const inputBlockArr = fields.map(({name, label, valid, errorMsg}, i)=>{
-	return new InputBlock('div', {name, label, input: inputArr[i], valid, fieldErrorMsg: errorMsg});
+	return new InputBlock({name, label, input: inputArr[i], valid, fieldErrorMsg: errorMsg}, 'div');
 });
 const inputObj = fields.reduce((obj: {[key:string]: InputBlock}, field, i)=>{
 	obj[field.name] = inputBlockArr[i];
 	return obj;
 }, {});
 
-const inputs = new List('div', inputObj);
-const button = new Button('button', {attr: {type: 'submit', name: 'Sign in', class: ''}, label: 'Войти'});
-const link = new Link('div', {href: PATH.SIGNUP, label: 'Нет аккаунта?'});
+const inputs = new List(inputObj, 'div');
+const button = new Button({attr: {type: 'submit', name: 'Sign in', class: ''}, label: 'Войти'}, 'button');
+const link = new Link({href: PATH.SIGNUP, label: 'Нет аккаунта?'}, 'div');
 
 export default class LoginPage extends Form {
 	router = new Router('#root');
 	constructor(){
 		super(
-			'div',
 			{
 				containerClass: 'container-form-login',
 				formClass: 'form',
@@ -66,6 +65,7 @@ export default class LoginPage extends Form {
 					}
 				}
 			},
+			'div',
 			'body'
 		);
 	}

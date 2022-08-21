@@ -1,16 +1,16 @@
-<div class="chatItem__inner">
-	<div class="chatItem__avatar">
-		<img src="{{ avatar }}" alt="{{ title }}" width="47" height="47" class="chatItem__img">
+<div class="chat-item__inner">
+	<div class="chat-item__avatar">
+		<img src="{{ avatar }}" alt="{{ title }}" width="47" height="47" class="chat-item__img">
 	</div>
-	<div class="chatItem__block">
-		<div class="chatItem__header">
-			<div class="chatItem__title">{{ title }}</div>
-			<div class="chatItem__time">{{ time }}</div>
+	<div class="chat-item__block">
+		<div class="chat-item__header">
+			<div class="chat-item__title">{{ title }}</div>
+			<div class="chat-item__time">{{ time }}</div>
 		</div>
-		<div class="chatItem__main">
-			<div class="chatItem__content">{{ content }}</div>
+		<div class="chat-item__main">
+			<div class="chat-item__content">{{ content }}</div>
 			{{#if unread_count }}
-				<div class="chatItem__unread_count">{{ unread_count }}</div>
+				<div class="chat-item__unread_count">{{ unread_count }}</div>
 			{{/if}}
 		</div>
 	</div>

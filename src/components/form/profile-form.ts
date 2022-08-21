@@ -2,8 +2,8 @@ import Form from ".";
 import tmpl from './form.hbs';
 import './form.scss';
 import Spiner from '../spiner';
-import { connect, saveUserDataToStore } from "../../utils/HOC";
-import { Indexed } from "../../utils/store";
+import { connect, saveUserDataToStore } from "../../core/HOC";
+import { Indexed } from "../../core/types";
 
 class ProfileForm extends Form {
 
