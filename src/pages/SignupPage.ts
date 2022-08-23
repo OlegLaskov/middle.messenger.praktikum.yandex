@@ -49,12 +49,12 @@ const inputArr: Input[] = fields.map(({type, name, autocomplete})=>{
 });
 
 const inputBlockArr: InputBlock[] = fields.map(({name, label, validationRegexpOrFunc, errorMsg}, i)=>{
-	const fieldvalid: ValidFunction|RegExp|undefined = (name==='confirm_password') ? function(){
+	const fieldValid: ValidFunction|RegExp|undefined = (name==='confirm_password') ? function(){
 		return (<HTMLInputElement> inputArr[5].element).value === (<HTMLInputElement> inputArr[6].element).value;
 	} : validationRegexpOrFunc;
 
 	return new InputBlock(
-		{name, label, input: inputArr[i], validationRegexpOrFunc: fieldvalid, fieldErrorMsg: errorMsg},
+		{name, label, input: inputArr[i], validationRegexpOrFunc: fieldValid, fieldErrorMsg: errorMsg},
 		'div'
 		);
 });

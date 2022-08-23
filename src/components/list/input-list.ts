@@ -63,13 +63,13 @@ function createInputElement({type, label, name, validationRegexpOrFunc, errorMsg
 		'input', 
 		'form__input form__input__right'
 		);
-	const lineinput: FieldBlock = {label, input};
+	const lineInput: FieldBlock = {label, input};
 	
 	if(!readonly){
-		lineinput.validationRegexpOrFunc = validationRegexpOrFunc; 
-		lineinput.fieldErrorMsg =  errorMsg;
+		lineInput.validationRegexpOrFunc = validationRegexpOrFunc; 
+		lineInput.fieldErrorMsg =  errorMsg;
 	}
-	return new LineInput(lineinput, 'div');
+	return new LineInput(lineInput, 'div');
 }
 
 export default connect(InputList);

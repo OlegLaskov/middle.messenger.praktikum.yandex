@@ -79,8 +79,6 @@ export default class ChangePassword extends List {
 				'form__button form__button__w250'
 			),
 	
-			link = null,
-		
 			form = new ProfileForm(
 				{
 					formClass: 'profile',
@@ -89,11 +87,9 @@ export default class ChangePassword extends List {
 					title: null,
 					inputs,
 					button,
-					link,
 					request: {
 						f_submit: userApi.changePassword,
 						resolve: (resp: string)=>{
-							console.log('resp='+typeof resp, resp);
 							if(resp === 'OK'){
 								alert('Пароль успешно изменен');
 								this.router.go(PATH.PROFILE);
