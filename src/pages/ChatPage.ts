@@ -94,7 +94,7 @@ export default class ChatPage extends List {
 				input: {attr: {type: 'text', name: fieldLoginName, value: '', placeholder: ' ', autofocus: true}},
 				name: fieldLoginName,
 				label: 'Логин',
-				valid: REG_EXP.LOGIN, 
+				validationRegexpOrFunc: REG_EXP.LOGIN, 
 				fieldErrorMsg: ERROR_MSG.LOGIN
 			}
 		);
@@ -103,7 +103,7 @@ export default class ChatPage extends List {
 				input: {attr: {type: 'text', name: fieldLoginName, value: '', placeholder: ' ', autofocus: true}},
 				name: fieldLoginName,
 				label: 'Логин',
-				valid: REG_EXP.LOGIN, 
+				validationRegexpOrFunc: REG_EXP.LOGIN, 
 				fieldErrorMsg: ERROR_MSG.LOGIN
 			}
 		);

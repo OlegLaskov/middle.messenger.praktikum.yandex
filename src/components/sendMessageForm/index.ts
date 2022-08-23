@@ -23,7 +23,7 @@ export default class SendMessageForm extends Form {
 			'send-message__input'
 		);
 		const sendMessageInputBlock = new InputBlock(
-			{name: 'add_chat_input', input: sendMessageInput, valid: REG_EXP.NO_EMPTY, 
+			{name: 'add_chat_input', input: sendMessageInput, validationRegexpOrFunc: REG_EXP.NO_EMPTY, 
 			fieldErrorMsg: ''},
 			'div',
 			'send-message__block'

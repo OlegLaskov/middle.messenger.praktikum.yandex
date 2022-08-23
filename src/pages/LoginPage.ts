@@ -9,32 +9,41 @@ import { PATH } from '../router/paths';
 import Router from '../router';
 import loginApi from '../api/login-api';
 import store from '../core/store';
+import { Field } from '../core/types';
 
-const fields = [
+const fields: Field[] = [
 	{
-		type: 'text', name: 'login', label: 'Логин', autocomplete: 'login', 
-		valid: REG_EXP.LOGIN, errorMsg: ERROR_MSG.LOGIN
+		type: 'text', 
+		name: 'login', 
+		label: 'Логин', 
+		autocomplete: 'login', 
+		validationRegexpOrFunc: REG_EXP.LOGIN, 
+		errorMsg: ERROR_MSG.LOGIN
 	},
 	{
-		type: 'password', name: 'password', label: 'Пароль', autocomplete: 'current-password', 
-		valid: REG_EXP.PASSWORD, errorMsg: ERROR_MSG.PASSWORD
+		type: 'password', 
+		name: 'password', 
+		label: 'Пароль', 
+		autocomplete: 'current-password', 
+		validationRegexpOrFunc: REG_EXP.PASSWORD, 
+		errorMsg: ERROR_MSG.PASSWORD
 	},
 ];
 
 const inputArr = fields.map(({type, name, autocomplete})=>{
-	return new Input({attr: {type, id: name, name, placeholder: ' ', autocomplete}}, 'input');
+	return new Input({attr: {type, id: name, name, placeholder: ' ', autocomplete}});
 });
-const inputBlockArr = fields.map(({name, label, valid, errorMsg}, i)=>{
-	return new InputBlock({name, label, input: inputArr[i], valid, fieldErrorMsg: errorMsg}, 'div');
+const inputBlockArr = fields.map(({name, label, validationRegexpOrFunc, errorMsg}, i)=>{
+	return new InputBlock({name, label, input: inputArr[i], validationRegexpOrFunc, fieldErrorMsg: errorMsg});
 });
 const inputObj = fields.reduce((obj: {[key:string]: InputBlock}, field, i)=>{
 	obj[field.name] = inputBlockArr[i];
 	return obj;
 }, {});
 
-const inputs = new List(inputObj, 'div');
-const button = new Button({attr: {type: 'submit', name: 'Sign in', class: ''}, label: 'Войти'}, 'button');
-const link = new Link({href: PATH.SIGNUP, label: 'Нет аккаунта?'}, 'div');
+const inputs = new List(inputObj);
+const button = new Button({attr: {type: 'submit', name: 'Sign in', class: ''}, label: 'Войти'});
+const link = new Link({href: PATH.SIGNUP, label: 'Нет аккаунта?'});
 
 export default class LoginPage extends Form {
 	router = new Router('#root');

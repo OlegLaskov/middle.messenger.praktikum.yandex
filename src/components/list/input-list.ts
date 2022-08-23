@@ -1,8 +1,7 @@
 import * as Handlebars from 'handlebars';
 import List from '.';
 import { connect } from '../../core/HOC';
-import { TProps } from '../../core/types';
-import { Field, FieldBlock } from '../../utils/validationConst';
+import { Field, FieldBlock, TProps } from '../../core/types';
 import Input from '../input';
 import LineInput from '../lineinput';
 
@@ -56,8 +55,8 @@ class InputList extends List{
 	}
 }
 
-function createInputElement({type, label, name, valid, errorMsg, value, autocomplete, autofocus}: Field, 
-	readonly: boolean){
+function createInputElement({type, label, name, validationRegexpOrFunc, errorMsg, 
+	value, autocomplete, autofocus}: Field, readonly: boolean){
 
 	const input = new Input(
 		{attr: {type, id: name, name, value, readonly, autocomplete, autofocus}},
@@ -67,7 +66,7 @@ function createInputElement({type, label, name, valid, errorMsg, value, autocomp
 	const lineinput: FieldBlock = {label, input};
 	
 	if(!readonly){
-		lineinput.valid = valid; 
+		lineinput.validationRegexpOrFunc = validationRegexpOrFunc; 
 		lineinput.fieldErrorMsg =  errorMsg;
 	}
 	return new LineInput(lineinput, 'div');

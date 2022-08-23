@@ -3,6 +3,7 @@ import Component from "./component";
 export type TProps = {[key:string|symbol]: any};
 export type TChildren = {[key:string|symbol]: Component};
 export type TTag = 'div' | 'input' | 'a' | 'input' | 'nav' | 'main' | 'form' | 'button' | 'p';
+export type TInputType = 'email' | 'text' | 'password' | 'hidden' | 'tel';
 export type PlainObject<T = any> = {
     [k in string]: T;
 };
@@ -18,7 +19,7 @@ export type User = {
 	"avatar": string|null
 };
 export type InputAttributes = {
-	type: string,
+	type: TInputType,
 	id?: string,
 	name?: string,
 	placeholder?: string,
@@ -72,3 +73,21 @@ export type TstoreMsgs = {
 	[key in string]: TchatMsgs
 };
 export type ValidFunction = () => boolean;
+
+export interface Field {
+	type: TInputType,
+	name: string,
+	value?: string,
+	label?: string|null,
+	validationRegexpOrFunc?: ValidFunction|RegExp,
+	errorMsg?: string|null,
+	autocomplete?: string|null,
+	autofocus?: boolean
+}
+
+export interface FieldBlock {
+	input: Component,
+	label?: string|null,
+	validationRegexpOrFunc?: ValidFunction|RegExp,
+	fieldErrorMsg?: string|null,
+}

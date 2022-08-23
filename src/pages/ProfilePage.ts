@@ -3,7 +3,7 @@ import store from '../core/store';
 import { connect, saveUserDataToStore } from '../core/HOC';
 import List from '../components/list';
 import Button from '../components/button';
-import {REG_EXP, ERROR_MSG, Field} from '../utils/validationConst';
+import {REG_EXP, ERROR_MSG} from '../utils/validationConst';
 import LeftNav from '../components/leftnav';
 import Avatar from '../components/avatar';
 import { PATH } from '../router/paths';
@@ -15,7 +15,7 @@ import Router from '../router';
 import Modal from '../components/modal';
 import InputBlock from '../components/inputBlock';
 import Form from '../components/form';
-import { FormWithFile, Indexed, User } from '../core/types';
+import { Field, FormWithFile, Indexed, User } from '../core/types';
 
 export default class ProfilePage extends List {
 	router = new Router('#root');
@@ -45,17 +45,17 @@ export default class ProfilePage extends List {
 		
 		const fields: Field[] = [
 				{type: 'text', label: 'Почта', name: 'email', value: email || '', 
-					valid: REG_EXP.EMAIL, errorMsg: ERROR_MSG.EMAIL, autofocus: true},
+					validationRegexpOrFunc: REG_EXP.EMAIL, errorMsg: ERROR_MSG.EMAIL, autofocus: true},
 				{type: 'text', label: 'Логин', name: 'login', value: login || '', 
-					valid: REG_EXP.LOGIN, errorMsg: ERROR_MSG.LOGIN},
+					validationRegexpOrFunc: REG_EXP.LOGIN, errorMsg: ERROR_MSG.LOGIN},
 				{type: 'text', label: 'Имя', name: 'first_name', value: first_name || '', 
-					valid: REG_EXP.NAME, errorMsg: ERROR_MSG.NAME},
+					validationRegexpOrFunc: REG_EXP.NAME, errorMsg: ERROR_MSG.NAME},
 				{type: 'text', label: 'Фамилия', name: 'second_name', value: second_name || '', 
-					valid: REG_EXP.NAME, errorMsg: ERROR_MSG.NAME},
+					validationRegexpOrFunc: REG_EXP.NAME, errorMsg: ERROR_MSG.NAME},
 				{type: 'text', label: 'Имя в чате', name: 'display_name', value: display_name || '', 
-					valid: REG_EXP.DISPLAY_NAME, errorMsg: ERROR_MSG.DISPLAY_NAME},
+					validationRegexpOrFunc: REG_EXP.DISPLAY_NAME, errorMsg: ERROR_MSG.DISPLAY_NAME},
 				{type: 'text', label: 'Телефон', name: 'phone', value: phone || '', 
-					valid: REG_EXP.PHONE, errorMsg: ERROR_MSG.PHONE},
+					validationRegexpOrFunc: REG_EXP.PHONE, errorMsg: ERROR_MSG.PHONE},
 			];
 		
 		const inputObj = fields.reduce((obj: {[key:string|symbol]: Field}, field)=>{
@@ -133,7 +133,7 @@ export default class ProfilePage extends List {
 				input: {attr: {type: 'file', accept:"image/*", name: avatarName, id: avatarName}},
 				name: avatarName,
 				label: 'Аватар',
-				valid: REG_EXP.NO_EMPTY, 
+				validationRegexpOrFunc: REG_EXP.NO_EMPTY, 
 				fieldErrorMsg: 'Нужно выбрать файл'
 			}
 		);

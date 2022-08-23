@@ -15,13 +15,13 @@ export default class InputBlock extends Component{
 			propsAndChildren.events = {};
 		}
 		
-		if(!propsAndChildren.events.focusout && propsAndChildren.valid){
+		if(!propsAndChildren.events.focusout && propsAndChildren.validationRegexpOrFunc){
 			propsAndChildren.events.focusout = (e: FocusEvent)=>{
 				const type = (<HTMLInputElement> e.target).type;
 				type != 'file' && this.validate(e);
 			};
 		}
-		if(!propsAndChildren.events.change && propsAndChildren.valid){
+		if(!propsAndChildren.events.change && propsAndChildren.validationRegexpOrFunc){
 			propsAndChildren.events.change = (e: FocusEvent)=>{
 				this.validate(e);
 			};
@@ -35,13 +35,13 @@ export default class InputBlock extends Component{
 	validate(e:FocusEvent|{target: HTMLElement}={target: this.children.input.element}){
 		const {name, value} = <HTMLInputElement> e.target;
 		if(name){
-			const {valid} = this.props;
-			if(valid){
+			const {validationRegexpOrFunc} = this.props;
+			if(validationRegexpOrFunc){
 				this.isValid = false;
-				if(typeof valid !== 'function'){
-					this.isValid = !!value.match(valid);
+				if(typeof validationRegexpOrFunc !== 'function'){
+					this.isValid = !!value.match(validationRegexpOrFunc);
 				} else {
-					this.isValid = valid(this);
+					this.isValid = validationRegexpOrFunc(this);
 				}
 				if(this.isValid){
 					this.setProps({...this.props, classErr: ''});

@@ -1,6 +1,3 @@
-import Component from "../core/component";
-import { ValidFunction } from "../core/types";
-
 export const REG_EXP = {
 	NAME: /^[A-ZА-Я]{1}[A-ZА-Яa-zа-я-]{2,}$/,
 	LOGIN: /^(?=.*?[A-Za-z_-])([A-Za-z0-9_-]){3,20}$/,
@@ -22,21 +19,3 @@ export const ERROR_MSG = {
 	CONFIRM_NEW_PASSWORD: 'Не совпадает с новым паролем',
 	DISPLAY_NAME: 'Допустимы 3 имени через пробел (Имя Отчество Фамилия)'
 };
-
-export interface Field {
-	type: 'email' | 'text' | 'password' | 'hidden' | 'tel',
-	name: string,
-	value?: string,
-	label?: string|null,
-	valid?: ValidFunction|RegExp,
-	errorMsg?: string|null,
-	autocomplete?: string|null,
-	autofocus?: boolean
-}
-
-export interface FieldBlock {
-	input: Component,
-	label?: string|null,
-	valid?: ValidFunction|RegExp,
-	fieldErrorMsg?: string|null,
-}

@@ -3,41 +3,41 @@ import Input from '../components/input';
 import List from '../components/list';
 import InputBlock from '../components/inputBlock';
 import Button from '../components/button';
-import {REG_EXP, ERROR_MSG, Field} from '../utils/validationConst';
+import {REG_EXP, ERROR_MSG} from '../utils/validationConst';
 import Link from '../components/link';
 import { PATH } from '../router/paths';
 import Router from '../router';
 import signupApi from '../api/signup-api';
-import { ValidFunction } from '../core/types';
+import { Field, ValidFunction } from '../core/types';
 
 const fields: Field[] = [
 	{
 		type: 'email', name: 'email', label: 'Почта', autocomplete: 'email', 
-		valid: REG_EXP.EMAIL, errorMsg: ERROR_MSG.EMAIL
+		validationRegexpOrFunc: REG_EXP.EMAIL, errorMsg: ERROR_MSG.EMAIL
 	},
 	{
 		type: 'text', name: 'login', label: 'Логин', autocomplete: 'login', 
-		valid: REG_EXP.LOGIN, errorMsg: ERROR_MSG.LOGIN
+		validationRegexpOrFunc: REG_EXP.LOGIN, errorMsg: ERROR_MSG.LOGIN
 	},
 	{
 		type: 'text', name: 'first_name', label: 'Имя', autocomplete: 'first-name', 
-		valid: REG_EXP.NAME, errorMsg: ERROR_MSG.NAME
+		validationRegexpOrFunc: REG_EXP.NAME, errorMsg: ERROR_MSG.NAME
 	},
 	{
 		type: 'text', name: 'second_name', label: 'Фамилия', autocomplete: 'last-name', 
-		valid: REG_EXP.NAME, errorMsg: ERROR_MSG.NAME
+		validationRegexpOrFunc: REG_EXP.NAME, errorMsg: ERROR_MSG.NAME
 	},
 	{
 		type: 'tel', name: 'phone', label: 'Телефон', autocomplete: 'phone', 
-		valid: REG_EXP.PHONE, errorMsg: ERROR_MSG.PHONE
+		validationRegexpOrFunc: REG_EXP.PHONE, errorMsg: ERROR_MSG.PHONE
 	},
 	{
 		type: 'password', name: 'password', label: 'Пароль', 
-		valid: REG_EXP.PASSWORD, errorMsg: ERROR_MSG.PASSWORD
+		validationRegexpOrFunc: REG_EXP.PASSWORD, errorMsg: ERROR_MSG.PASSWORD
 	},
 	{
 		type: 'password', name: 'confirm_password', label: 'Пароль ещё раз', 
-		valid: REG_EXP.PASSWORD, errorMsg: ERROR_MSG.CONFIRM_PASSWORD
+		validationRegexpOrFunc: REG_EXP.PASSWORD, errorMsg: ERROR_MSG.CONFIRM_PASSWORD
 	},
 ];
 
@@ -48,13 +48,13 @@ const inputArr: Input[] = fields.map(({type, name, autocomplete})=>{
 		);
 });
 
-const inputBlockArr: InputBlock[] = fields.map(({name, label, valid, errorMsg}, i)=>{
+const inputBlockArr: InputBlock[] = fields.map(({name, label, validationRegexpOrFunc, errorMsg}, i)=>{
 	const fieldvalid: ValidFunction|RegExp|undefined = (name==='confirm_password') ? function(){
 		return (<HTMLInputElement> inputArr[5].element).value === (<HTMLInputElement> inputArr[6].element).value;
-	} : valid;
+	} : validationRegexpOrFunc;
 
 	return new InputBlock(
-		{name, label, input: inputArr[i], valid: fieldvalid, fieldErrorMsg: errorMsg},
+		{name, label, input: inputArr[i], validationRegexpOrFunc: fieldvalid, fieldErrorMsg: errorMsg},
 		'div'
 		);
 });

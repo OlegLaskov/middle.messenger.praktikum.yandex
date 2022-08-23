@@ -18,7 +18,7 @@ export default class AddChatForm extends Form {
 			'nav__add_chat_input'
 		);
 		const addChatInputBlock = new InputBlock(
-			{name: 'add_chat_input', input: addChatInput, valid: REG_EXP.NO_EMPTY, 
+			{name: 'add_chat_input', input: addChatInput, validationRegexpOrFunc: REG_EXP.NO_EMPTY, 
 			fieldErrorMsg: 'Введите название чата'},
 			'div',
 			'nav__add_chat_input_block'
