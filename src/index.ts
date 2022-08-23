@@ -11,6 +11,7 @@ import ChangePassword from './pages/ChangePassword';
 import './style.scss';
 
 const router = new Router('#root');
+router.setErrorRoute(PATH.ERROR404);
 router
 	.use(PATH.LOGIN, LoginPage)
 	.use(PATH.SIGNUP, SignupPage)

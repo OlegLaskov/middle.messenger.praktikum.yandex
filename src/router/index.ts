@@ -9,6 +9,7 @@ export default class Router {
 	private history: History;
 	private _currentRoute: Route|null;
 	private _rootQuery: string;
+	private _errorRoute: string|null = null;
 
 	constructor(rootQuery: string) {
 		if (Router.__instance) {
@@ -56,7 +57,7 @@ export default class Router {
 			}
 		} else {
 			console.log('Route not found');
-			this.go(PATH.ERROR404);
+			this._errorRoute && this.go(this._errorRoute);
 		}
 	}
 
@@ -75,5 +76,9 @@ export default class Router {
 
 	public getRoute(pathname: string) {
 		return this.routes.find(route => route.match(pathname)) || null;
+	}
+
+	public setErrorRoute(route: string){
+		this._errorRoute = route;
 	}
 }

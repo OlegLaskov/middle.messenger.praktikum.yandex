@@ -2,7 +2,7 @@ import Component from "./component";
 
 export type TProps = {[key:string|symbol]: any};
 export type TChildren = {[key:string|symbol]: Component};
-export type TTag = 'div' | 'input' | 'a' | 'input' | 'nav' | 'main' | 'form' | 'button' | 'p';
+export type TTag = 'div' | 'input' | 'a' | 'nav' | 'main' | 'form' | 'button' | 'p';
 export type TInputType = 'email' | 'text' | 'password' | 'hidden' | 'tel';
 export type PlainObject<T = any> = {
     [k in string]: T;
