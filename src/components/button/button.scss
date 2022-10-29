@@ -1,27 +1,28 @@
-$blueButton: #0071f0;
-$focusButton: rgba(0, 113, 240, 0.7);
+@import "../../globalVar.scss";
 
 .form {
-	&__button {
-		letter-spacing: 1px;
-		font-size: 1rem;
-		width: 100%;
-		text-align: center;
-		padding: 10px 20px;
-		margin-bottom: 32px;
-		border: none;
-		border-radius: 5px;
-		color: #fff;
-		background-color: $blueButton;
-		outline: none;
-		cursor: pointer;
-		transition: background-color 0.3s;
-	}
-	&__button:focus,
-	&__button:hover {
-		background-color: $focusButton;
-	}
-	&__button__w250 {
-		max-width: 250px;
-	}
+  &__button {
+    letter-spacing: 1px;
+    font-size: 1rem;
+    width: 100%;
+    text-align: center;
+    padding: 10px 20px;
+    margin-bottom: 32px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    background-color: $blueButton;
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  &__button:focus,
+  &__button:hover {
+    background-color: $focusButton;
+  }
+
+  &__button__w250 {
+    max-width: 250px;
+  }
 }

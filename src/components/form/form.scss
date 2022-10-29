@@ -1,15 +1,42 @@
-$lightShadow: #ccc;
+@import "../../globalVar.scss";
 
 .form {
-	width: 300px;
-	padding: 0 32px;
-	border-radius: 10px;
-	box-shadow: 0 4px 16px $lightShadow;
-	letter-spacing: 1px;
+  width: 300px;
+  padding: 0 32px;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px $lightShadow;
+  letter-spacing: 1px;
+  z-index: inherit;
 
-	&__title {
-		text-align: center;
-		margin: 32px 0;
-		font-weight: normal;
-	}
+  &__title {
+    text-align: center;
+    margin: 32px 0;
+    font-weight: normal;
+  }
+
+  &__group {
+    position: relative;
+    margin-bottom: 32px;
+  }
+
+  &__errorMsg {
+    font-size: 0.8rem;
+    width: 100%;
+    padding: 0;
+    border: none;
+    color: red;
+    background-color: transparent;
+    outline: none;
+    display: none;
+    transition: 0.3s;
+
+    &__show {
+      display: block !important;
+    }
+
+    &__last {
+      display: block;
+      padding-bottom: 20px;
+    }
+  }
 }

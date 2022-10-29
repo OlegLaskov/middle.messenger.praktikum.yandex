@@ -1,9 +1,10 @@
-<form class="{{formClass}}">
-	{{{avatar}}}
-	<h1 class="{{titleClass}}">{{title}}</h1>
-	{{{ inputs }}}
-	{{{ button }}}
-	{{#each links}}
-		{{> link }}
-	{{/each}}
-</form>
+<div class="{{ containerClass }}">
+	<form class="{{ formClass }}">
+		{{{ avatar }}}
+		<h1 class="{{ titleClass }}">{{ title }}</h1>
+		{{{ inputs }}}
+		<div class="form__errorMsg form__errorMsg__last">{{ errorMsg }}</div>
+		{{{ button }}}
+		{{{ link }}}
+	</form>
+</div>

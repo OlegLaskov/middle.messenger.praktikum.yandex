@@ -1,0 +1,17 @@
+<div class="chat-item__inner">
+	<div class="chat-item__avatar">
+		<img src="{{ avatar }}" alt="{{ title }}" width="47" height="47" class="chat-item__img">
+	</div>
+	<div class="chat-item__block">
+		<div class="chat-item__header">
+			<div class="chat-item__title">{{ title }}</div>
+			<div class="chat-item__time">{{ time }}</div>
+		</div>
+		<div class="chat-item__main">
+			<div class="chat-item__content">{{ content }}</div>
+			{{#if unread_count }}
+				<div class="chat-item__unread_count">{{ unread_count }}</div>
+			{{/if}}
+		</div>
+	</div>
+</div>

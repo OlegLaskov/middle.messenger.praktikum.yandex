@@ -1,33 +1,31 @@
-$black: #1e1e1e;
-$grayLine: #eaeaea;
-$grayFont: #999999;
+@import "../../globalVar.scss";
 
 .line {
-	position: relative;
-	margin-bottom: 20px;
-	display: flex;	
+  position: relative;
+  margin-bottom: 20px;
+  display: flex;
 
-	&__key, &__value {
-		letter-spacing: 1px;
-		font-size: 16px;
-		width: 100%;
-		padding: 0 0 10px 0;
-		border: none;
-		border-bottom: 1px solid $grayLine;
-		background-color: transparent;
-		outline: none;
-		transition: 0.3s;
-	}
-	&__key {
-		flex: 1;
-		color: $black;
-		text-align: left;
-	}
-	&__value {
-		color: $grayFont;
-		text-align: right;
-	}
-}
-.input__right {
-	text-align: right;
+  &__key,
+  &__value {
+    letter-spacing: 1px;
+    font-size: 16px;
+    width: 100%;
+    padding: 0 0 10px;
+    border: none;
+    border-bottom: 1px solid $grayLine;
+    background-color: transparent;
+    outline: none;
+    transition: 0.3s;
+  }
+
+  &__key {
+    flex: 1;
+    color: $blackFont;
+    text-align: left;
+  }
+
+  &__value {
+    color: $grayFont;
+    text-align: right;
+  }
 }

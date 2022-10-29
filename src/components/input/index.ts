@@ -1,16 +1,17 @@
 import tmpl from './input.hbs';
-import Component from '../../utils/component';
+import Component from '../../core/component';
 import './input.scss';
+import { InputType, TTag } from '../../core/types';
 
 export default class Input extends Component{
-	constructor(tagName = "input", propsAndChildren = {}, defaultClass = 'form__input'){
-		super(tagName, propsAndChildren, defaultClass);
+	constructor(propsAndChildren: InputType = {}, tagName: TTag = "input", defaultClass = 'form__input'){
+		super(propsAndChildren, tagName, defaultClass);
 	}
-	validation(){
+
+	validate(){
 		return true;
 	}
 	render(){
-		console.log('Input render');
 		return this.compile(tmpl);
 	}
 }

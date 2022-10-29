@@ -1,37 +1,24 @@
-import {default as renderDOM} from './utils/render';
-import main from './pages/main';
-import login from './pages/login';
-import signup from './pages/signup';
-import profile from './pages/profile';
-import error from './pages/error';
-import Component from './utils/component';
+import Router from './router';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
+import { PATH } from './router/paths';
+import ChatPage from './pages/ChatPage';
+import ProfilePage from './pages/ProfilePage';
+import Error500 from './pages/Error500';
+import Error404 from './pages/Error404';
+import ChangePassword from './pages/ChangePassword';
+
 import './style.scss';
 
-const data: {[key: string]: Component|string} = {
-	'/': login(),
-	'/signup': signup(),
-	'/profile': profile({readonly: true}),
-	'/changeprofile': profile({readonly: false}),
-	'/changepassword': profile({readonly: false, changepassword: true}),
-	'/error': error({
-		title: '500',
-		content: 'Мы уже фиксим',
-		links: [
-			{href: '/chat', class1: '', label: 'Назад к чатам'},
-		],
-		
-	}),
-	'/error404': error({
-		title: '404',
-		content: 'Не туда попали',
-		links: [
-			{href: '/chat', class1: '', label: 'Назад к чатам'},
-		],
-	}),
-	'/chat': main(),
-
-
-};
-
-const page: Component|string = data[window.location.pathname] || data['/error404'];
-renderDOM('#root', page);
+const router = new Router('#root');
+router.setErrorRoute(PATH.ERROR404);
+router
+	.use(PATH.LOGIN, LoginPage)
+	.use(PATH.SIGNUP, SignupPage)
+	.use(PATH.CHAT, ChatPage)
+	.use(PATH.PROFILE, ProfilePage, {readonly: true})
+	.use(PATH.EDIT_PROFILE, ProfilePage, {readonly: false})
+	.use(PATH.CHANGE_PASSWORD, ChangePassword)
+	.use(PATH.ERROR500, Error500)
+	.use(PATH.ERROR404, Error404)
+	.start();

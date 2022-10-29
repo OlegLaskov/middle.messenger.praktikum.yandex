@@ -1,48 +1,54 @@
-$bkgrAvatar: #EFEFEF;
+$bkgrAvatar: #efefef;
+$avatarSize: 130px;
 
 .avatar {
-	margin: 20px;
-	text-align: center;
-	height: auto;
-	min-height: 130px;
-	width: 130px;
-	// color: $bkgrAvatar;
-	background-color: $bkgrAvatar;
-	border-radius: 50%;
-	position: relative;
-	margin-left: auto;
-	margin-right: auto;
-	&__changable {
-		&:hover {
-			color: black;
-			background-color: black;
-			opacity: 0.9;
-		}
-	}
-	&__label {
-		font-size: 0.8rem;
-		position: absolute;
-		top: 58px;
-		left: 12px;
-		z-index: -1;
-	}
-	&__img {
-		position: absolute;
-		top: 0px;
-		left: 0px;
-		height: 130px;
-		width: 130px;
-		background: url(/resources/noPhoto.jpg);
-		cursor: default;
-	}
-	&__name {
-		text-align: center;
-	}
-	/* &__changable:hover &__label {
-		z-index: 1000;
-	} */
-	&__changable:hover &__img {
-		cursor: pointer;
-		background: url(/resources/changePhoto.jpg);
-	}
+  margin: 20px;
+  text-align: center;
+  height: auto;
+  min-height: $avatarSize;
+  width: $avatarSize;
+  background-color: $bkgrAvatar;
+  border-radius: 50%;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+
+  &__label {
+    font-size: 0.8rem;
+    position: absolute;
+    top: 58px;
+    left: 12px;
+    z-index: -1;
+  }
+
+  &__img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: $avatarSize;
+    width: $avatarSize;
+    cursor: default;
+  }
+
+  &__noPhoto {
+    background: url("/resources/noPhoto.jpg");
+  }
+
+  &__name {
+    text-align: center;
+  }
+
+  &__img img {
+    max-width: $avatarSize;
+    object-fit: cover;
+  }
+
+  &__changable:hover &__img {
+    cursor: pointer;
+    background: url("/resources/changePhoto.jpg");
+  }
+
+  &__changable:hover img {
+    display: none;
+  }
 }

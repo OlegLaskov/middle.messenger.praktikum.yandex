@@ -1,48 +1,63 @@
 import tmpl from './inputBlock.hbs';
-import Component from '../../utils/component';
+import Component from '../../core/component';
 import './inputBlock.scss';
+import Input from '../input';
+import { TProps, TTag } from '../../core/types';
 
 export default class InputBlock extends Component{
-	constructor(tagName = "div", propsAndChildren: {[key:string|symbol]: any} = {}, defaultClass = 'form__group'){
+	constructor(propsAndChildren: TProps = {}, tagName: TTag = "div", defaultClass = 'form__group'){
+
+		if(propsAndChildren.input && !(propsAndChildren.input instanceof Component)){
+			propsAndChildren.input = new Input(propsAndChildren.input);
+		}
 
 		if(!propsAndChildren.events){
 			propsAndChildren.events = {};
 		}
-		if(!propsAndChildren.events.focusout && propsAndChildren.valid){
-			propsAndChildren.events.focusout = (e: Event)=>{
-				this.eventBus().emit('validation', e);
+		
+		if(!propsAndChildren.events.focusout && propsAndChildren.validationRegexpOrFunc){
+			propsAndChildren.events.focusout = (e: FocusEvent)=>{
+				const type = (<HTMLInputElement> e.target).type;
+				type != 'file' && this.validate(e);
+			};
+		}
+		if(!propsAndChildren.events.change && propsAndChildren.validationRegexpOrFunc){
+			propsAndChildren.events.change = (e: FocusEvent)=>{
+				this.validate(e);
 			};
 		}
 
-		super(tagName, propsAndChildren, defaultClass);
-		this.eventBus().on('validation', this.validation.bind(this));
+		super(propsAndChildren, tagName, defaultClass);
 	}
 
 	isValid: boolean;
 
-	validation(e={target: this.children.input._element}){
+	validate(e:FocusEvent|{target: HTMLElement}={target: this.children.input.element}){
 		const {name, value} = <HTMLInputElement> e.target;
 		if(name){
-			const {valid} = this.props;
-			
-			if(valid){
+			const {validationRegexpOrFunc} = this.props;
+			if(validationRegexpOrFunc){
 				this.isValid = false;
-				if(typeof valid !== 'function'){
-					this.isValid = !!value.match(valid);
+				if(typeof validationRegexpOrFunc !== 'function'){
+					this.isValid = !!value.match(validationRegexpOrFunc);
 				} else {
-					this.isValid = valid(this);
+					this.isValid = validationRegexpOrFunc(this);
 				}
 				if(this.isValid){
-					this.props.classErr = '';
+					this.setProps({...this.props, classErr: ''});
 				} else {
-					this.props.classErr = 'form__errorMsg__show';
+					this.setProps({...this.props, classErr: 'form__errorMsg__show'});
 				}
 			}
 		}
 		return this.isValid;
 	}
+
+	clearInput(){
+		(<HTMLInputElement> this.children.input.element).value = '';
+	}
+
 	render(){
-		console.log('InputBlock render');
 		return this.compile(tmpl, this.props);
 	}
 }

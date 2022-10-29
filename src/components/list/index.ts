@@ -1,9 +1,8 @@
 import * as Handlebars from 'handlebars';
-import Component from '../../utils/component';
+import Component from '../../core/component';
 
 export default class List extends Component{
 	render(){
-		console.log('List render=');
 		let tmpl = '';
 		if(this.children && Object.keys(this.children).length){
 			Object.keys(this.children).forEach(key => {
