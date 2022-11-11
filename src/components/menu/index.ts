@@ -1,4 +1,4 @@
-import * as Handlebars from 'handlebars';
+import {compile} from 'handlebars';
 import { TProps, TTag } from '../../core/types';
 import List from '../list';
 
@@ -16,6 +16,6 @@ export default class Menu extends List{
 				tmpl += `{{{ ${key} }}}`;
 			});
 		}
-		return this.compile(Handlebars.compile(tmpl), this.props);
+		return this.compile(compile(tmpl), this.props);
 	}
 }

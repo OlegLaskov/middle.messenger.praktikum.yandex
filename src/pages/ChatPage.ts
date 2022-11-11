@@ -1,4 +1,4 @@
-import * as Handlebars from 'handlebars';
+import {compile} from 'handlebars';
 import Input from '../components/input';
 import List from '../components/list';
 import { PATH } from '../router/paths';
@@ -235,6 +235,6 @@ export default class ChatPage extends List {
 				tmpl += `{{{ ${key} }}}`;
 			});
 		}
-		return this.compile(Handlebars.compile(tmpl), this.props);
+		return this.compile(compile(tmpl), this.props);
 	}
 }

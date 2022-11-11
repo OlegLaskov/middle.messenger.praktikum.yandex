@@ -1,4 +1,4 @@
-import * as Handlebars from 'handlebars';
+import {compile} from 'handlebars';
 import List from '.';
 import { connect } from '../../core/HOC';
 import { Field, FieldBlock, TProps } from '../../core/types';
@@ -51,7 +51,7 @@ class InputList extends List{
 				tmpl += `{{{ ${key} }}}`;
 			});
 		}
-		return this.compile(Handlebars.compile(tmpl), this.props);
+		return this.compile(compile(tmpl), this.props);
 	}
 }
 

@@ -1,4 +1,5 @@
-import {fetchWithRetry, METHODS, RequestOptions} from '../core/HTTP';
+import {fetchWithRetry, METHODS} from '../core/HTTP';
+import { RequestOptions } from '../core/types';
 
 type Form = {[key: string]: string};
 

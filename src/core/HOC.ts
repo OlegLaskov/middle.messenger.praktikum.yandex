@@ -1,9 +1,9 @@
 import userApi from "../api/user-api";
-import { User } from "../pages/ProfilePage";
+import { Indexed, User } from "./types";
 import Router from '../router';
 import { PATH } from "../router/paths";
 import Component from "./component";
-import store, { Indexed, StoreEvents } from "./store";
+import store, { StoreEvents } from "./store";
 
 const router = new Router('#root');
 

@@ -1,4 +1,4 @@
-import * as Handlebars from 'handlebars';
+import {compile} from 'handlebars';
 import ChatItem from '../chatItem';
 import List from '.';
 import { connect } from '../../core/HOC';
@@ -104,7 +104,7 @@ class ChatList extends List{
 				tmpl += `{{{ ${key} }}}`;
 			});
 		}
-		return this.compile(Handlebars.compile(tmpl), this.props);
+		return this.compile(compile(tmpl), this.props);
 	}
 }
 function mapStateToProps(state: Indexed<unknown>){
