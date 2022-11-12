@@ -1,6 +1,6 @@
 ### Проект WEB Мессенджера
 
-3-й этап разработки (спринт 3): https://github.com/OlegLaskov/middle.messenger.praktikum.yandex/pull/3
+4-й этап разработки (спринт 4): https://github.com/OlegLaskov/middle.messenger.praktikum.yandex/pull/4
 
 Прототипы экранов проекта: https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0%3A1
 
