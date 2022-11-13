@@ -4,13 +4,13 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.static(__dirname ));
+app.use(express.static(__dirname + '/dist'));
 app.get('/:folder', function(req, res) {
-	res.sendFile(path.join(__dirname, 'index.html'));
+	res.sendFile(path.join(__dirname, '/dist'));
 });
 
 app.post('/:folder', function(req, res){
-	res.sendFile(path.join(__dirname, 'index.html'));
+	res.sendFile(path.join(__dirname, '/dist'));
 });
 
 app.listen(PORT, function () {

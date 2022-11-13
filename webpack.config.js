@@ -1,5 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const path = require('path');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const HtmlWebpackPlugin = require('html-webpack-plugin'); 
 
 module.exports = {
 	mode: 'development',
@@ -66,5 +68,13 @@ module.exports = {
 		},
 		historyApiFallback: true,
 		port: 3000
-    }
+    },
+	plugins: [
+		new HtmlWebpackPlugin({
+			title: 'Oleg Messenger',
+			// eslint-disable-next-line no-undef
+			template: path.resolve(__dirname, './src/template.html'),
+			filename: 'index.html'
+		})
+	]
 };

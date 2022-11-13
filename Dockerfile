@@ -1,10 +1,10 @@
-FROM node
+FROM node:16
 
 WORKDIR /app
 
-COPY . .
+COPY /dist .
 
-RUN npm install
+RUN npm i express
 
 EXPOSE 3000
 
