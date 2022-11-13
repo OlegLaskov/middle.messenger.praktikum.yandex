@@ -41,6 +41,7 @@
 		"handlebars-loader": "1.7.2",
 		"hbs": "4.2.0",
 		"html-webpack-plugin": "5.5.0",
+		"husky": "^8.0.2",
 		"jsdom": "20.0.0",
 		"jsdom-global": "3.0.2",
 		"loader-utils": "1.4.2",
@@ -67,5 +68,10 @@
 		"fs": false,
 		"path": false,
 		"os": false
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "npm-run-all test lint:all"
+		}
 	}
 }
