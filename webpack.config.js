@@ -41,7 +41,7 @@ module.exports = {
 			},
 			{
 				test: /\.(s(a|c)ss)$/,
-				use: ['style-loader','css-loader', 'sass-loader', 'postcss-loader']
+				use: ['style-loader','css-loader', 'sass-loader']
 			},
 			{
 				test: /\.(hbs|handlebars)$/,
