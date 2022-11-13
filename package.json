@@ -8,7 +8,8 @@
 		"build": "cross-env NODE_ENV=production webpack --progress",
 		"start": "cross-env NODE_ENV=production webpack --progress && node server.js",
 		"lint": "eslint . && stylelint \"src/**/*.scss\"",
-		"test": "mocha -r jsdom-global/register"
+		"test": "mocha -r jsdom-global/register",
+		"prepare": "node -v && husky install && chmod ug+x .husky/*"
 	},
 	"keywords": [
 		"messenger",
@@ -68,10 +69,5 @@
 		"fs": false,
 		"path": false,
 		"os": false
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "npm-run-all test lint:all"
-		}
 	}
 }

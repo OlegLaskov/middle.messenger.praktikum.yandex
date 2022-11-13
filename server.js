@@ -6,11 +6,11 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.static(__dirname + '/dist'));
 app.get('/:folder', function(req, res) {
-	res.sendFile(path.join(__dirname, '/dist'));
+	res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
 app.post('/:folder', function(req, res){
-	res.sendFile(path.join(__dirname, '/dist'));
+	res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
 app.listen(PORT, function () {
