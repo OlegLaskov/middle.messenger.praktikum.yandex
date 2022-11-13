@@ -13,7 +13,7 @@
 Тесты компонента и роутера
 После запуска проект запускается на 3000 порту
 
-Проект выложен на Netlify: https://dancing-entremet-490804.netlify.app/
+Проект выложен на heroku: https://messenger-oleg.herokuapp.com/
 
 ## Установка
 
@@ -21,3 +21,4 @@
 - `npm run build` — сборка стабильной версии,
 - `npm run start` — запуск стабильной версии,
 - `npm run test` — запуск тестов
+- `npm run lint` — запуск eslint и stylelint
