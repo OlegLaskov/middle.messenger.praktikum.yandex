@@ -10,7 +10,7 @@
 		"lint": "eslint . && stylelint \"src/**/*.scss\"",
 		"test": "mocha -r jsdom-global/register",
 		"prepare": "node -v && husky install",
-		"postinstall": "patch-package && npm rebuild node-sass"
+		"postinstall": "npm rebuild node-sass && patch-package"
 	},
 	"keywords": [
 		"messenger",
