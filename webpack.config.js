@@ -2,6 +2,8 @@
 const path = require('path');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const HtmlWebpackPlugin = require('html-webpack-plugin'); 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
 	mode: 'development',
@@ -43,7 +45,7 @@ module.exports = {
 			},
 			{
 				test: /\.(s(a|c)ss)$/,
-				use: ['style-loader','css-loader', 'sass-loader']
+				use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
 			},
 			{
 				test: /\.(hbs|handlebars)$/,
@@ -75,6 +77,9 @@ module.exports = {
 			// eslint-disable-next-line no-undef
 			template: path.resolve(__dirname, './src/template.html'),
 			filename: 'index.html'
+		}),
+		new MiniCssExtractPlugin({
+			filename: '[name].[contenthash].css',
 		})
 	]
 };

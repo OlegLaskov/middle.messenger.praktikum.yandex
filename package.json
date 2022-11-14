@@ -10,7 +10,7 @@
 		"lint": "eslint . && stylelint \"src/**/*.scss\"",
 		"test": "mocha -r jsdom-global/register",
 		"prepare": "node -v && husky install",
-		"postinstall": "npm rebuild node-sass --force && patch-package"
+		"postinstall": "patch-package"
 	},
 	"keywords": [
 		"messenger",
@@ -46,9 +46,11 @@
 		"husky": "8.0.2",
 		"jsdom": "20.0.0",
 		"jsdom-global": "3.0.2",
+		"mini-css-extract-plugin": "2.6.1",
 		"mocha": "10.0.0",
 		"node-sass": "7.0.3",
 		"patch-package": "6.5.0",
+		"sass": "1.56.1",
 		"sass-loader": "13.2.0",
 		"style-loader": "3.3.1",
 		"stylelint": "14.8.3",
