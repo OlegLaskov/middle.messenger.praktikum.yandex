@@ -1,5 +1,4 @@
 import Component from "../core/component";
-import { PATH } from "./paths";
 import Route from "./route";
 
 export default class Router {

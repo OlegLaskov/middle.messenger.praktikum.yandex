@@ -1,4 +1,4 @@
-import * as Handlebars from 'handlebars';
+import {compile} from 'handlebars';
 import List from '../list';
 import webSocketTransport from '../../core/WebSocketTransport';
 import { connect } from '../../core/HOC';
@@ -123,7 +123,7 @@ class ChatMainBlock extends List{
 			});
 		}
 		
-		return this.compile(Handlebars.compile(tmpl), this.props);
+		return this.compile(compile(tmpl), this.props);
 	}
 }
 function mapStateToProps(state: Indexed<unknown>){

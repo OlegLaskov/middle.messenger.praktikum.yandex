@@ -1,4 +1,4 @@
-import * as Handlebars from 'handlebars';
+import {compile} from 'handlebars';
 import Component from '../../core/component';
 
 export default class List extends Component{
@@ -9,6 +9,6 @@ export default class List extends Component{
 				tmpl += `{{{ ${key} }}}`;
 			});
 		}
-		return this.compile(Handlebars.compile(tmpl), this.props);
+		return this.compile(compile(tmpl), this.props);
 	}
 }

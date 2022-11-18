@@ -7,11 +7,14 @@ $blueInput: #1a73a8;
 $blackFont: #1e1e1e;
 $grayFont: #999;
 $blueButton: #0071f0;
-$focusButton: rgb(0 113 240 / 70%);
+/* stylelint-disable-next-line function-name-case */
+$focusButton: RGB(0 113 240 / 70%);
 $selectedChatColor: #e4edfd;
 $backgroundInput: #efefef;
 $blueBackgrnd: #3369f3;
 $menuBackground: #fff;
-$menuShadow: 0 0 6px rgb(0 0 0 / 14%);
+/* stylelint-disable-next-line function-name-case */
+$menuShadow: 0 0 6px RGB(0 0 0 / 14%);
 $grayLine: #eaeaea;
-$backgroundModal: rgb(0 0 0 / 40%);
+/* stylelint-disable-next-line function-name-case */
+$backgroundModal: RGB(0 0 0 / 40%);

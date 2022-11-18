@@ -9,7 +9,7 @@ class WebSocketTransport {
 	private BASE_URL = '/chats';
 	private userId: number;
 	private socket: WebSocket|null;
-	private pingInterval: number;
+	private pingInterval: number|NodeJS.Timer;
 
 	transformMsg = (msg:Tmsg)=>{
 		msg.msgClass = msg.user_id === this.userId ? 'message__right' : 'message__left';
